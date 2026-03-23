@@ -13,62 +13,104 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
         
+        :root {
+            --gold: #a68966;
+            --dark: #4a3728;
+            --cream: #fdfbf7;
+        }
+
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: #fdfbf7; 
-            color: #4a3728; 
+            background-color: var(--cream); 
+            color: var(--dark); 
             margin: 0;
-            padding: 0;
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        /* Navigasi Glassmorphism */
         .nav-glass { background: rgba(253, 251, 247, 0.96); backdrop-filter: blur(15px); }
         
-        /* Button & Gold Accents */
-        .btn-gold { background: #a68966; color: white; transition: 0.4s; border-radius: 1.25rem; }
-        .btn-gold:hover { background: #8e7352; transform: translateY(-3px); box-shadow: 0 10px 20px -5px rgba(166, 137, 102, 0.4); }
-        
-        /* Unit Card Premium */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .floating { animation: float 6s ease-in-out infinite; }
+
+        .btn-gold { 
+            background: var(--gold); 
+            color: white; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border-radius: 1.25rem; 
+        }
+        .btn-gold:hover { 
+            background: #8e7352; 
+            transform: scale(1.05) translateY(-5px); 
+            box-shadow: 0 15px 30px -5px rgba(166, 137, 102, 0.4); 
+        }
+
         .unit-card { 
             background: white; 
             border-radius: 2.5rem; 
             border: 1px solid #f1f1f1;
-            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
             overflow: hidden;
         }
-        .unit-card:hover { transform: translateY(-12px); box-shadow: 0 30px 60px -15px rgba(0,0,0,0.08); }
-        
-        /* Tab Phase Buttons */
-        .phase-btn { transition: 0.3s; border: 1px solid #eee; background: white; }
-        .phase-btn.active { background-color: #4a3728 !important; color: white !important; border-color: #4a3728; }
+        .unit-card:hover { 
+            transform: translateY(-15px) scale(1.02); 
+            box-shadow: 0 40px 80px -20px rgba(0,0,0,0.1); 
+        }
 
-        /* Gallery Modal Styling */
+        .phase-btn { 
+            transition: 0.3s; 
+            border: 1px solid #eee; 
+            background: white; 
+            white-space: nowrap;
+        }
+        .phase-btn.active { 
+            background-color: var(--dark) !important; 
+            color: white !important; 
+            border-color: var(--dark); 
+            transform: scale(1.1);
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: white;
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 1.2rem;
+        }
+        .social-icon:hover {
+            background: var(--gold);
+            color: white;
+            transform: translateY(-8px) rotate(360deg);
+        }
+
         #gallery-modal {
             display: none;
             position: fixed;
             inset: 0;
             z-index: 9999;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.98);
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
-        #gallery-modal.active { display: flex; }
-
-        /* Mencegah Konten Hilang Saat AOS Loading */
-        [data-aos] { opacity: 1 !important; transform: none !important; visibility: visible !important; }
-        .aos-init[data-aos] { opacity: 0 !important; transform: translateY(20px) !important; }
-        .aos-animate[data-aos] { opacity: 1 !important; transform: translateY(0) !important; }
-
+        #gallery-modal.active { display: flex; animation: fadeIn 0.3s ease; }
+        
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
 
-    <!-- NAVBAR (NAVIGASI DIKUNCI) -->
-    <nav class="fixed w-full z-[1000] nav-glass px-8 py-5 border-b border-gray-100">
+    <!-- NAVBAR -->
+    <nav class="fixed w-full z-[1000] nav-glass px-8 py-5 border-b border-gray-100" data-aos="fade-down">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="font-extrabold text-xl tracking-tighter uppercase">Nefsi Asrifah | <span class="text-[#a68966]">Echi</span></div>
             <div class="hidden md:flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em]">
@@ -76,37 +118,49 @@
                 <a href="#katalog" class="hover:text-[#a68966] transition-colors">Katalog</a>
                 <a href="#kpr" class="hover:text-[#a68966] transition-colors">Simulasi KPR</a>
             </div>
-            <button onclick="toggleMenu()" class="md:hidden text-2xl text-[#4a3728]"><i class="fas fa-bars"></i></button>
+            <button onclick="toggleMenu()" class="md:hidden text-2xl text-[#4a3728] transition-transform active:scale-90"><i class="fas fa-bars"></i></button>
         </div>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white p-8 flex flex-col gap-5 shadow-2xl md:hidden">
-            <a href="#home" onclick="toggleMenu()" class="font-bold text-[11px] uppercase tracking-widest">Beranda</a>
-            <a href="#katalog" onclick="toggleMenu()" class="font-bold text-[11px] uppercase tracking-widest">Katalog</a>
-            <a href="#kpr" onclick="toggleMenu()" class="font-bold text-[11px] uppercase tracking-widest">Simulasi KPR</a>
+            <a href="#home" onclick="toggleMenu()" class="font-bold text-[11px] uppercase tracking-widest text-center">Beranda</a>
+            <a href="#katalog" onclick="toggleMenu()" class="font-bold text-[11px] uppercase tracking-widest text-center">Katalog</a>
+            <a href="#kpr" onclick="toggleMenu()" class="font-bold text-[11px] uppercase tracking-widest text-center">Simulasi KPR</a>
         </div>
     </nav>
 
-    <!-- HERO SECTION (TATA LETAK DIKUNCI) -->
+    <!-- HERO SECTION -->
     <section id="home" class="min-h-screen flex items-center px-8 pt-24 pb-12">
         <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center w-full">
-            <div data-aos="fade-right">
+            <div data-aos="fade-right" data-aos-duration="1200">
                 <span class="text-[10px] font-extrabold text-[#a68966] uppercase tracking-[0.5em] mb-6 block">Sales Inhouse Lippoland</span>
-                <h1 class="text-6xl lg:text-8xl font-black leading-[0.9] mb-6 text-[#4a3828]">Eksklusif <br><span class="text-[#a68966]">Hunian</span></h1>
-                <p class="text-gray-400 text-lg mb-10 font-medium max-w-md italic border-l-4 border-[#a68966] pl-6">
-                    "Menemukan properti impian Anda dengan pelayanan personal dan profesional bersama Echi."
-                </p>
+                <h1 class="text-6xl lg:text-7xl font-black leading-[0.9] mb-6 text-[#4a3828]">Nefsi <br><span class="text-[#a68966]">Asrifah</span></h1>
+                
+                <div class="space-y-4 mb-10">
+                    <p class="text-sm font-bold text-gray-500 uppercase tracking-widest">Property Consultant | Trusted & Result-Oriented</p>
+                    <p class="text-gray-400 text-lg font-medium max-w-md italic border-l-4 border-[#a68966] pl-6 leading-relaxed">
+                        "Lebih dari sekadar menjual, saya menghadirkan solusi, kepastian, dan nilai investasi terbaik untuk setiap klien."
+                    </p>
+                </div>
+
                 <div class="flex flex-wrap gap-5">
                     <a href="#katalog" class="btn-gold px-12 py-6 font-bold text-[11px] uppercase tracking-[0.2em] shadow-xl">Jelajahi Unit</a>
-                    <a href="https://wa.me/628111982833" class="bg-white border-2 border-gray-100 px-12 py-6 rounded-[1.25rem] font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-gray-50 transition-all">Konsultasi</a>
+                    <a href="https://wa.me/628111982833" target="_blank" class="bg-white border-2 border-gray-100 px-12 py-6 rounded-[1.25rem] font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-gray-50 transition-all">Hubungi Saya</a>
                 </div>
             </div>
-            <div class="relative" data-aos="zoom-in" data-aos-delay="200">
-                <div class="bg-white p-5 rounded-[4rem] shadow-2xl relative">
-                    <img src="wajah.jpg" class="rounded-[3.5rem] w-full h-[550px] object-cover" onerror="this.src='https://placehold.co/600x800?text=Echi+Profile'">
-                    <div class="absolute -bottom-6 -right-6 bg-[#a68966] text-white p-8 rounded-[2.5rem] shadow-2xl hidden md:block">
-                        <p class="text-[10px] uppercase font-bold tracking-widest mb-1">Pengalaman</p>
-                        <p class="text-3xl font-black">Top Sales</p>
+
+            <div class="relative flex flex-col items-center">
+                <div class="bg-white p-5 rounded-[4rem] shadow-2xl relative floating" data-aos="zoom-in" data-aos-duration="1500">
+                    <img src="wajah.jpg" class="rounded-[3.5rem] w-full h-[500px] object-cover" onerror="this.src='https://placehold.co/600x800?text=Echi+Profile'">
+                    <div class="absolute -bottom-6 -left-6 bg-[#4a3728] text-white p-8 rounded-[2.5rem] shadow-2xl hidden md:block">
+                        <p class="text-[10px] uppercase font-bold tracking-widest mb-1">Status</p>
+                        <p class="text-2xl font-black">Sales Inhouse</p>
                     </div>
+                </div>
+                
+                <div class="flex gap-4 mt-12" data-aos="fade-up" data-aos-delay="600">
+                    <a href="https://wa.me/628111982833" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/echi.parkserpong?igsh=MXR3cm9ocmY0ZTRxcg==" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@echi.parkserpong?_t=ZS-8tNoWn7XjR4&_r=1" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    <a href="mailto:nefsiasrifah@gmail.com" class="social-icon"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
         </div>
@@ -115,31 +169,29 @@
     <!-- KATALOG SECTION -->
     <section id="katalog" class="py-32 px-8 bg-white rounded-[4rem] md:rounded-[6rem] -mt-10 relative z-10 shadow-[0_-20px_50px_rgba(0,0,0,0.03)]">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20">
+            <div class="text-center mb-20" data-aos="fade-up">
                 <h2 class="text-4xl font-black uppercase tracking-[0.2em] mb-4">Park Serpong</h2>
                 <div class="w-24 h-1.5 bg-[#a68966] mx-auto rounded-full"></div>
             </div>
 
-            <!-- Tab Phase -->
-            <div class="mb-16 flex justify-center gap-4 overflow-x-auto pb-6 no-scrollbar">
-                <button onclick="filterPhase(7)" id="btn-7" class="phase-btn active px-10 py-4 rounded-2xl font-bold text-[11px] uppercase tracking-widest">Fase 7</button>
-                <button onclick="filterPhase(6)" id="btn-6" class="phase-btn px-10 py-4 rounded-2xl font-bold text-[11px] uppercase tracking-widest">Fase 6</button>
-                <button onclick="filterPhase(5)" id="btn-5" class="phase-btn px-10 py-4 rounded-2xl font-bold text-[11px] uppercase tracking-widest">Fase 5</button>
+            <div class="mb-16 flex justify-start md:justify-center gap-4 overflow-x-auto py-4 no-scrollbar scroll-smooth" data-aos="fade-up">
+                <button onclick="filterPhase(7)" id="btn-7" class="phase-btn active px-10 py-4 rounded-2xl font-bold text-[11px] uppercase tracking-widest shadow-sm">Fase 7</button>
+                <button onclick="filterPhase(6)" id="btn-6" class="phase-btn px-10 py-4 rounded-2xl font-bold text-[11px] uppercase tracking-widest shadow-sm">Fase 6</button>
+                <button onclick="filterPhase(5)" id="btn-5" class="phase-btn px-10 py-4 rounded-2xl font-bold text-[11px] uppercase tracking-widest shadow-sm">Fase 5</button>
             </div>
 
-            <!-- Unit Grid -->
-            <div id="unit-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <!-- Data Dimuat via JS -->
-            </div>
+            <div id="unit-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
         </div>
     </section>
 
     <!-- SIMULASI KPR SECTION -->
     <section id="kpr" class="py-32 px-8">
-        <div class="max-w-4xl mx-auto">
-            <div class="bg-white p-12 md:p-20 rounded-[4rem] shadow-2xl border border-gray-50" data-aos="fade-up">
-                <h3 class="text-3xl font-black text-center mb-16 uppercase tracking-[0.2em]">Simulasi KPR</h3>
-                <div class="grid md:grid-cols-2 gap-16">
+        <div class="max-w-5xl mx-auto">
+            <div class="bg-white p-12 md:p-20 rounded-[4rem] shadow-2xl border border-gray-50 overflow-hidden relative" data-aos="zoom-in-up" data-aos-duration="1200">
+                <div class="absolute -top-20 -right-20 w-64 h-64 bg-cream rounded-full opacity-50"></div>
+                
+                <h3 class="text-3xl font-black text-center mb-16 uppercase tracking-[0.2em] relative z-10">Simulasi KPR</h3>
+                <div class="grid md:grid-cols-2 gap-16 relative z-10">
                     <div class="space-y-10">
                         <div class="border-b-2 border-gray-100 pb-4 focus-within:border-[#a68966] transition-all">
                             <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block tracking-widest">Harga Properti (Rp)</label>
@@ -157,10 +209,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-col justify-center items-center md:items-start p-10 bg-[#fdfbf7] rounded-[3rem]">
-                        <p class="text-[11px] font-bold text-gray-400 uppercase mb-3 tracking-widest text-center md:text-left">Estimasi Angsuran</p>
-                        <h4 id="hasil-cicilan" class="text-4xl font-black text-[#a68966]">Rp 1.900.000</h4>
-                        <p class="text-[10px] mt-4 text-gray-400 italic text-center md:text-left">*Asumsi suku bunga 5% per tahun</p>
+                    <div class="flex flex-col justify-center items-center md:items-start p-10 bg-[#fdfbf7] rounded-[3rem] border border-[#f0ece4] shadow-inner">
+                        <p class="text-[11px] font-bold text-gray-400 uppercase mb-3 tracking-widest">Estimasi Angsuran</p>
+                        <h4 id="hasil-cicilan" class="text-5xl font-black text-[#a68966] mb-2 tracking-tighter">Rp 1.900.000</h4>
+                        <p class="text-[10px] text-gray-400 italic">Asumsi bunga flat 5% p.a</p>
+                        <!-- TOMBOL KONSULTASI KPR OTOMATIS -->
+                        <button onclick="whatsappKPR()" class="mt-8 text-[11px] font-extrabold uppercase tracking-widest text-[#4a3728] border-b-2 border-[#a68966] pb-2 hover:text-[#a68966] transition-all">
+                            Konsultasi KPR Ke Echi <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -168,27 +224,27 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="py-20 text-center border-t border-gray-100 bg-white">
-        <div class="max-w-7xl mx-auto px-8">
+    <footer class="py-20 text-center bg-white">
+        <div class="max-w-7xl mx-auto px-8" data-aos="fade-up">
             <p class="text-[10px] font-bold text-gray-300 uppercase tracking-[0.8em] mb-4">Nefsi Asrifah | Echi</p>
-            <p class="text-[9px] text-gray-400">Official Property Consultant at Park Serpong • 2026</p>
+            <p class="text-[9px] text-gray-400 uppercase tracking-widest">Sales Inhouse Lippoland • Your Reliable Partner • 2026</p>
         </div>
     </footer>
 
-    <!-- MODAL GALLERY -->
+    <!-- MODAL GALERI -->
     <div id="gallery-modal" onclick="closeGallery()">
         <div class="relative w-full max-w-5xl px-4" onclick="event.stopPropagation()">
-            <img id="modal-img" src="" class="w-full h-auto max-h-[80vh] object-contain rounded-[2rem] shadow-2xl border-4 border-white">
-            <button onclick="prevPhoto()" class="absolute left-10 top-1/2 -translate-y-1/2 text-white text-4xl"><i class="fas fa-chevron-left"></i></button>
-            <button onclick="nextPhoto()" class="absolute right-10 top-1/2 -translate-y-1/2 text-white text-4xl"><i class="fas fa-chevron-right"></i></button>
-            <button onclick="closeGallery()" class="absolute -top-14 right-4 text-white text-3xl"><i class="fas fa-times"></i></button>
+            <img id="modal-img" src="" class="w-full h-auto max-h-[85vh] object-contain rounded-[2rem] shadow-2xl border-4 border-white transition-all duration-500">
+            <button onclick="prevPhoto()" class="absolute left-6 md:left-10 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-4xl transition-all"><i class="fas fa-chevron-left"></i></button>
+            <button onclick="nextPhoto()" class="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-4xl transition-all"><i class="fas fa-chevron-right"></i></button>
+            <button onclick="closeGallery()" class="absolute -top-16 right-4 text-white text-3xl"><i class="fas fa-times"></i></button>
         </div>
     </div>
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // DATA UNIT - Berdasarkan Struktur Folder GitHub Anda
+        const waNumber = "628111982833";
         const unitData = {
             7: [
                 { name: "Wonder House 2L", price: "305 Jt", val: 305000000, img: "fase-7/unit-1.jpg", photos: ["fase-7/unit-1.jpg", "fase-7/unit-1.1.jpg", "fase-7/unit-1.2.jpg", "fase-7/unit-1.3.jpg"] },
@@ -219,11 +275,18 @@
             container.innerHTML = '';
 
             unitData[p].forEach((u, i) => {
+                // LOGIKA WHATSAPP UNIT
+                const textUnit = encodeURIComponent(`Halo Kak Echi, saya tertarik dengan unit ${u.name} di Fase ${p}. Boleh minta info lebih lanjut?`);
+                const waLink = `https://wa.me/${waNumber}?text=${textUnit}`;
+
                 container.innerHTML += `
-                    <div class="unit-card" data-aos="fade-up" data-aos-delay="${i*100}">
-                        <div class="h-64 overflow-hidden cursor-pointer" onclick="openGallery(${p}, ${i})">
-                            <img src="${u.img}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700" 
+                    <div class="unit-card" data-aos="zoom-in-up" data-aos-delay="${i*150}">
+                        <div class="h-64 overflow-hidden cursor-pointer relative group" onclick="openGallery(${p}, ${i})">
+                            <img src="${u.img}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" 
                                  onerror="this.src='https://placehold.co/600x400?text=${u.name.replace(/\s/g,'+')}'">
+                            <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="bg-white/90 px-6 py-2 rounded-full font-bold text-[10px] uppercase tracking-widest shadow-xl">Lihat Detail Galeri</span>
+                            </div>
                         </div>
                         <div class="p-10">
                             <h4 class="font-black uppercase text-xl mb-2 tracking-tight">${u.name}</h4>
@@ -232,8 +295,8 @@
                                 <p class="text-[10px] font-bold text-[#a68966] uppercase mb-1 tracking-widest">Harga Mulai</p>
                                 <p class="text-3xl font-black text-[#4a3728] mb-8 italic">Rp ${u.price}</p>
                                 <div class="grid grid-cols-2 gap-4">
-                                    <button onclick="selectKPR(${u.val})" class="py-4 border-2 border-gray-100 rounded-2xl font-bold text-[9px] uppercase hover:bg-gray-50 transition-all">Simulasi KPR</button>
-                                    <a href="https://wa.me/628111982833" target="_blank" class="py-4 bg-[#a68966] text-white rounded-2xl font-bold text-[9px] uppercase text-center shadow-lg">Chat Echi</a>
+                                    <button onclick="selectKPR(${u.val})" class="py-4 border-2 border-gray-100 rounded-2xl font-bold text-[9px] uppercase hover:bg-gray-50 transition-all active:scale-95 shadow-sm">Simulasi KPR</button>
+                                    <a href="${waLink}" target="_blank" class="py-4 bg-[#a68966] text-white rounded-2xl font-bold text-[9px] uppercase text-center shadow-lg active:scale-95 transition-all">Chat Echi</a>
                                 </div>
                             </div>
                         </div>
@@ -243,14 +306,16 @@
             if(window.AOS) AOS.refresh();
         }
 
-        // KPR LOGIC
+        // LOGIKA KPR
         function formatNumber(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+        
         function handleHargaInput(e) {
             let v = e.value.replace(/\D/g, "");
             document.getElementById('harga-unit').value = v;
             e.value = formatNumber(v);
             hitungKPR();
         }
+
         function hitungKPR() {
             const h = parseFloat(document.getElementById('harga-unit').value) || 0;
             const d = parseFloat(document.getElementById('dp-percent').value) || 0;
@@ -261,6 +326,7 @@
             const cicil = n > 0 ? (pinj * bung) / (1 - Math.pow(1 + bung, -n)) : 0;
             document.getElementById('hasil-cicilan').innerText = "Rp " + formatNumber(Math.round(cicil));
         }
+
         function selectKPR(v) {
             document.getElementById('harga-unit').value = v;
             document.getElementById('harga-display').value = formatNumber(v);
@@ -268,26 +334,4 @@
             document.getElementById('kpr').scrollIntoView({behavior:'smooth'});
         }
 
-        // GALLERY LOGIC
-        function openGallery(p, i) {
-            currentGallery = unitData[p][i].photos;
-            galleryIdx = 0;
-            document.getElementById('modal-img').src = currentGallery[0];
-            document.getElementById('gallery-modal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeGallery() { 
-            document.getElementById('gallery-modal').classList.remove('active'); 
-            document.body.style.overflow = 'auto';
-        }
-        function nextPhoto() { galleryIdx = (galleryIdx + 1) % currentGallery.length; document.getElementById('modal-img').src = currentGallery[galleryIdx]; }
-        function prevPhoto() { galleryIdx = (galleryIdx - 1 + currentGallery.length) % currentGallery.length; document.getElementById('modal-img').src = currentGallery[galleryIdx]; }
-
-        window.onload = () => {
-            AOS.init({ duration: 1000, once: true, offset: 50 });
-            filterPhase(7);
-            hitungKPR();
-        }
-    </script>
-</body>
-                        </html>
+        //
