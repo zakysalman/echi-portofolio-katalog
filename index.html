@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echi | Sales Inhouse Lippoland - Park Serpong</title>
+    <title>Echi | Sales Inhouse Lippoland</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Pustaka Ikon Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&display=swap" rel="stylesheet">
+    
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FDFBF7; color: #4A3728; scroll-behavior: smooth; }
         .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
@@ -25,36 +30,30 @@
         .unit-card { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
         .unit-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         
-        .wood-menu-btn { display: flex; flex-direction: column; gap: 6px; padding: 10px; cursor: pointer; }
-        .wood-slat { height: 4px; background: linear-gradient(90deg, #8A6D4D, #4A3728); border-radius: 10px; transition: all 0.3s ease; }
-        .wood-slat:nth-child(1) { width: 30px; }
-        .wood-slat:nth-child(2) { width: 22px; margin-left: auto; }
-        .wood-slat:nth-child(3) { width: 26px; }
-
         .modal { display: none; position: fixed; z-index: 2000; inset: 0; background: rgba(74, 55, 40, 0.98); backdrop-filter: blur(15px); }
         .modal.active { display: flex; }
         .gold-gradient { background: linear-gradient(135deg, #A68966 0%, #8A6D4D 100%); }
+        
         .filter-btn { border: 2px solid #E5DACE; transition: all 0.3s ease; min-width: 160px; text-align: center; background: white; }
         .filter-btn.active { background-color: #4A3728; color: white; border-color: #4A3728; transform: scale(1.05); }
         
-        .thumb-btn { width: 60px; height: 60px; border-radius: 10px; overflow: hidden; border: 2px solid transparent; cursor: pointer; flex-shrink: 0; }
+        .thumb-btn { width: 60px; height: 60px; border-radius: 10px; overflow: hidden; border: 2px solid transparent; cursor: pointer; flex-shrink: 0; background: #eee; }
         .thumb-btn.active { border-color: #A68966; }
 
         .social-layer {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(74, 55, 40, 0.8);
-            backdrop-filter: blur(8px);
-            padding: 15px;
+            bottom: 0; left: 0; right: 0;
+            background: rgba(74, 55, 40, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 25px;
             transform: translateY(100%);
-            transition: transform 0.4s ease;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .profile-container:hover .social-layer { transform: translateY(0); }
+        .social-layer i { font-size: 2rem; color: white; }
 
         @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade { animation: fade-in 0.8s ease-out forwards; }
@@ -65,36 +64,22 @@
     <!-- NAVIGATION -->
     <nav class="fixed w-full z-[1500] glass border-b border-gray-100 px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="font-black text-xl tracking-tighter uppercase flex items-center gap-2 cursor-pointer" onclick="window.location.href='#home'">
-                ECI PROPERTI <span class="bg-[#A68966] text-white px-2 py-0.5 rounded text-[10px] font-bold tracking-normal">OFFICIAL</span>
+            <div class="font-black text-xl tracking-tighter uppercase cursor-pointer" onclick="window.location.href='#home'">
+                ECI PROPERTI <span class="bg-[#A68966] text-white px-2 py-0.5 rounded text-[10px] font-bold">OFFICIAL</span>
             </div>
             <div class="hidden md:flex items-center gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
                 <a href="#home" class="hover:text-[#A68966] transition">Profil</a>
                 <a href="#kpr-section" class="hover:text-[#A68966] transition">KPR</a>
                 <a href="#catalog" class="hover:text-[#A68966] transition">Katalog</a>
-                <a href="javascript:void(0)" onclick="directWaContact('Umum')" class="gold-gradient text-white px-8 py-3 rounded-full shadow-lg hover:opacity-90 transition border-none">WhatsApp</a>
-            </div>
-            <div class="md:hidden wood-menu-btn" onclick="toggleMobileMenu()">
-                <div class="wood-slat"></div>
-                <div class="wood-slat"></div>
-                <div class="wood-slat"></div>
+                <a href="javascript:void(0)" onclick="directWaContact('Umum')" class="gold-gradient text-white px-8 py-3 rounded-full text-[10px]">WhatsApp</a>
             </div>
         </div>
     </nav>
 
-    <!-- MOBILE MENU -->
-    <div id="mobile-menu" class="fixed inset-0 bg-white z-[1600] hidden flex-col items-center justify-center gap-8">
-        <button class="absolute top-10 right-10 text-3xl text-[#4A3728]" onclick="toggleMobileMenu()"><i class="fas fa-times"></i></button>
-        <a href="#home" class="text-2xl font-black text-[#4A3728]" onclick="toggleMobileMenu()">PROFIL</a>
-        <a href="#kpr-section" class="text-2xl font-black text-[#4A3728]" onclick="toggleMobileMenu()">KPR</a>
-        <a href="#catalog" class="text-2xl font-black text-[#4A3728]" onclick="toggleMobileMenu()">KATALOG</a>
-        <a href="javascript:void(0)" class="gold-gradient text-white px-10 py-4 rounded-full font-black text-sm tracking-widest" onclick="toggleMobileMenu(); directWaContact('Umum')">WHATSAPP</a>
-    </div>
-
     <!-- PROFILE HERO SECTION -->
     <section id="home" class="relative pt-48 pb-16 px-6 min-h-screen flex items-center">
         <div class="hero-bg-container">
-            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop" class="hero-bg-image" alt="Luxury Housing">
+            <img src="fase-7/unit-1.jpg" class="hero-bg-image" alt="Background">
             <div class="hero-overlay"></div>
         </div>
 
@@ -104,60 +89,67 @@
                 <h1 class="text-5xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-2 text-[#4A3728]">
                     Nefsi Asrifah | <span class="text-[#A68966] italic font-serif">Echi.</span>
                 </h1>
-                <!-- Slogan ditaruh di bawah profil -->
-                <p class="text-lg text-gray-500 font-bold italic mb-10 tracking-wide uppercase text-[12px] text-[#A68966]">
+                <p class="text-lg text-[#A68966] font-bold italic mb-8 tracking-wide uppercase text-[12px]">
                     "Lebih dari sekadar menjual, saya menghadirkan solusi dan nilai investasi terbaik."
                 </p>
                 <p class="text-xl text-gray-700 leading-relaxed mb-12 max-w-lg border-l-4 border-[#A68966] pl-6">
-                    Membantu Anda menemukan hunian impian di Park Serpong dengan transparansi dan pelayanan maksimal.
+                    Membantu Anda menemukan hunian impian dengan transparansi dan pelayanan maksimal.
                 </p>
                 <div class="flex gap-4">
-                    <a href="#catalog" class="bg-[#4A3728] text-white px-10 py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl hover:bg-[#A68966] transition-all">Lihat Unit <i class="fas fa-arrow-right ml-3"></i></a>
+                    <a href="#catalog" class="bg-[#4A3728] text-white px-10 py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl">Eksplorasi Unit <i class="fas fa-arrow-right ml-3"></i></a>
                 </div>
             </div>
             
             <div class="relative animate-fade" style="animation-delay: 0.2s">
-                <!-- Foto Profil dengan Layer Media Sosial yang Bergerak -->
                 <div class="relative group profile-container aspect-[4/5] bg-[#E5DACE] rounded-[5rem] overflow-hidden shadow-2xl border-[12px] border-white cursor-pointer">
-                    <img src="wajah.jpg" alt="Nefsi Asrifah Echi" class="w-full h-full object-cover">
+                    <img src="wajah.jpg" alt="Foto Profil Echi" class="w-full h-full object-cover">
                     <div class="social-layer">
-                        <a href="https://tiktok.com/@parkserponghomes" target="_blank" class="text-white text-2xl hover:text-[#A68966] transition"><i class="fa-brands fa-tiktok"></i></a>
-                        <a href="https://instagram.com/echiproperti" target="_blank" class="text-white text-2xl hover:text-[#A68966] transition"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="javascript:void(0)" onclick="directWaContact('Umum')" class="text-white text-2xl hover:text-[#A68966] transition"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://tiktok.com/@parkserponghomes" target="_blank" class="hover:scale-125 transition duration-300">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                        <a href="https://instagram.com/echiproperti" target="_blank" class="hover:scale-125 transition duration-300">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="directWaContact('Umum')" class="hover:scale-125 transition duration-300">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- KPR SECTION (HOME PROFIL) -->
+    <!-- PERHITUNGAN KPR -->
     <section id="kpr-section" class="py-24 px-6 bg-[#FDFBF7]">
         <div class="max-w-4xl mx-auto bg-white rounded-[4rem] shadow-xl overflow-hidden border border-gray-100 flex flex-col md:flex-row">
             <div class="p-12 md:w-1/2">
                 <h2 class="text-3xl font-black text-[#4A3728] mb-2 italic uppercase">Perhitungan KPR</h2>
-                <p class="text-gray-500 text-sm mb-10">Menghitung KPR dengan langsung untuk memperkirakan harga hunian Anda.</p>
+                <p class="text-gray-500 text-sm mb-10">Hitung estimasi cicilan hunian impian Anda di sini.</p>
                 
                 <div class="space-y-6">
                     <div>
                         <label class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Harga Properti (Rp)</label>
-                        <input type="number" id="prop-price" value="305000000" oninput="calculateKPR()" class="w-full bg-gray-50 border-none p-4 rounded-2xl font-bold focus:ring-2 focus:ring-[#A68966] outline-none">
+                        <input type="number" id="prop-price" value="305000000" oninput="calculateKPR()" class="w-full bg-gray-50 border-none p-4 rounded-2xl font-bold outline-none focus:ring-2 focus:ring-[#A68966]">
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">DP (%)</label>
-                            <input type="number" id="dp-input" value="5" oninput="calculateKPR()" class="w-full bg-gray-50 border-none p-4 rounded-2xl font-bold outline-none">
+                            <input type="number" id="dp-input" value="5" oninput="calculateKPR()" class="w-full bg-gray-50 border-none p-4 rounded-2xl font-bold outline-none focus:ring-2 focus:ring-[#A68966]">
                         </div>
                         <div>
                             <label class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Tenor (Thn)</label>
-                            <input type="number" id="tenor-input" value="20" oninput="calculateKPR()" class="w-full bg-gray-50 border-none p-4 rounded-2xl font-bold outline-none">
+                            <input type="number" id="tenor-input" value="20" oninput="calculateKPR()" class="w-full bg-gray-50 border-none p-4 rounded-2xl font-bold outline-none focus:ring-2 focus:ring-[#A68966]">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="gold-gradient p-12 md:w-1/2 flex flex-col justify-center text-white text-center">
                 <p class="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Estimasi Cicilan</p>
-                <h4 id="monthly-installment" class="text-5xl font-black italic mb-10 tracking-tighter">Rp 0</h4>
-                <button onclick="waContactKpr()" class="w-full bg-[#4A3728] text-white py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-2xl hover:scale-105 transition">Konsultasi KPR Ke Echi</button>
+                <h4 id="monthly-installment" class="text-5xl font-black italic mb-10">Rp 0</h4>
+                <!-- TOMBOL BARU: Konsultasi KPR ke Echi -->
+                <button onclick="waContactKpr()" class="w-full bg-[#4A3728] text-white py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition shadow-lg">
+                    Konsultasi KPR ke Echi <i class="fa-brands fa-whatsapp ml-2"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -185,44 +177,41 @@
     </section>
 
     <!-- GALLERY MODAL -->
-    <div id="gallery-modal" class="modal items-center justify-center p-4 md:p-10" onclick="closeModal()">
-        <div class="bg-white w-full max-w-5xl rounded-[3rem] overflow-hidden shadow-2xl relative flex flex-col h-[90vh] md:h-auto" onclick="event.stopPropagation()">
-            <button onclick="closeModal()" class="absolute top-6 right-6 z-30 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center"><i class="fas fa-times text-[#4A3728]"></i></button>
-            
-            <div class="flex-grow md:flex md:h-[500px]">
-                <div class="md:w-2/3 bg-gray-100 flex items-center justify-center relative p-4">
-                    <img id="main-modal-img" src="" class="max-w-full max-h-full object-contain">
+    <div id="gallery-modal" class="modal items-center justify-center p-4" onclick="closeModal()">
+        <div class="bg-white w-full max-w-5xl rounded-[3rem] overflow-hidden shadow-2xl relative md:flex h-[90vh] md:h-auto" onclick="event.stopPropagation()">
+            <button onclick="closeModal()" class="absolute top-6 right-6 z-30 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center"><i class="fas fa-times text-[#4A3728]"></i></button>
+            <div class="md:w-2/3 bg-gray-100 flex flex-col items-center justify-center p-4">
+                <img id="main-modal-img" src="" class="max-w-full max-h-[400px] object-contain mb-4">
+                <div id="thumb-container" class="flex gap-2 overflow-x-auto w-full justify-center"></div>
+            </div>
+            <div class="md:w-1/3 p-12 flex flex-col justify-between">
+                <div>
+                    <h3 id="modal-unit-name" class="text-3xl font-black uppercase text-[#4A3728] mb-2">Unit Name</h3>
+                    <p id="modal-unit-price" class="text-2xl font-bold text-[#A68966] mb-8">Price</p>
+                    <p class="text-[10px] font-bold uppercase text-gray-400 mb-2">Tipe Properti</p>
+                    <p id="modal-unit-coll" class="text-sm font-bold text-gray-600 mb-8"></p>
                 </div>
-                <div class="md:w-1/3 p-8 md:p-12 flex flex-col justify-between">
-                    <div>
-                        <h3 id="modal-unit-name" class="text-3xl font-black uppercase text-[#4A3728] mb-2 leading-tight">Unit Name</h3>
-                        <p id="modal-unit-price" class="text-2xl font-bold text-[#A68966] mb-6">Price</p>
-                        <p class="text-[10px] font-black uppercase text-gray-400 mb-4">Galeri Foto Pendukung</p>
-                        <div id="thumb-container" class="flex gap-2 overflow-x-auto pb-4"></div>
-                    </div>
-                    <button id="wa-button-gallery" class="gold-gradient text-white py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-xl">Tanya Echi</button>
-                </div>
+                <button id="wa-button-gallery" class="gold-gradient text-white py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest">Tanya Echi <i class="fa-brands fa-whatsapp ml-2"></i></button>
             </div>
         </div>
     </div>
 
     <script>
         const waNumber = "628119001899";
-        let currentUnit = null;
-
         const allData = {
             7: [
-                { name: 'Bronze Livin 3R', price: '305 Jt', rawPrice: 305000000, folder: 'fase-7', prefix: 'unit-1', coll: 'Wonder Phase 7' },
-                { name: 'Silver Livin', price: '450 Jt', rawPrice: 450000000, folder: 'fase-7', prefix: 'unit-2', coll: 'Wonder Phase 7' },
-                { name: 'Gold Livin', price: '774 Jt', rawPrice: 774000000, folder: 'fase-7', prefix: 'unit-3', coll: 'Wonder Phase 7' }
+                { name: 'Bronze Livin 3R', price: '305 Jt', path: 'fase-7/unit-1.jpg', base: 'fase-7/unit-1', coll: 'Wonder Phase 7' },
+                { name: 'Silver Livin', price: '450 Jt', path: 'fase-7/unit-2.jpg', base: 'fase-7/unit-2', coll: 'Wonder Phase 7' },
+                { name: 'Gold Livin', price: '774 Jt', path: 'fase-7/unit-3.jpg', base: 'fase-7/unit-3', coll: 'Wonder Phase 7' }
             ],
             6: [
-                { name: 'Enamaste Type 1', price: '500 Jt', rawPrice: 500000000, folder: 'fase-6', prefix: 'unit-1', coll: 'Enamaste Phase 6' },
-                { name: 'Enamaste Type 2', price: '650 Jt', rawPrice: 650000000, folder: 'fase-6', prefix: 'unit-2', coll: 'Enamaste Phase 6' }
+                { name: 'Enamaste Type 1', price: '500 Jt', path: 'fase-6/unit-1.jpg', base: 'fase-6/unit-1', coll: 'Enamaste Phase 6' },
+                { name: 'Enamaste Type 2', price: '650 Jt', path: 'fase-6/unit-2.jpg', base: 'fase-6/unit-2', coll: 'Enamaste Phase 6' },
+                { name: 'Enamaste Type 3', price: '800 Jt', path: 'fase-6/unit-3.jpg', base: 'fase-6/unit-3', coll: 'Enamaste Phase 6' }
             ],
             5: [
-                { name: 'Hi5 Bronze', price: '393 Jt', rawPrice: 393000000, folder: 'fase-5', prefix: 'unit-1', coll: 'Hi5 Phase 5' },
-                { name: 'TreeTops T3.3', price: '629 Jt', rawPrice: 629000000, folder: 'fase-5', prefix: 'unit-2', coll: 'Hi5 Phase 5' }
+                { name: 'Hi5 Bronze', price: '393 Jt', path: 'fase-5/unit-1.jpg', base: 'fase-5/unit-1', coll: 'Hi5 Phase 5' },
+                { name: 'Hi5 Silver', price: '490 Jt', path: 'fase-5/unit-2.jpg', base: 'fase-5/unit-2', coll: 'Hi5 Phase 5' }
             ]
         };
 
@@ -237,13 +226,13 @@
             const units = allData[p] || [];
             grid.innerHTML = units.map((u, i) => `
                 <div class="bg-white rounded-[3rem] overflow-hidden border border-gray-100 shadow-sm unit-card group" onclick="openGallery(${p}, ${i})">
-                    <div class="h-72 overflow-hidden">
-                        <img src="${u.folder}/${u.prefix}.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" onerror="this.src='https://via.placeholder.com/400x300?text=Foto+Utama'">
+                    <div class="h-72 overflow-hidden bg-gray-50">
+                        <img src="${u.path}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" onerror="this.src='https://via.placeholder.com/400x300?text=Foto+Unit'">
                     </div>
                     <div class="p-8 text-center">
                         <h3 class="text-xl font-black uppercase mb-1 text-[#4A3728]">${u.name}</h3>
                         <p class="text-[9px] font-bold text-gray-300 uppercase tracking-widest mb-4 pb-4 border-b border-gray-50">${u.coll}</p>
-                        <p class="text-2xl font-black text-[#A68966] italic flex items-center justify-center gap-2">
+                        <p class="text-2xl font-black text-[#A68966] italic">
                            <span class="text-[10px] not-italic uppercase opacity-60">Start From</span> Rp ${u.price}
                         </p>
                     </div>
@@ -253,31 +242,22 @@
 
         function openGallery(phase, idx) {
             const unit = allData[phase][idx];
-            currentUnit = unit;
             document.getElementById('modal-unit-name').innerText = unit.name;
             document.getElementById('modal-unit-price').innerText = "Start From Rp " + unit.price;
-            document.getElementById('main-modal-img').src = `${unit.folder}/${unit.prefix}.jpg`;
-            
-            // Set Pesan WA Spesifik untuk tombol di gallery
+            document.getElementById('modal-unit-coll').innerText = unit.coll;
+            document.getElementById('main-modal-img').src = unit.path;
+            const thumbContainer = document.getElementById('thumb-container');
+            const thumbs = [unit.path, `${unit.base}.1.jpg`, `${unit.base}.2.jpg`, `${unit.base}.3.jpg`];
+            thumbContainer.innerHTML = thumbs.map((img, i) => `
+                <div class="thumb-btn ${i === 0 ? 'active' : ''}" onclick="changeModalImg(this, '${img}')">
+                    <img src="${img}" class="w-full h-full object-cover" onerror="this.parentElement.style.display='none'">
+                </div>
+            `).join('');
             const waBtn = document.getElementById('wa-button-gallery');
             waBtn.onclick = () => {
                 const msg = `Halo Bu Echi, saya tertarik dengan unit *${unit.name}* (${unit.coll}). Bisa minta info lengkapnya?`;
                 window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`);
             };
-
-            const thumbs = [
-                `${unit.folder}/${unit.prefix}.jpg`,
-                `${unit.folder}/${unit.prefix}.1.jpg`,
-                `${unit.folder}/${unit.prefix}.2.jpg`
-            ];
-            
-            const thumbContainer = document.getElementById('thumb-container');
-            thumbContainer.innerHTML = thumbs.map((img, i) => `
-                <div class="thumb-btn ${i === 0 ? 'active' : ''}" onclick="changeModalImg(this, '${img}')">
-                    <img src="${img}" class="w-full h-full object-cover" onerror="this.style.display='none'">
-                </div>
-            `).join('');
-
             document.getElementById('gallery-modal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -298,12 +278,25 @@
         }
 
         function closeModal() { document.getElementById('gallery-modal').classList.remove('active'); document.body.style.overflow = 'auto'; }
-        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); document.getElementById('mobile-menu').classList.toggle('flex'); }
 
         function directWaContact(context) {
-            const msg = `Halo Bu Echi, saya ingin tanya info unit di Park Serpong.`;
+            const msg = `Halo Bu Echi, saya melihat katalog properti Anda dan ingin berkonsultasi mengenai unit properti.`;
             window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`);
         }
 
         function waContactKpr() {
-            c
+            const cicilan = document.getElementById('monthly-installment').innerText;
+            const harga = document.getElementById('prop-price').value;
+            const msg = `Halo Bu Echi, saya mencoba simulasi KPR di website untuk properti seharga Rp ${harga} dan mendapatkan estimasi cicilan ${cicilan} per bulan. Saya ingin konsultasi lebih lanjut mengenai program KPR ini.`;
+            window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`);
+        }
+
+        window.onload = () => {
+            renderUnits(7);
+            calculateKPR();
+        };
+    </script>
+</body>
+</html>
+
+                                
