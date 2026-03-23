@@ -77,7 +77,14 @@
             transition: max-height 0.4s ease-in-out;
         }
         #mobile-menu.active {
-            max-height: 400px;
+            max-height: 500px;
+        }
+
+        /* Active Phase Button */
+        .phase-btn.active {
+            background-color: #4a3728;
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -91,27 +98,24 @@
                 <span>ECHI PROPERTI</span>
             </div>
             
-            <!-- Desktop Menu -->
             <div class="hidden md:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest text-gray-400">
                 <a href="#home" class="hover:text-[#a68966] transition">Beranda</a>
                 <a href="#katalog" class="hover:text-[#a68966] transition">Katalog</a>
-                <a href="#kontak" class="hover:text-[#a68966] transition">Kontak</a>
-                <a href="https://wa.me/628119001899" class="btn-gold text-white px-6 py-3 rounded-full shadow-lg transition transform hover:scale-105">WhatsApp</a>
+                <a href="#kpr" class="hover:text-[#a68966] transition">KPR</a>
+                <a href="https://wa.me/628111982833" target="_blank" class="btn-gold text-white px-6 py-3 rounded-full shadow-lg transition transform hover:scale-105">WhatsApp</a>
             </div>
 
-            <!-- Mobile Toggle -->
             <button id="menu-toggle" class="md:hidden text-2xl p-2 focus:outline-none">
                 <i id="menu-icon" class="fa-solid fa-bars-staggered"></i>
             </button>
         </div>
 
-        <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="md:hidden bg-white/95 backdrop-blur-md">
             <div class="p-6 flex flex-col gap-4">
                 <a href="#home" onclick="toggleMenu()" class="font-bold text-sm uppercase tracking-widest py-3">Beranda</a>
                 <a href="#katalog" onclick="toggleMenu()" class="font-bold text-sm uppercase tracking-widest py-3 border-t border-gray-50">Katalog</a>
-                <a href="#kontak" onclick="toggleMenu()" class="font-bold text-sm uppercase tracking-widest py-3 border-t border-gray-50">Kontak</a>
-                <a href="https://wa.me/628119001899" class="btn-gold text-white text-center py-4 rounded-xl font-bold text-xs uppercase tracking-widest mt-2">WhatsApp</a>
+                <a href="#kpr" onclick="toggleMenu()" class="font-bold text-sm uppercase tracking-widest py-3 border-t border-gray-50">KPR</a>
+                <a href="https://wa.me/628111982833" target="_blank" class="btn-gold text-white text-center py-4 rounded-xl font-bold text-xs uppercase tracking-widest mt-2">WhatsApp</a>
             </div>
         </div>
     </nav>
@@ -121,27 +125,24 @@
         <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
             <div data-aos="fade-up" data-aos-delay="200">
                 <span class="inline-block bg-[#a68966]/10 text-[#a68966] px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6">Property Consultant | Trusted & Result-Oriented</span>
-                
                 <h1 class="text-5xl lg:text-8xl font-black leading-[0.9] mb-8 text-[#4a3728]">Katalog <br><span class="text-[#a68966]">Echi Properti</span></h1>
-                
                 <p class="text-gray-500 text-lg leading-relaxed mb-10 max-w-md italic border-l-4 border-[#a68966] pl-6">
                     "Lebih dari sekadar menjual, saya menghadirkan solusi, kepastian, dan nilai investasi terbaik untuk setiap klien."
                 </p>
-                
                 <div class="flex gap-4">
                     <a href="#katalog" class="btn-gold text-white px-10 py-5 rounded-2xl font-bold text-sm shadow-xl">Lihat Unit</a>
-                    <a href="https://wa.me/628119001899" class="border-2 border-[#a68966] text-[#a68966] px-10 py-5 rounded-2xl font-bold text-sm hover:bg-[#a68966] hover:text-white transition">Konsultasi Gratis</a>
+                    <a href="https://wa.me/628111982833" target="_blank" class="border-2 border-[#a68966] text-[#a68966] px-10 py-5 rounded-2xl font-bold text-sm hover:bg-[#a68966] hover:text-white transition">Konsultasi Gratis</a>
                 </div>
             </div>
             <div class="relative flex justify-center" data-aos="zoom-in" data-aos-delay="400">
                 <div class="w-full max-w-[420px] relative z-10">
                     <div class="absolute -inset-4 bg-[#a68966]/5 rounded-[3rem] -rotate-3 -z-10"></div>
                     <div class="bg-white p-4 rounded-[3rem] shadow-2xl float-element">
-                        <img src="wajah.jpg" alt="Echi Profile" class="rounded-[2.5rem] w-full h-[500px] object-cover grayscale-[20%] hover:grayscale-0 transition duration-700">
+                        <img src="wajah.jpg" alt="Echi Profile" class="rounded-[2.5rem] w-full h-[500px] object-cover" onerror="this.src='https://via.placeholder.com/500x700?text=Echi+Properti'">
                         <div class="flex justify-center gap-6 py-6 border-t border-gray-50 mt-4">
-                            <a href="https://tiktok.com/@parkserponghomes" class="text-xl text-gray-400 hover:text-[#a68966] transition"><i class="fa-brands fa-tiktok"></i></a>
-                            <a href="https://instagram.com/echiproperti" class="text-xl text-gray-400 hover:text-[#a68966] transition"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="https://wa.me/628119001899" class="text-xl text-gray-400 hover:text-[#a68966] transition"><i class="fa-brands fa-whatsapp"></i></a>
+                            <a href="https://tiktok.com/@parkserponghomes" target="_blank" class="text-xl text-gray-400 hover:text-[#a68966] transition"><i class="fa-brands fa-tiktok"></i></a>
+                            <a href="https://instagram.com/echiproperti" target="_blank" class="text-xl text-gray-400 hover:text-[#a68966] transition"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="https://wa.me/628111982833" target="_blank" class="text-xl text-gray-400 hover:text-[#a68966] transition"><i class="fa-brands fa-whatsapp"></i></a>
                         </div>
                     </div>
                 </div>
@@ -157,28 +158,27 @@
                     <h2 class="text-4xl lg:text-6xl font-black text-[#4a3728] mb-4">Unit <span class="text-[#a68966]">Pilihan.</span></h2>
                     <p class="text-gray-400 uppercase tracking-widest text-[11px] font-bold">Koleksi Properti Park Serpong</p>
                 </div>
-                <!-- Filter Tabs -->
                 <div class="flex gap-4 mt-8 md:mt-0 overflow-x-auto pb-4">
-                    <button onclick="filterPhase(7)" id="btn-7" class="phase-btn active px-8 py-4 rounded-2xl bg-[#4a3728] text-white font-bold text-[10px] uppercase tracking-widest transition shadow-lg shrink-0">Phase 7 (Wonder)</button>
+                    <button onclick="filterPhase(7)" id="btn-7" class="phase-btn active px-8 py-4 rounded-2xl bg-gray-50 text-gray-400 font-bold text-[10px] uppercase tracking-widest transition shrink-0">Phase 7 (Wonder)</button>
                     <button onclick="filterPhase(6)" id="btn-6" class="phase-btn px-8 py-4 rounded-2xl bg-gray-50 text-gray-400 font-bold text-[10px] uppercase tracking-widest transition shrink-0">Phase 6 (Enamaste)</button>
                     <button onclick="filterPhase(5)" id="btn-5" class="phase-btn px-8 py-4 rounded-2xl bg-gray-50 text-gray-400 font-bold text-[10px] uppercase tracking-widest transition shrink-0">Phase 5 (Hi5)</button>
                 </div>
             </div>
 
             <div id="unit-container" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-                <!-- Unit list injected here -->
+                <!-- Unit list injected here via JavaScript -->
             </div>
         </div>
     </section>
 
     <!-- KPR CALCULATOR -->
-    <section class="py-32 px-6 bg-[#fdfbf7]">
+    <section id="kpr" class="py-32 px-6 bg-[#fdfbf7]">
         <div class="max-w-5xl mx-auto bg-white rounded-[3rem] shadow-2xl overflow-hidden grid lg:grid-cols-2 border border-gray-50" data-aos="fade-up">
             <div class="p-12 lg:p-20">
                 <h3 class="text-2xl font-black text-[#4a3728] uppercase mb-10">Simulasi Cicilan</h3>
                 <div class="space-y-8">
                     <div>
-                        <label class="block text-[10px] font-bold uppercase text-gray-400 mb-2">Harga Unit</label>
+                        <label class="block text-[10px] font-bold uppercase text-gray-400 mb-2">Harga Unit (Rp)</label>
                         <input type="number" id="harga-unit" value="305000000" oninput="hitungKPR()" class="w-full p-4 bg-gray-50 rounded-xl font-bold border-b-2 border-transparent focus:border-[#a68966] outline-none transition">
                     </div>
                     <div class="grid grid-cols-2 gap-4">
@@ -196,7 +196,7 @@
             <div class="btn-gold p-12 lg:p-20 text-white flex flex-col justify-center items-center text-center">
                 <p class="text-[10px] font-bold uppercase tracking-[0.3em] opacity-60 mb-2">Estimasi Per Bulan</p>
                 <h4 id="hasil-cicilan" class="text-4xl lg:text-6xl font-black mb-8 italic">Rp 1.900.000</h4>
-                <a href="https://wa.me/628119001899?text=Halo%20Bu%20Echi%2C%20saya%20sudah%20mencoba%20simulasi%20cicilan%20di%20website%20dan%20ingin%20konsultasi%20KPR%20lebih%20lanjut." target="_blank" class="w-full bg-white text-[#4a3728] py-5 rounded-2xl font-bold text-xs uppercase tracking-widest shadow-xl hover:scale-105 transition">Konsultasi ke Echi</a>
+                <button onclick="handleWaKPR()" class="w-full bg-white text-[#4a3728] py-5 rounded-2xl font-bold text-xs uppercase tracking-widest shadow-xl hover:scale-105 transition">Konsultasi ke Echi</a>
             </div>
         </div>
     </section>
@@ -206,9 +206,9 @@
         <div class="max-w-7xl mx-auto flex flex-col items-center text-center">
             <div class="text-3xl font-black tracking-tighter mb-8 italic uppercase">ECHI PROPERTI</div>
             <div class="flex gap-10 mb-16">
-                <a href="https://tiktok.com/@parkserponghomes" class="text-3xl hover:text-[#a68966] transition"><i class="fa-brands fa-tiktok"></i></a>
-                <a href="https://instagram.com/echiproperti" class="text-3xl hover:text-[#a68966] transition"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://wa.me/628119001899" class="text-3xl hover:text-[#a68966] transition"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://tiktok.com/@parkserponghomes" target="_blank" class="text-3xl hover:text-[#a68966] transition"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://instagram.com/echiproperti" target="_blank" class="text-3xl hover:text-[#a68966] transition"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://wa.me/628111982833" target="_blank" class="text-3xl hover:text-[#a68966] transition"><i class="fa-brands fa-whatsapp"></i></a>
             </div>
             <p class="text-[10px] uppercase tracking-[0.6em] text-gray-600">© 2024 Park Serpong | Managed by Nefsi Asrifah</p>
         </div>
@@ -219,7 +219,7 @@
         <div class="bg-white max-w-4xl w-full rounded-[3rem] overflow-hidden relative shadow-2xl scale-95 opacity-0 transition-all duration-500 flex flex-col md:flex-row" id="modal-content" onclick="event.stopPropagation()">
             <button onclick="closeModal()" class="absolute top-6 right-6 text-2xl text-gray-400 hover:text-black focus:outline-none">✕</button>
             <div class="md:w-1/2 bg-gray-50 flex items-center justify-center p-8">
-                <img id="modal-img" src="" class="max-w-full max-h-[400px] object-contain drop-shadow-2xl">
+                <img id="modal-img" src="" class="max-w-full max-h-[400px] object-contain drop-shadow-2xl" onerror="this.src='https://via.placeholder.com/400x400?text=Unit+Image'">
             </div>
             <div class="md:w-1/2 p-10 lg:p-14">
                 <span id="modal-label" class="text-[10px] font-bold text-[#a68966] uppercase tracking-widest mb-2 block"></span>
@@ -255,25 +255,30 @@
             toggleMenu();
         });
 
-        window.addEventListener('click', () => {
-            if (mobileMenu.classList.contains('active')) {
-                toggleMenu();
-            }
-        });
-
+        // DATA UNIT LENGKAP
         const unitData = {
-            7: [
-                { name: "Bronze Livin 3R", price: "305 Jt", img: "fase-7/unit-1.jpg", tag: "Phase 7 (Wonder)" },
-                { name: "Silver Livin", price: "450 Jt", img: "fase-7/unit-2.jpg", tag: "Phase 7 (Wonder)" },
-                { name: "Gold Livin", price: "774 Jt", img: "fase-7/unit-3.jpg", tag: "Phase 7 (Wonder)" }
+            7: [ // 6 UNIT
+                { name: "Bronze Livin 3R", price: "305 Jt", img: "phase-7/bronze.jpg", tag: "Phase 7 (Wonder)" },
+                { name: "Silver Livin", price: "450 Jt", img: "phase-7/silver.jpg", tag: "Phase 7 (Wonder)" },
+                { name: "Gold Livin", price: "774 Jt", img: "phase-7/gold.jpg", tag: "Phase 7 (Wonder)" },
+                { name: "Platinum Mansion", price: "980 Jt", img: "phase-7/platinum.jpg", tag: "Phase 7 (Wonder)" },
+                { name: "Diamond Residence", price: "1.2 M", img: "phase-7/diamond.jpg", tag: "Phase 7 (Wonder)" },
+                { name: "Wonder Garden", price: "550 Jt", img: "phase-7/garden.jpg", tag: "Phase 7 (Wonder)" }
             ],
-            6: [
-                { name: "Enamaste Type A", price: "512 Jt", img: "fase-6/unit-1.jpg", tag: "Phase 6 (Enamaste)" },
-                { name: "Enamaste Luxury", price: "890 Jt", img: "fase-6/unit-2.jpg", tag: "Phase 6 (Enamaste)" }
+            6: [ // 5 UNIT
+                { name: "Enamaste Type A", price: "512 Jt", img: "phase-6/type-a.jpg", tag: "Phase 6 (Enamaste)" },
+                { name: "Enamaste Type B", price: "615 Jt", img: "phase-6/type-b.jpg", tag: "Phase 6 (Enamaste)" },
+                { name: "Enamaste Deluxe", price: "720 Jt", img: "phase-6/deluxe.jpg", tag: "Phase 6 (Enamaste)" },
+                { name: "Enamaste Luxury", price: "890 Jt", img: "phase-6/luxury.jpg", tag: "Phase 6 (Enamaste)" },
+                { name: "Enamaste Suite", price: "1.1 M", img: "phase-6/suite.jpg", tag: "Phase 6 (Enamaste)" }
             ],
-            5: [
-                { name: "Hi5 Compact", price: "390 Jt", img: "fase-5/unit-1.jpg", tag: "Phase 5 (Hi5)" },
-                { name: "Hi5 Standard", price: "480 Jt", img: "fase-5/unit-2.jpg", tag: "Phase 5 (Hi5)" }
+            5: [ // 6 UNIT
+                { name: "Hi5 Compact", price: "390 Jt", img: "phase-5/compact.jpg", tag: "Phase 5 (Hi5)" },
+                { name: "Hi5 Standard", price: "480 Jt", img: "phase-5/standard.jpg", tag: "Phase 5 (Hi5)" },
+                { name: "Hi5 Prime", price: "590 Jt", img: "phase-5/prime.jpg", tag: "Phase 5 (Hi5)" },
+                { name: "Hi5 Corner", price: "650 Jt", img: "phase-5/corner.jpg", tag: "Phase 5 (Hi5)" },
+                { name: "Hi5 Executive", price: "820 Jt", img: "phase-5/executive.jpg", tag: "Phase 5 (Hi5)" },
+                { name: "Hi5 Loft", price: "410 Jt", img: "phase-5/loft.jpg", tag: "Phase 5 (Hi5)" }
             ]
         };
 
@@ -320,35 +325,7 @@
             document.getElementById('modal-label').innerText = tag;
             
             const msg = `Halo Bu Echi, saya ingin bertanya lebih lanjut mengenai unit *${name}* yang ada di *${tag}*. Terima kasih.`;
-            document.getElementById('wa-link').href = `https://wa.me/628119001899?text=${encodeURIComponent(msg)}`;
+            document.getElementById('wa-link').href = `https://wa.me/628111982833?text=${encodeURIComponent(msg)}`;
             
             const modal = document.getElementById('modal-detail');
-            const content = document.getElementById('modal-content');
-            
-            modal.style.display = 'flex';
-            setTimeout(() => {
-                content.classList.remove('scale-95', 'opacity-0');
-                content.classList.add('scale-100', 'opacity-100');
-            }, 50);
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            const content = document.getElementById('modal-content');
-            content.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                document.getElementById('modal-detail').style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }, 300);
-        }
-
-        function hitungKPR() {
-            const h = document.getElementById('harga-unit').value;
-            const d = document.getElementById('dp-percent').value;
-            const t = document.getElementById('tenor').value;
-            
-            const pinjaman = h * (1 - (d/100));
-            const bunga = 0.05 / 12; 
-            const n = t * 12;
-            
-            const cicilan = (pinjaman * 
+            const content = document.g
