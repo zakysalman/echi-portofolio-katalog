@@ -6,6 +6,10 @@
     <title>Echi | Sales Inhouse Lippoland</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Animasi AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
     <!-- Pustaka Ikon Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     
@@ -13,120 +17,161 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FDFBF7; color: #4A3728; scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FDFBF7; color: #4A3728; scroll-behavior: smooth; overflow-x: hidden; }
         .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
         
+        /* Hero Background */
         .hero-bg-container {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; overflow: hidden;
         }
-        .hero-bg-image { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9); }
+        .hero-bg-image { width: 100%; height: 100%; object-fit: cover; }
         .hero-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(to bottom, rgba(253, 251, 247, 0.4) 0%, rgba(253, 251, 247, 0.95) 85%, #FDFBF7 100%);
+            background: linear-gradient(to bottom, rgba(253, 251, 247, 0) 0%, rgba(253, 251, 247, 0.7) 70%, #FDFBF7 100%);
         }
 
+        /* Unit Cards */
         .unit-card { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
         .unit-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         
-        .modal { display: none; position: fixed; z-index: 2000; inset: 0; background: rgba(74, 55, 40, 0.98); backdrop-filter: blur(15px); }
-        .modal.active { display: flex; }
-        .gold-gradient { background: linear-gradient(135deg, #A68966 0%, #8A6D4D 100%); }
-        
-        .filter-btn { border: 2px solid #E5DACE; transition: all 0.3s ease; min-width: 160px; text-align: center; background: white; }
-        .filter-btn.active { background-color: #4A3728; color: white; border-color: #4A3728; transform: scale(1.05); }
-        
-        .thumb-btn { width: 60px; height: 60px; border-radius: 10px; overflow: hidden; border: 2px solid transparent; cursor: pointer; flex-shrink: 0; background: #eee; }
-        .thumb-btn.active { border-color: #A68966; }
+        /* Efek Transparansi Foto Unit Latar Hitam */
+        .unit-image-container {
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .unit-image-container img {
+            mix-blend-mode: multiply; /* Menghilangkan latar belakang hitam/putih agar transparan */
+            filter: contrast(1.1) brightness(1.05);
+        }
 
-        .social-layer {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            background: rgba(74, 55, 40, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 20px;
+        /* Tata Letak Media Sosial DI BAWAH PROFIL (Sesuai Percakapan) */
+        .social-bar-bottom {
+            background: white;
+            padding: 15px 0;
             display: flex;
             justify-content: center;
             gap: 25px;
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-top: 1px solid #E5DACE;
         }
-        .profile-container:hover .social-layer { transform: translateY(0); }
-        .social-layer i { font-size: 2rem; color: white; }
+        .social-bar-bottom a {
+            color: #4A3728;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .social-bar-bottom a:hover {
+            color: #A68966;
+            transform: translateY(-3px);
+        }
 
-        @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fade { animation: fade-in 0.8s ease-out forwards; }
+        /* UI Elements */
+        .gold-gradient { background: linear-gradient(135deg, #A68966 0%, #8A6D4D 100%); }
+        .filter-btn { border: 2px solid #E5DACE; transition: all 0.3s ease; min-width: 140px; text-align: center; background: white; }
+        .filter-btn.active { background-color: #4A3728; color: white; border-color: #4A3728; transform: scale(1.05); }
+        
+        .modal { display: none; position: fixed; z-index: 2000; inset: 0; background: rgba(74, 55, 40, 0.98); backdrop-filter: blur(15px); }
+        .modal.active { display: flex; }
+        
+        #mobile-menu {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+        }
+        #mobile-menu.open { transform: translateX(0); }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="overflow-x-hidden">
+<body>
 
     <!-- NAVIGATION -->
-    <nav class="fixed w-full z-[1500] glass border-b border-gray-100 px-6 py-4">
+    <nav class="fixed w-full z-[1500] glass border-b border-gray-100 px-4 md:px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="font-black text-xl tracking-tighter uppercase cursor-pointer" onclick="window.location.href='#home'">
+            <div class="font-black text-lg md:text-xl tracking-tighter uppercase cursor-pointer" onclick="window.location.href='#home'">
                 ECI PROPERTI <span class="bg-[#A68966] text-white px-2 py-0.5 rounded text-[10px] font-bold">OFFICIAL</span>
             </div>
+            
             <div class="hidden md:flex items-center gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
-                <a href="#home" class="hover:text-[#A68966] transition">Profil</a>
-                <a href="#kpr-section" class="hover:text-[#A68966] transition">KPR</a>
-                <a href="#catalog" class="hover:text-[#A68966] transition">Katalog</a>
+                <a href="#home" class="hover:text-[#A68966] transition">Profile</a>
+                <a href="#catalog" class="hover:text-[#A68966] transition">Catalog</a>
+                <a href="#contact" class="hover:text-[#A68966] transition">Contact</a>
                 <a href="javascript:void(0)" onclick="directWaContact('Umum')" class="gold-gradient text-white px-8 py-3 rounded-full text-[10px]">WhatsApp</a>
             </div>
+
+            <button onclick="toggleMenu()" class="md:hidden text-2xl text-[#4A3728]">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
         </div>
     </nav>
 
-    <!-- PROFILE HERO SECTION -->
-    <section id="home" class="relative pt-48 pb-16 px-6 min-h-screen flex items-center">
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu" class="fixed inset-y-0 right-0 w-72 bg-[#FDFBF7] z-[2000] shadow-2xl md:hidden flex flex-col p-10 border-l border-gray-100">
+        <div class="flex justify-end mb-16">
+            <button onclick="toggleMenu()" class="text-3xl text-[#4A3728]"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="flex flex-col gap-10 text-sm font-black uppercase tracking-[0.3em] text-[#4A3728]">
+            <a href="#home" onclick="toggleMenu()">Profile</a>
+            <a href="#catalog" onclick="toggleMenu()">Catalog</a>
+            <a href="#contact" onclick="toggleMenu()">Contact</a>
+            <hr class="border-gray-200">
+            <a href="javascript:void(0)" onclick="directWaContact('Umum')" class="text-[#A68966] flex items-center gap-3">
+                WhatsApp <i class="fa-brands fa-whatsapp text-xl"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- PROFILE HERO -->
+    <section id="home" class="relative pt-32 md:pt-48 pb-16 px-6 min-h-screen flex items-center">
         <div class="hero-bg-container">
-            <img src="fase-7/unit-1.jpg" class="hero-bg-image" alt="Background">
+            <img src="fase-7/unit-1.jpg" class="hero-bg-image" alt="Hero Background">
             <div class="hero-overlay"></div>
         </div>
 
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center relative z-10">
-            <div class="animate-fade">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center relative z-10">
+            <div data-aos="fade-right" data-aos-duration="1000">
                 <div class="inline-block bg-[#A68966]/10 text-[#A68966] px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6">Sales Inhouse Lippoland</div>
-                <h1 class="text-5xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-2 text-[#4A3728]">
+                <h1 class="text-4xl md:text-8xl font-black tracking-tighter leading-[0.9] md:leading-[0.85] mb-2 text-[#4A3728]">
                     Nefsi Asrifah | <span class="text-[#A68966] italic font-serif">Echi.</span>
                 </h1>
-                <p class="text-lg text-[#A68966] font-bold italic mb-8 tracking-wide uppercase text-[12px]">
+                
+                <p class="text-md md:text-lg text-[#A68966] font-bold italic mb-6 md:mb-8 tracking-wide uppercase text-[10px] md:text-[12px]">
                     "Lebih dari sekadar menjual, saya menghadirkan solusi dan nilai investasi terbaik."
                 </p>
-                <p class="text-xl text-gray-700 leading-relaxed mb-12 max-w-lg border-l-4 border-[#A68966] pl-6">
-                    Membantu Anda menemukan hunian impian dengan transparansi dan pelayanan maksimal.
+                <p class="text-lg md:text-xl text-gray-700 leading-relaxed mb-10 md:12 max-w-lg border-l-4 border-[#A68966] pl-6">
+                    Membantu Anda menemukan hunian impian dengan transparansi dan pelayanan maksimal di kawasan strategis.
                 </p>
+                
                 <div class="flex gap-4">
-                    <a href="#catalog" class="bg-[#4A3728] text-white px-10 py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl">Eksplorasi Unit <i class="fas fa-arrow-right ml-3"></i></a>
+                    <a href="#catalog" class="bg-[#4A3728] text-white px-8 md:px-10 py-4 md:py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl">Eksplorasi Unit <i class="fas fa-arrow-right ml-3"></i></a>
                 </div>
             </div>
             
-            <div class="relative animate-fade" style="animation-delay: 0.2s">
-                <div class="relative group profile-container aspect-[4/5] bg-[#E5DACE] rounded-[5rem] overflow-hidden shadow-2xl border-[12px] border-white cursor-pointer">
-                    <img src="wajah.jpg" alt="Foto Profil Echi" class="w-full h-full object-cover">
-                    <div class="social-layer">
-                        <a href="https://tiktok.com/@parkserponghomes" target="_blank" class="hover:scale-125 transition duration-300">
-                            <i class="fa-brands fa-tiktok"></i>
-                        </a>
-                        <a href="https://instagram.com/echiproperti" target="_blank" class="hover:scale-125 transition duration-300">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-                        <a href="javascript:void(0)" onclick="directWaContact('Umum')" class="hover:scale-125 transition duration-300">
-                            <i class="fa-brands fa-whatsapp"></i>
-                        </a>
+            <div class="relative" data-aos="zoom-in" data-aos-duration="1000">
+                <!-- Foto Profil dengan Media Sosial DI BAWAH -->
+                <div class="bg-white rounded-[3rem] md:rounded-[5rem] overflow-hidden shadow-2xl border-[8px] md:border-[12px] border-white mx-auto max-w-sm md:max-w-none">
+                    <div class="aspect-[4/5] bg-[#E5DACE] overflow-hidden">
+                        <img src="wajah.jpg" alt="Foto Echi" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Panel Media Sosial Statis di Bawah Profil -->
+                    <div class="social-bar-bottom">
+                        <a href="https://tiktok.com/@parkserponghomes" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="https://instagram.com/echiproperti" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="javascript:void(0)" onclick="directWaContact('Umum')" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PERHITUNGAN KPR -->
-    <section id="kpr-section" class="py-24 px-6 bg-[#FDFBF7]">
-        <div class="max-w-4xl mx-auto bg-white rounded-[4rem] shadow-xl overflow-hidden border border-gray-100 flex flex-col md:flex-row">
-            <div class="p-12 md:w-1/2">
-                <h2 class="text-3xl font-black text-[#4A3728] mb-2 italic uppercase">Perhitungan KPR</h2>
-                <p class="text-gray-500 text-sm mb-10">Hitung estimasi cicilan hunian impian Anda di sini.</p>
-                
-                <div class="space-y-6">
+    <!-- KPR SECTION -->
+    <section id="kpr-section" class="py-24 px-4 md:px-6 bg-[#FDFBF7]">
+        <div class="max-w-4xl mx-auto bg-white rounded-[2.5rem] md:rounded-[4rem] shadow-xl overflow-hidden border border-gray-100 flex flex-col md:flex-row" data-aos="fade-up">
+            <div class="p-8 md:p-12 md:w-1/2">
+                <h2 class="text-2xl md:text-3xl font-black text-[#4A3728] mb-2 italic uppercase">Perhitungan KPR</h2>
+                <div class="space-y-6 mt-8">
                     <div>
                         <label class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Harga Properti (Rp)</label>
                         <input type="number" id="prop-price" value="305000000" oninput="calculateKPR()" class="w-full bg-gray-50 border-none p-4 rounded-2xl font-bold outline-none focus:ring-2 focus:ring-[#A68966]">
@@ -143,11 +188,10 @@
                     </div>
                 </div>
             </div>
-            <div class="gold-gradient p-12 md:w-1/2 flex flex-col justify-center text-white text-center">
+            <div class="gold-gradient p-8 md:p-12 md:w-1/2 flex flex-col justify-center text-white text-center">
                 <p class="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Estimasi Cicilan</p>
-                <h4 id="monthly-installment" class="text-5xl font-black italic mb-10">Rp 0</h4>
-                <!-- TOMBOL BARU: Konsultasi KPR ke Echi -->
-                <button onclick="waContactKpr()" class="w-full bg-[#4A3728] text-white py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition shadow-lg">
+                <h4 id="monthly-installment" class="text-3xl md:text-5xl font-black italic mb-8 md:mb-10">Rp 0</h4>
+                <button onclick="waContactKpr()" class="w-full bg-[#4A3728] text-white py-4 md:py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition shadow-lg">
                     Konsultasi KPR ke Echi <i class="fa-brands fa-whatsapp ml-2"></i>
                 </button>
             </div>
@@ -155,63 +199,93 @@
     </section>
 
     <!-- CATALOG SECTION -->
-    <section id="catalog" class="py-32 px-6 bg-white">
-        <div class="max-w-7xl mx-auto text-center mb-16">
-            <h2 class="text-6xl md:text-8xl font-black tracking-tighter uppercase italic mb-12 text-[#4A3728]">Pilih <span class="text-[#A68966]">Rumah Anda</span></h2>
-            <div class="flex flex-wrap justify-center gap-4 mb-12">
-                <button onclick="changePhase(7)" id="btn-7" class="filter-btn active px-8 py-5 rounded-[2rem] flex flex-col items-center">
-                    <span class="text-[9px] font-black uppercase tracking-widest opacity-60">Phase 7</span>
-                    <span class="text-xs font-bold uppercase tracking-widest">Wonder Collection</span>
+    <section id="catalog" class="py-24 md:py-32 px-4 md:px-6 bg-white">
+        <div class="max-w-7xl mx-auto text-center mb-12" data-aos="fade-up">
+            <h2 class="text-4xl md:text-8xl font-black tracking-tighter uppercase italic mb-8 md:mb-12 text-[#4A3728]">Choose <span class="text-[#A68966]">Your Home</span></h2>
+            <div class="flex flex-nowrap overflow-x-auto pb-4 md:pb-0 md:justify-center gap-4 mb-12 scrollbar-hide px-4">
+                <button onclick="changePhase(7)" id="btn-7" class="filter-btn active px-6 md:px-8 py-4 md:py-5 rounded-2xl md:rounded-[2rem] flex flex-col items-center flex-shrink-0">
+                    <span class="text-[8px] md:text-[9px] font-black uppercase tracking-widest opacity-60">Phase 7</span>
+                    <span class="text-[10px] md:text-xs font-bold uppercase tracking-widest">Wonder</span>
                 </button>
-                <button onclick="changePhase(6)" id="btn-6" class="filter-btn px-8 py-5 rounded-[2rem] flex flex-col items-center">
-                    <span class="text-[9px] font-black uppercase tracking-widest opacity-60">Phase 6</span>
-                    <span class="text-xs font-bold uppercase tracking-widest">Enamaste Collection</span>
+                <button onclick="changePhase(6)" id="btn-6" class="filter-btn px-6 md:px-8 py-4 md:py-5 rounded-2xl md:rounded-[2rem] flex flex-col items-center flex-shrink-0">
+                    <span class="text-[8px] md:text-[9px] font-black uppercase tracking-widest opacity-60">Phase 6</span>
+                    <span class="text-[10px] md:text-xs font-bold uppercase tracking-widest">Enamaste</span>
                 </button>
-                <button onclick="changePhase(5)" id="btn-5" class="filter-btn px-8 py-5 rounded-[2rem] flex flex-col items-center">
-                    <span class="text-[9px] font-black uppercase tracking-widest opacity-60">Phase 5</span>
-                    <span class="text-xs font-bold uppercase tracking-widest">Hi5 Collection</span>
+                <button onclick="changePhase(5)" id="btn-5" class="filter-btn px-6 md:px-8 py-4 md:py-5 rounded-2xl md:rounded-[2rem] flex flex-col items-center flex-shrink-0">
+                    <span class="text-[8px] md:text-[9px] font-black uppercase tracking-widest opacity-60">Phase 5</span>
+                    <span class="text-[10px] md:text-xs font-bold uppercase tracking-widest">Hi5</span>
                 </button>
             </div>
         </div>
-        <div id="unit-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-7xl mx-auto"></div>
+        <div id="unit-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 max-w-7xl mx-auto px-2"></div>
     </section>
 
-    <!-- GALLERY MODAL -->
-    <div id="gallery-modal" class="modal items-center justify-center p-4" onclick="closeModal()">
-        <div class="bg-white w-full max-w-5xl rounded-[3rem] overflow-hidden shadow-2xl relative md:flex h-[90vh] md:h-auto" onclick="event.stopPropagation()">
-            <button onclick="closeModal()" class="absolute top-6 right-6 z-30 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center"><i class="fas fa-times text-[#4A3728]"></i></button>
-            <div class="md:w-2/3 bg-gray-100 flex flex-col items-center justify-center p-4">
-                <img id="main-modal-img" src="" class="max-w-full max-h-[400px] object-contain mb-4">
-                <div id="thumb-container" class="flex gap-2 overflow-x-auto w-full justify-center"></div>
+    <!-- FOOTER -->
+    <footer id="contact" class="py-20 px-6 bg-[#4A3728] text-white text-center">
+        <div class="max-w-7xl mx-auto">
+            <div class="font-black text-2xl md:text-3xl tracking-tighter uppercase mb-8 italic">ECI PROPERTI</div>
+            <div class="flex justify-center gap-10 mb-14">
+                <a href="https://tiktok.com/@parkserponghomes" target="_blank" class="text-3xl hover:text-[#A68966] transition"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://instagram.com/echiproperti" target="_blank" class="text-3xl hover:text-[#A68966] transition"><i class="fa-brands fa-instagram"></i></a>
+                <a href="javascript:void(0)" onclick="directWaContact('Umum')" class="text-3xl hover:text-[#A68966] transition"><i class="fa-brands fa-whatsapp"></i></a>
             </div>
-            <div class="md:w-1/3 p-12 flex flex-col justify-between">
+            <p class="text-[10px] uppercase tracking-[0.4em] opacity-30 pt-10 border-t border-white/10">© 2024 ECHI PROPERTI OFFICIAL. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="gallery-modal" class="modal items-center justify-center p-4" onclick="closeModal()">
+        <div class="bg-white w-full max-w-5xl rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl relative flex flex-col md:flex-row h-[90vh] md:h-auto" onclick="event.stopPropagation()">
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-[2100] w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center"><i class="fas fa-times text-[#4A3728]"></i></button>
+            <div class="md:w-2/3 bg-gray-50 flex flex-col items-center justify-center p-4">
+                <img id="main-modal-img" src="" class="max-w-full max-h-[300px] md:max-h-[500px] object-contain mb-4 mix-blend-multiply">
+                <div id="thumb-container" class="flex gap-2 overflow-x-auto w-full justify-center pb-2 scrollbar-hide"></div>
+            </div>
+            <div class="md:w-1/3 p-8 md:p-12 flex flex-col justify-between">
                 <div>
-                    <h3 id="modal-unit-name" class="text-3xl font-black uppercase text-[#4A3728] mb-2">Unit Name</h3>
-                    <p id="modal-unit-price" class="text-2xl font-bold text-[#A68966] mb-8">Price</p>
-                    <p class="text-[10px] font-bold uppercase text-gray-400 mb-2">Tipe Properti</p>
+                    <h3 id="modal-unit-name" class="text-2xl md:text-3xl font-black uppercase text-[#4A3728] mb-2">Unit Name</h3>
+                    <p id="modal-unit-price" class="text-xl md:text-2xl font-bold text-[#A68966] mb-8">Price</p>
+                    <p class="text-[10px] font-bold uppercase text-gray-400 mb-2">Property Collection</p>
                     <p id="modal-unit-coll" class="text-sm font-bold text-gray-600 mb-8"></p>
                 </div>
-                <button id="wa-button-gallery" class="gold-gradient text-white py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest">Tanya Echi <i class="fa-brands fa-whatsapp ml-2"></i></button>
+                <button id="wa-button-gallery" class="gold-gradient text-white py-4 md:py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest w-full">Ask Echi <i class="fa-brands fa-whatsapp ml-2"></i></button>
             </div>
         </div>
     </div>
 
     <script>
+        AOS.init({ once: true });
         const waNumber = "628119001899";
+        
+        function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
+
         const allData = {
             7: [
                 { name: 'Bronze Livin 3R', price: '305 Jt', path: 'fase-7/unit-1.jpg', base: 'fase-7/unit-1', coll: 'Wonder Phase 7' },
                 { name: 'Silver Livin', price: '450 Jt', path: 'fase-7/unit-2.jpg', base: 'fase-7/unit-2', coll: 'Wonder Phase 7' },
-                { name: 'Gold Livin', price: '774 Jt', path: 'fase-7/unit-3.jpg', base: 'fase-7/unit-3', coll: 'Wonder Phase 7' }
+                { name: 'Gold Livin', price: '774 Jt', path: 'fase-7/unit-3.jpg', base: 'fase-7/unit-3', coll: 'Wonder Phase 7' },
+                { name: 'Platinum Unit', price: '920 Jt', path: 'fase-7/unit-4.jpg', base: 'fase-7/unit-4', coll: 'Wonder Phase 7' },
+                { name: 'Diamond Suite', price: '1.2 M', path: 'fase-7/unit-5.jpg', base: 'fase-7/unit-5', coll: 'Wonder Phase 7' },
+                { name: 'Exotic Living', price: '1.5 M', path: 'fase-7/unit-6.jpg', base: 'fase-7/unit-6', coll: 'Wonder Phase 7' },
+                { name: 'Ultimate Mansion', price: '2.1 M', path: 'fase-7/unit-7.jpg', base: 'fase-7/unit-7', coll: 'Wonder Phase 7' }
             ],
             6: [
                 { name: 'Enamaste Type 1', price: '500 Jt', path: 'fase-6/unit-1.jpg', base: 'fase-6/unit-1', coll: 'Enamaste Phase 6' },
                 { name: 'Enamaste Type 2', price: '650 Jt', path: 'fase-6/unit-2.jpg', base: 'fase-6/unit-2', coll: 'Enamaste Phase 6' },
-                { name: 'Enamaste Type 3', price: '800 Jt', path: 'fase-6/unit-3.jpg', base: 'fase-6/unit-3', coll: 'Enamaste Phase 6' }
+                { name: 'Enamaste Type 3', price: '800 Jt', path: 'fase-6/unit-3.jpg', base: 'fase-6/unit-3', coll: 'Enamaste Phase 6' },
+                { name: 'Enamaste Type 4', price: '950 Jt', path: 'fase-6/unit-4.jpg', base: 'fase-6/unit-4', coll: 'Enamaste Phase 6' },
+                { name: 'Enamaste Royal', price: '1.1 M', path: 'fase-6/unit-5.jpg', base: 'fase-6/unit-5', coll: 'Enamaste Phase 6' },
+                { name: 'Enamaste Grand', price: '1.3 M', path: 'fase-6/unit-6.jpg', base: 'fase-6/unit-6', coll: 'Enamaste Phase 6' },
+                { name: 'Enamaste Premier', price: '1.6 M', path: 'fase-6/unit-7.jpg', base: 'fase-6/unit-7', coll: 'Enamaste Phase 6' }
             ],
             5: [
                 { name: 'Hi5 Bronze', price: '393 Jt', path: 'fase-5/unit-1.jpg', base: 'fase-5/unit-1', coll: 'Hi5 Phase 5' },
-                { name: 'Hi5 Silver', price: '490 Jt', path: 'fase-5/unit-2.jpg', base: 'fase-5/unit-2', coll: 'Hi5 Phase 5' }
+                { name: 'Hi5 Silver', price: '490 Jt', path: 'fase-5/unit-2.jpg', base: 'fase-5/unit-2', coll: 'Hi5 Phase 5' },
+                { name: 'Hi5 Gold', price: '580 Jt', path: 'fase-5/unit-3.jpg', base: 'fase-5/unit-3', coll: 'Hi5 Phase 5' },
+                { name: 'Hi5 Platinum', price: '670 Jt', path: 'fase-5/unit-4.jpg', base: 'fase-5/unit-4', coll: 'Hi5 Phase 5' },
+                { name: 'Hi5 Diamond', price: '850 Jt', path: 'fase-5/unit-5.jpg', base: 'fase-5/unit-5', coll: 'Hi5 Phase 5' },
+                { name: 'Hi5 Emerald', price: '1.1 M', path: 'fase-5/unit-6.jpg', base: 'fase-5/unit-6', coll: 'Hi5 Phase 5' },
+                { name: 'Hi5 Ruby', price: '1.4 M', path: 'fase-5/unit-7.jpg', base: 'fase-5/unit-7', coll: 'Hi5 Phase 5' }
             ]
         };
 
@@ -225,78 +299,6 @@
             const grid = document.getElementById('unit-grid');
             const units = allData[p] || [];
             grid.innerHTML = units.map((u, i) => `
-                <div class="bg-white rounded-[3rem] overflow-hidden border border-gray-100 shadow-sm unit-card group" onclick="openGallery(${p}, ${i})">
-                    <div class="h-72 overflow-hidden bg-gray-50">
-                        <img src="${u.path}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" onerror="this.src='https://via.placeholder.com/400x300?text=Foto+Unit'">
-                    </div>
-                    <div class="p-8 text-center">
-                        <h3 class="text-xl font-black uppercase mb-1 text-[#4A3728]">${u.name}</h3>
-                        <p class="text-[9px] font-bold text-gray-300 uppercase tracking-widest mb-4 pb-4 border-b border-gray-50">${u.coll}</p>
-                        <p class="text-2xl font-black text-[#A68966] italic">
-                           <span class="text-[10px] not-italic uppercase opacity-60">Start From</span> Rp ${u.price}
-                        </p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function openGallery(phase, idx) {
-            const unit = allData[phase][idx];
-            document.getElementById('modal-unit-name').innerText = unit.name;
-            document.getElementById('modal-unit-price').innerText = "Start From Rp " + unit.price;
-            document.getElementById('modal-unit-coll').innerText = unit.coll;
-            document.getElementById('main-modal-img').src = unit.path;
-            const thumbContainer = document.getElementById('thumb-container');
-            const thumbs = [unit.path, `${unit.base}.1.jpg`, `${unit.base}.2.jpg`, `${unit.base}.3.jpg`];
-            thumbContainer.innerHTML = thumbs.map((img, i) => `
-                <div class="thumb-btn ${i === 0 ? 'active' : ''}" onclick="changeModalImg(this, '${img}')">
-                    <img src="${img}" class="w-full h-full object-cover" onerror="this.parentElement.style.display='none'">
-                </div>
-            `).join('');
-            const waBtn = document.getElementById('wa-button-gallery');
-            waBtn.onclick = () => {
-                const msg = `Halo Bu Echi, saya tertarik dengan unit *${unit.name}* (${unit.coll}). Bisa minta info lengkapnya?`;
-                window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`);
-            };
-            document.getElementById('gallery-modal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function changeModalImg(el, src) {
-            document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-            document.getElementById('main-modal-img').src = src;
-        }
-
-        function calculateKPR() {
-            const price = parseFloat(document.getElementById('prop-price').value) || 0;
-            const dpPercent = parseFloat(document.getElementById('dp-input').value) || 0;
-            const tenor = parseFloat(document.getElementById('tenor-input').value) || 20;
-            const loan = price - (price * dpPercent / 100);
-            const monthly = (loan * 0.04 / 12) / (1 - Math.pow(1 + 0.04/12, -(tenor * 12))); 
-            document.getElementById('monthly-installment').innerText = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(monthly);
-        }
-
-        function closeModal() { document.getElementById('gallery-modal').classList.remove('active'); document.body.style.overflow = 'auto'; }
-
-        function directWaContact(context) {
-            const msg = `Halo Bu Echi, saya melihat katalog properti Anda dan ingin berkonsultasi mengenai unit properti.`;
-            window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`);
-        }
-
-        function waContactKpr() {
-            const cicilan = document.getElementById('monthly-installment').innerText;
-            const harga = document.getElementById('prop-price').value;
-            const msg = `Halo Bu Echi, saya mencoba simulasi KPR di website untuk properti seharga Rp ${harga} dan mendapatkan estimasi cicilan ${cicilan} per bulan. Saya ingin konsultasi lebih lanjut mengenai program KPR ini.`;
-            window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`);
-        }
-
-        window.onload = () => {
-            renderUnits(7);
-            calculateKPR();
-        };
-    </script>
-</body>
-</html>
-
-                                
+                <div class="bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-sm unit-card group" data-aos="fade-up" data-aos-delay="${i * 50}" onclick="openGallery(${p}, ${i})">
+                    <div class="h-60 md:h-72 unit-image-container group-hover:scale-105 transition duration-700">
+                        <img src="${u.path}" class="w-full h-fu
