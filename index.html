@@ -89,7 +89,6 @@
         }
         .thumb-scroller::-webkit-scrollbar { display: none; }
 
-        /* UKURAN 16:9 UNTUK FOTO PENDUKUNG SESUAI PERMINTAAN */
         .thumb-item {
             min-width: 180px; aspect-ratio: 16/9; border-radius: 1.2rem;
             object-fit: cover; cursor: pointer; border: 2px solid transparent;
@@ -218,14 +217,14 @@
 
             unitData[phase].forEach((u) => {
                 const cardId = u.id;
-                // List bawah menyertakan foto utama agar bisa diklik kembali
-                const allPhotos = [u.mainPhoto, ...u.supportPhotos];
+                // Hanya foto pendukung yang masuk ke slider bawah
+                const supportOnly = u.supportPhotos;
                 
-                let thumbs = allPhotos.map((img, idx) => `
+                let thumbs = supportOnly.map((img, idx) => `
                     <img src="fase-${phase}/${img}" 
                          class="thumb-item ${idx===0?'active':''}" 
                          onclick="changePhoto('${cardId}', 'fase-${phase}/${img}', this)"
-                         onerror="this.src='https://placehold.co/320x180?text=Park+Serpong'">
+                         onerror="this.src='https://placehold.co/320x180?text=Support+View'">
                 `).join('');
 
                 container.innerHTML += `
@@ -303,4 +302,4 @@
         };
     </script>
 </body>
-</html>
+    </html>
