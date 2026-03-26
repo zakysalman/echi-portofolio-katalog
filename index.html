@@ -28,6 +28,7 @@
 
         .nav-glass { background: rgba(253, 251, 247, 0.96); backdrop-filter: blur(10px); z-index: 1000; }
         
+        /* Profile Wrapper */
         .profile-wrapper {
             background: white;
             border-radius: 3rem;
@@ -36,14 +37,83 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            max-width: 900px;
+            margin: 0 auto;
         }
         @media (min-width: 768px) {
-            .profile-wrapper { flex-direction: row; min-height: 500px; }
-            .profile-img-side { width: 40%; }
-            .profile-info-side { width: 60%; padding: 4rem; }
+            .profile-wrapper { flex-direction: row; align-items: center; }
+            .profile-img-side { width: 35%; }
+            .profile-info-side { width: 65%; padding: 3rem; }
         }
 
-        /* KATALOG LAYOUT */
+        /* Social Icons */
+        .social-link {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #f8f5f0;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        .social-link:hover {
+            background: var(--gold);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Floating Quick Nav Independent */
+        .floating-nav-container {
+            max-width: 900px;
+            margin: 2rem auto 0; 
+            position: relative;
+            z-index: 50;
+            padding: 0 20px;
+        }
+        
+        .quick-nav-card {
+            background: white;
+            border-radius: 2rem;
+            padding: 1rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border: 1px solid rgba(166, 137, 102, 0.1);
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .quick-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            border-radius: 1.2rem;
+            font-weight: 800;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            color: var(--dark);
+            flex: 1;
+            justify-content: center;
+        }
+        
+        .quick-nav-btn i { color: var(--gold); font-size: 14px; }
+        .quick-nav-btn:hover { 
+            background: var(--gold); 
+            color: white; 
+            border-color: var(--gold); 
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(166, 137, 102, 0.2);
+        }
+        .quick-nav-btn:hover i { color: white; }
+
+        /* Unit Layout */
         .unit-card {
             background: white;
             border-radius: 2.5rem;
@@ -69,7 +139,7 @@
         }
 
         .photo-main-right {
-            background: transparent; /* Transparan sesuai garis putih */
+            background: transparent; 
             border-radius: 1.5rem;
             overflow: hidden;
             position: relative;
@@ -79,10 +149,9 @@
         .unit-img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Menggunakan contain agar gambar tidak terpotong */
+            object-fit: contain; 
         }
 
-        /* Slider Engine */
         .slider-container { width: 100%; height: 100%; position: relative; }
         .slider-wrapper { display: flex; height: 100%; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
         .slider-item { min-width: 100%; height: 100%; }
@@ -99,7 +168,6 @@
         .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.2); cursor: pointer; transition: all 0.3s ease; }
         .dot.active { background: var(--gold); width: 16px; border-radius: 4px; }
 
-        /* Tombol Panah Slider (Garis Merah) */
         .nav-btn {
             position: absolute;
             top: 50%;
@@ -117,15 +185,19 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             transition: all 0.2s;
         }
-        .nav-btn:hover { background: white; transform: translateY(-50%) scale(1.1); }
-        .nav-prev { left: 8px; }
-        .nav-next { right: 8px; }
 
         .price-tag {
             font-size: 2.2rem;
             font-weight: 800;
             color: var(--gold);
             letter-spacing: -1.5px;
+        }
+
+        #kpr-res {
+            font-size: 1.5rem; 
+            font-weight: 800;
+            color: var(--gold);
+            margin-top: 5px;
         }
 
         @media (max-width: 640px) {
@@ -145,6 +217,7 @@
                 order: 2;
             }
             .price-tag { font-size: 1.8rem; }
+            .quick-nav-card { flex-direction: column; gap: 10px; }
         }
     </style>
 </head>
@@ -157,16 +230,44 @@
         </div>
     </nav>
 
-    <section id="home" class="pt-36 pb-16 px-6">
+    <section id="home" class="pt-36 pb-8 px-6">
         <div class="max-w-6xl mx-auto">
+            <!-- Profile Wrapper -->
             <div class="profile-wrapper" data-aos="fade-up">
                 <div class="profile-img-side">
-                    <img src="wajah.jpg" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop'">
+                    <img src="wajah.jpg" class="w-full h-auto object-cover md:rounded-l-[3rem]" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop'">
                 </div>
-                <div class="profile-info-side">
+                <div class="profile-info-side p-8">
                     <span class="text-[10px] font-black text-[#a68966] uppercase tracking-[0.4em] mb-4 block">Official Sales Specialist</span>
-                    <h1 class="text-4xl font-black text-[#4a3728] mb-4 tracking-tight">Halo, saya Echi</h1>
-                    <p class="text-gray-500 font-medium leading-relaxed mb-8">Property Consultant resmi Park Serpong. Temukan pilihan hunian terbaik dengan simulasi cicilan transparan dan layanan responsif.</p>
+                    <h1 class="text-3xl font-black text-[#4a3728] mb-4 tracking-tight">Halo, saya Echi</h1>
+                    <p class="text-gray-500 font-medium leading-relaxed text-sm mb-6">Property Consultant resmi Park Serpong. Temukan pilihan hunian terbaik dengan simulasi cicilan transparan dan layanan responsif.</p>
+                    
+                    <!-- Social Media Icons -->
+                    <div class="flex gap-4">
+                        <a href="https://wa.me/628111982833" target="_blank" class="social-link" title="WhatsApp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="#" target="_blank" class="social-link" title="TikTok">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                        <a href="#" target="_blank" class="social-link" title="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floating Quick Nav OUTSIDE Profile -->
+            <div class="floating-nav-container" data-aos="fade-up" data-aos-delay="200">
+                <div class="quick-nav-card">
+                    <a href="#katalog" class="quick-nav-btn">
+                        <i class="fa-solid fa-layer-group"></i>
+                        Katalog Park Serpong
+                    </a>
+                    <a href="#kpr" class="quick-nav-btn">
+                        <i class="fa-solid fa-calculator"></i>
+                        Hitung KPR
+                    </a>
                 </div>
             </div>
         </div>
@@ -174,73 +275,124 @@
 
     <section id="katalog" class="py-16 px-6">
         <div class="max-w-7xl mx-auto">
-            <div class="flex justify-between items-end mb-12">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
                 <div>
                     <h2 class="text-3xl font-black tracking-tighter uppercase mb-1">Park Serpong</h2>
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest italic">Pilih Unit Impian Anda</p>
                 </div>
-                <select id="fase-selector" onchange="renderGrid(this.value)" class="bg-white border border-gray-200 px-4 py-2 rounded-xl text-[11px] font-bold outline-none cursor-pointer">
-                    <option value="7">FASE 07</option>
-                    <option value="6">FASE 06</option>
-                    <option value="5">FASE 05</option>
-                </select>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="renderGrid(7)" id="btn-7" class="phase-btn px-6 py-2 rounded-full text-[10px] font-bold bg-[#4a3728] text-white">FASE 07</button>
+                    <button onclick="renderGrid(6)" id="btn-6" class="phase-btn px-6 py-2 rounded-full text-[10px] font-bold bg-white border border-gray-100">FASE 06</button>
+                    <button onclick="renderGrid(5)" id="btn-5" class="phase-btn px-6 py-2 rounded-full text-[10px] font-bold bg-white border border-gray-100">FASE 05</button>
+                </div>
             </div>
 
             <div id="unit-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-8"></div>
         </div>
     </section>
 
+    <!-- KPR SECTION -->
     <section id="kpr" class="py-20 px-6 mb-20">
-        <div class="max-w-4xl mx-auto bg-white p-12 rounded-[3rem] shadow-sm border border-gray-100">
+        <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-[3rem] shadow-sm border border-gray-100">
             <h3 class="text-2xl font-black text-center mb-10 text-[#4a3728]">Simulasi Cicilan</h3>
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Harga Properti (Rp)</label>
-                    <input type="text" id="kpr-disp" value="325.000.000" oninput="formatInput(this)" class="w-full text-3xl font-black outline-none border-b-2 border-gray-100 focus:border-[#a68966] bg-transparent pb-2 transition-all">
-                    <input type="hidden" id="kpr-raw" value="325000000">
+            <div class="grid md:grid-cols-2 gap-10 items-start">
+                <div class="space-y-6">
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block tracking-widest">Harga Properti (Rp)</label>
+                        <input type="text" id="kpr-disp" value="325.000.000" oninput="formatInput(this)" class="w-full text-2xl font-black outline-none border-b-2 border-gray-100 focus:border-[#a68966] bg-transparent pb-2 transition-all">
+                        <input type="hidden" id="kpr-raw" value="325000000">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block tracking-widest">DP (%)</label>
+                            <select id="dp-percent" onchange="calculateKPR()" class="w-full bg-gray-50 border border-gray-200 px-4 py-3 rounded-2xl text-xs font-bold outline-none cursor-pointer appearance-none">
+                                <option value="0">0%</option>
+                                <option value="5" selected>5%</option>
+                                <option value="10">10%</option>
+                                <option value="15">15%</option>
+                                <option value="20">20%</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block tracking-widest">Tenor (Tahun)</label>
+                            <select id="tenor" onchange="calculateKPR()" class="w-full bg-gray-50 border border-gray-200 px-4 py-3 rounded-2xl text-xs font-bold outline-none cursor-pointer appearance-none">
+                                <option value="5">5 Thn</option>
+                                <option value="10">10 Thn</option>
+                                <option value="15">15 Thn</option>
+                                <option value="20" selected>20 Thn</option>
+                                <option value="25">25 Thn</option>
+                                <option value="30">30 Thn</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-gray-50 p-8 rounded-3xl text-center border border-gray-100">
+
+                <div class="bg-[#f8f5f0] p-8 rounded-[2.5rem] text-center border border-[#f0ebe3]">
                     <p class="text-[10px] font-bold text-gray-400 uppercase mb-2 tracking-widest">Estimasi Cicilan / Bulan</p>
-                    <h4 id="kpr-res" class="text-3xl font-black text-[#a68966]">Rp 2.050.000</h4>
+                    <h4 id="kpr-res">Rp 2.050.000</h4>
+                    <p class="text-[8px] text-gray-400 mt-4 leading-relaxed font-medium">*Asumsi bunga 5% p.a fixed.<br>Perhitungan hanya bersifat estimasi.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <footer class="py-10 text-center border-t border-gray-100">
+        <p class="text-[10px] font-bold text-gray-300 uppercase tracking-[0.3em]">Nefsi Asrifah | Park Serpong 2024</p>
+    </footer>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         const unitData = {
             5: [
-                { name: "Perunggu Livin Tipe B", tag: "305 Jt", val: 305000000, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
-                { name: "Perunggu Livin Tipe BB", tag: "390 Jt", val: 390000000, photos: ["unit-2.jpg", "unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] },
-                { name: "Quartz Livin Tipe Q", tag: "450 Jt", val: 450000000, photos: ["unit-3.jpg", "unit-3.1.jpg", "unit-3.2.jpg", "unit-3.3.jpg"] }
+                { name: "Perunggu Livin Tipe B", tag: "305 Jt", val: 305000000, photos: ["5-1.jpg", "5-1a.jpg"] },
+                { name: "Perunggu Livin Tipe BB", tag: "390 Jt", val: 390000000, photos: ["5-2.jpg", "5-2a.jpg"] },
+                { name: "Quartz Livin Tipe Q", tag: "450 Jt", val: 450000000, photos: ["5-3.jpg", "5-3a.jpg"] },
+                { name: "Quartz Livin Tipe QL", tag: "510 Jt", val: 510000000, photos: ["5-4.jpg", "5-4a.jpg"] },
+                { name: "Zircon Livin Tipe Z", tag: "620 Jt", val: 620000000, photos: ["5-5.jpg", "5-5a.jpg"] }
             ],
             6: [
-                { name: "Perunggu Livin Tipe B", tag: "315 Jt", val: 315000000, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] }
+                { name: "Perunggu Livin Tipe B", tag: "315 Jt", val: 315000000, photos: ["6-1.jpg", "6-1a.jpg"] },
+                { name: "Perunggu Livin Tipe BB", tag: "405 Jt", val: 405000000, photos: ["6-2.jpg", "6-2a.jpg"] },
+                { name: "Quartz Livin Tipe Q", tag: "465 Jt", val: 465000000, photos: ["6-3.jpg", "6-3a.jpg"] },
+                { name: "Quartz Livin Tipe QL", tag: "525 Jt", val: 525000000, photos: ["6-4.jpg", "6-4a.jpg"] }
             ],
             7: [
-                { name: "Perunggu Beverly Livin", tag: "325 Jt", val: 325000000, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
-                { name: "Silver Beverly Livin", tag: "410 Jt", val: 410000000, photos: ["unit-2.jpg", "unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] }
+                { name: "Perunggu Beverly Tipe A", tag: "325 Jt", val: 325000000, photos: ["7-1.jpg", "7-1a.jpg"] },
+                { name: "Perunggu Beverly Tipe B", tag: "335 Jt", val: 335000000, photos: ["7-2.jpg", "7-2a.jpg"] },
+                { name: "Perunggu Beverly Tipe C", tag: "345 Jt", val: 345000000, photos: ["7-3.jpg", "7-3a.jpg"] },
+                { name: "Silver Beverly Tipe S", tag: "410 Jt", val: 410000000, photos: ["7-4.jpg", "7-4a.jpg"] },
+                { name: "Silver Beverly Tipe SL", tag: "435 Jt", val: 435000000, photos: ["7-5.jpg", "7-5a.jpg"] },
+                { name: "Quartz Beverly Tipe Q", tag: "480 Jt", val: 480000000, photos: ["7-6.jpg", "7-6a.jpg"] },
+                { name: "Quartz Beverly Tipe QL", tag: "540 Jt", val: 540000000, photos: ["7-7.jpg", "7-7a.jpg"] },
+                { name: "Zircon Beverly Tipe Z", tag: "650 Jt", val: 650000000, photos: ["7-8.jpg", "7-8a.jpg"] }
             ]
         };
 
         let activeSliders = {};
 
         function renderGrid(phase) {
+            document.querySelectorAll('.phase-btn').forEach(btn => {
+                btn.classList.remove('bg-[#4a3728]', 'text-white');
+                btn.classList.add('bg-white', 'border', 'border-gray-100');
+            });
+            const activeBtn = document.getElementById(`btn-${phase}`);
+            activeBtn.classList.remove('bg-white', 'border-gray-100');
+            activeBtn.classList.add('bg-[#4a3728]', 'text-white');
+
             const grid = document.getElementById('unit-grid');
             grid.innerHTML = '';
+            
             unitData[phase].forEach((u, uIdx) => {
                 const uniqueId = `u-${phase}-${uIdx}`;
                 activeSliders[uniqueId] = 0;
-                
                 const mainPhoto = u.photos[0]; 
                 const subPhotos = u.photos.slice(1); 
-
                 const items = subPhotos.map(img => `
                     <div class="slider-item">
                         <img src="fase-${phase}/${img}" class="unit-img" onerror="this.src='https://placehold.co/400x600?text=Interior'">
                     </div>
-                `).join('');
+                `).join('') || `<div class="slider-item"><img src="https://placehold.co/400x600?text=Soon" class="unit-img"></div>`;
                 
                 const dots = subPhotos.map((_, i) => `
                     <div class="dot ${i === 0 ? 'active' : ''}" onclick="moveSlider('${uniqueId}', ${i})"></div>
@@ -249,35 +401,27 @@
                 grid.innerHTML += `
                     <div class="unit-card" data-aos="fade-up">
                         <div class="visual-layout">
-                            <!-- Unit Utama (Transparan) -->
                             <div class="photo-main-right">
-                                <img src="fase-${phase}/${mainPhoto}" class="unit-img" onerror="this.src='https://placehold.co/400x600?text=Exterior'">
+                                <img src="fase-${phase}/${mainPhoto}" class="unit-img" onerror="this.src='https://placehold.co/400x600?text=Facade'">
                                 <div class="absolute top-4 right-4 bg-black/20 backdrop-blur-md text-white text-[8px] px-3 py-1 rounded-full uppercase font-bold tracking-widest">Unit Utama</div>
                             </div>
-                            <!-- Slider Pendukung dengan Tombol Panah -->
                             <div class="photo-box">
                                 <div class="slider-container">
-                                    <button class="nav-btn nav-prev" onclick="prevSlide('${uniqueId}', ${subPhotos.length})"><i class="fa-solid fa-chevron-left text-[10px]"></i></button>
                                     <div class="slider-wrapper" id="wrap-${uniqueId}">${items}</div>
-                                    <button class="nav-btn nav-next" onclick="nextSlide('${uniqueId}', ${subPhotos.length})"><i class="fa-solid fa-chevron-right text-[10px]"></i></button>
                                     <div class="dot-nav" id="dots-${uniqueId}">${dots}</div>
                                 </div>
                             </div>
                         </div>
-
                         <div class="px-2">
                             <h4 class="text-xl font-black text-[#4a3728] uppercase tracking-tighter mb-1">${u.name}</h4>
-                            <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-4">Official Portfolio</p>
                             <div class="flex justify-between items-center mb-4">
                                 <div>
                                     <p class="text-[9px] font-bold text-gray-300 uppercase mb-1">Harga Mulai</p>
                                     <p class="price-tag">Rp ${u.tag}</p>
                                 </div>
                                 <div class="flex gap-2">
-                                    <button onclick="setKPR(${u.val})" class="p-4 bg-gray-50 rounded-2xl border border-gray-100 hover:bg-white transition-all">
-                                        <i class="fa-solid fa-calculator text-[#a68966]"></i>
-                                    </button>
-                                    <button onclick="window.open('https://wa.me/628111982833')" class="px-7 py-4 bg-[#a68966] text-white rounded-2xl font-bold text-[10px] uppercase tracking-widest shadow-lg shadow-[#a68966]/20">WhatsApp</button>
+                                    <button onclick="setKPR(${u.val})" class="p-4 bg-gray-50 rounded-2xl border border-gray-100"><i class="fa-solid fa-calculator text-[#a68966]"></i></button>
+                                    <button onclick="window.open('https://wa.me/628111982833')" class="px-7 py-4 bg-[#a68966] text-white rounded-2xl font-bold text-[10px] uppercase tracking-widest">WhatsApp</button>
                                 </div>
                             </div>
                         </div>
@@ -287,46 +431,4 @@
             AOS.refresh();
         }
 
-        function moveSlider(id, idx) {
-            activeSliders[id] = idx;
-            const wrap = document.getElementById(`wrap-${id}`);
-            const dots = document.getElementById(`dots-${id}`).querySelectorAll('.dot');
-            wrap.style.transform = `translateX(-${idx * 100}%)`;
-            dots.forEach(d => d.classList.remove('active'));
-            dots[idx].classList.add('active');
-        }
-
-        function nextSlide(id, total) {
-            let next = (activeSliders[id] + 1) % total;
-            moveSlider(id, next);
-        }
-
-        function prevSlide(id, total) {
-            let prev = (activeSliders[id] - 1 + total) % total;
-            moveSlider(id, prev);
-        }
-
-        function formatIDR(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
-        function formatInput(el) {
-            let v = el.value.replace(/\D/g, "");
-            document.getElementById('kpr-raw').value = v;
-            el.value = formatIDR(v);
-            calculateKPR();
-        }
-        function calculateKPR() {
-            const h = parseFloat(document.getElementById('kpr-raw').value) || 0;
-            const r = 0.05 / 12; const n = 20 * 12;
-            const res = (h * 0.95 * r) / (1 - Math.pow(1 + r, -n));
-            document.getElementById('kpr-res').innerText = "Rp " + formatIDR(Math.round(res));
-        }
-        function setKPR(v) {
-            document.getElementById('kpr-raw').value = v;
-            document.getElementById('kpr-disp').value = formatIDR(v);
-            calculateKPR();
-            document.getElementById('kpr').scrollIntoView({behavior: 'smooth'});
-        }
-
-        window.onload = () => { AOS.init({ duration: 800, once: true }); renderGrid(7); }
-    </script>
-</body>
-                        </html>
+        function moveSlider(id, i
