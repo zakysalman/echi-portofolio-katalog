@@ -28,6 +28,7 @@
 
         .nav-glass { background: rgba(253, 251, 247, 0.96); backdrop-filter: blur(10px); z-index: 1000; }
         
+        /* Profile Layout */
         .profile-wrapper {
             background: white;
             border-radius: 3rem;
@@ -41,14 +42,14 @@
         }
         @media (min-width: 768px) {
             .profile-wrapper { flex-direction: row; align-items: center; }
-            .profile-img-side { width: 35%; }
+            .profile-img-side { width: 35%; height: 100%; }
             .profile-info-side { width: 65%; padding: 3rem; }
         }
 
-        /* Social Icons */
+        /* Sosmed Icons */
         .social-link {
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -56,7 +57,7 @@
             background: #f8f5f0;
             color: var(--dark);
             transition: all 0.3s ease;
-            font-size: 18px;
+            text-decoration: none;
         }
         .social-link:hover {
             background: var(--gold);
@@ -64,291 +65,224 @@
             transform: translateY(-3px);
         }
 
-        /* Independent Nav Button */
-        .floating-nav-container {
+        /* Independent Quick Nav */
+        .nav-buttons-container {
             max-width: 900px;
-            margin: 2.5rem auto 0; 
-            padding: 0 20px;
+            margin: 2rem auto 0;
+            display: flex;
+            gap: 12px;
+            padding: 0 15px;
         }
-        
-        .quick-nav-card {
+        .btn-nav-indie {
+            flex: 1;
             background: white;
-            border-radius: 2rem;
-            padding: 1rem;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            border: 1px solid rgba(166, 137, 102, 0.1);
-            display: flex;
-            gap: 15px;
-        }
-
-        .quick-nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 20px;
-            background: #fff;
-            border: 1px solid #f0f0f0;
-            border-radius: 1.2rem;
+            padding: 15px;
+            border-radius: 1.5rem;
+            text-align: center;
             font-weight: 800;
-            font-size: 10px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: all 0.3s;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid rgba(166,137,102,0.1);
             color: var(--dark);
-            flex: 1;
-            justify-content: center;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
         }
-        
-        .quick-nav-btn i { color: var(--gold); }
-        .quick-nav-btn:hover { 
-            background: var(--gold); 
-            color: white; 
-            transform: translateY(-3px);
+        .btn-nav-indie:hover {
+            background: var(--gold);
+            color: white;
+            transform: translateY(-2px);
         }
-        .quick-nav-btn:hover i { color: white; }
 
-        /* Unit Layout */
+        /* Unit Grid Layout Based on Screenshot */
         .unit-card {
             background: white;
             border-radius: 2.5rem;
-            padding: 1.2rem;
+            padding: 1.5rem;
             border: 1px solid #f0f0f0;
+            margin-bottom: 2rem;
         }
-
-        .visual-layout {
+        .visual-split {
             display: grid;
-            grid-template-columns: 1fr 1.2fr; 
-            gap: 12px;
-            height: 400px;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            height: 350px;
             margin-bottom: 1.5rem;
         }
-
-        .photo-box { background: #f9f9f9; border-radius: 1.5rem; overflow: hidden; height: 100%; position: relative; }
-        .photo-main-right { border-radius: 1.5rem; overflow: hidden; height: 100%; position: relative; }
-        .unit-img { width: 100%; height: 100%; object-fit: cover; }
-
-        .slider-wrapper { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
-        .slider-item { min-width: 100%; height: 100%; }
-
-        .dot-nav {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 5px;
+        .photo-side {
+            background: #f9f9f9;
+            border-radius: 2rem;
+            overflow: hidden;
+            position: relative;
+            height: 100%;
         }
-        .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.2); cursor: pointer; }
-        .dot.active { background: var(--gold); width: 15px; border-radius: 3px; }
+        .img-fit { width: 100%; height: 100%; object-fit: cover; }
+        
+        .slider-wrap { display: flex; height: 100%; transition: transform 0.5s ease; }
+        .slide { min-width: 100%; height: 100%; }
 
-        .price-tag { font-size: 2rem; font-weight: 800; color: var(--gold); letter-spacing: -1px; }
+        /* KPR Result - Scaled Up */
+        .kpr-result-box {
+            background: #f8f5f0;
+            padding: 2.5rem;
+            border-radius: 2.5rem;
+            text-align: center;
+            border: 1px solid #f0ebe3;
+        }
+        .kpr-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--gold);
+            line-height: 1.2;
+            margin: 10px 0;
+        }
 
         @media (max-width: 640px) {
-            .visual-layout { grid-template-columns: 1fr; height: auto; display: flex; flex-direction: column; }
-            .photo-main-right { height: 280px; order: 1; margin-bottom: 8px; }
-            .photo-box { height: 200px; order: 2; }
-            .quick-nav-card { flex-direction: column; }
+            .visual-split { grid-template-columns: 1fr; height: auto; }
+            .photo-side { height: 250px; }
+            .kpr-value { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="fixed w-full nav-glass px-6 py-4 border-b border-gray-100">
+    <nav class="fixed w-full nav-glass px-6 py-4 border-b border-gray-50">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="font-extrabold text-lg tracking-tighter uppercase">NEFSI ASRIFAH <span class="text-[#a68966]">| ECHI</span></div>
             <a href="https://wa.me/628111982833" target="_blank" class="bg-[#4a3728] text-white px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest">WhatsApp</a>
         </div>
     </nav>
 
-    <section id="home" class="pt-32 pb-10 px-6">
+    <div class="pt-32 pb-10 px-6">
         <div class="max-w-6xl mx-auto">
+            <!-- Profile Card -->
             <div class="profile-wrapper" data-aos="fade-up">
                 <div class="profile-img-side">
-                    <!-- Gunakan ID/Class yang tepat untuk gambar profil -->
-                    <img src="wajah.jpg" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=1000'">
+                    <img src="wajah.jpg" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop'">
                 </div>
-                <div class="profile-info-side">
+                <div class="profile-info-side p-8">
                     <span class="text-[10px] font-black text-[#a68966] uppercase tracking-[0.4em] mb-3 block">Official Sales Specialist</span>
-                    <h1 class="text-3xl font-black text-[#4a3728] mb-4 tracking-tight">Halo, saya Echi</h1>
-                    <p class="text-gray-500 font-medium leading-relaxed text-sm mb-8">Property Consultant resmi Park Serpong. Temukan pilihan hunian terbaik dengan simulasi cicilan transparan dan layanan responsif.</p>
+                    <h1 class="text-3xl font-black text-[#4a3728] mb-3 tracking-tight">Halo, saya Echi</h1>
+                    <p class="text-gray-500 font-medium leading-relaxed text-sm mb-6">Property Consultant resmi Park Serpong. Temukan pilihan hunian terbaik dengan simulasi cicilan transparan.</p>
                     
-                    <!-- Social Media Icons -->
+                    <!-- Social Media Row -->
                     <div class="flex gap-4">
-                        <a href="https://wa.me/628111982833" target="_blank" class="social-link" title="WhatsApp">
-                            <i class="fa-brands fa-whatsapp"></i>
-                        </a>
-                        <a href="https://tiktok.com/@echi.property" target="_blank" class="social-link" title="TikTok">
-                            <i class="fa-brands fa-tiktok"></i>
-                        </a>
-                        <a href="https://instagram.com/echi.property" target="_blank" class="social-link" title="Instagram">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
+                        <a href="https://wa.me/628111982833" target="_blank" class="social-link"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="#" target="_blank" class="social-link"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" target="_blank" class="social-link"><i class="fa-brands fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
 
-            <!-- Independent Quick Nav -->
-            <div class="floating-nav-container" data-aos="fade-up" data-aos-delay="200">
-                <div class="quick-nav-card">
-                    <a href="#katalog" class="quick-nav-btn">
-                        <i class="fa-solid fa-layer-group"></i>
-                        Katalog Unit
-                    </a>
-                    <a href="#kpr" class="quick-nav-btn">
-                        <i class="fa-solid fa-calculator"></i>
-                        Kalkulator KPR
-                    </a>
-                </div>
+            <!-- Separated Nav Buttons -->
+            <div class="nav-buttons-container" data-aos="fade-up" data-aos-delay="100">
+                <a href="#katalog" class="btn-nav-indie"><i class="fa-solid fa-house"></i> Katalog</a>
+                <a href="#kpr" class="btn-nav-indie"><i class="fa-solid fa-calculator"></i> Hitung KPR</a>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="katalog" class="py-16 px-6">
+    <section id="katalog" class="py-10 px-6">
         <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
-                <div>
-                    <h2 class="text-3xl font-black tracking-tighter uppercase mb-1">Pilihan Unit</h2>
-                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest italic tracking-widest">Temukan unit terbaik Anda</p>
-                </div>
-                <div class="flex flex-wrap gap-2">
-                    <button onclick="renderGrid(7)" id="btn-7" class="phase-btn px-6 py-2 rounded-full text-[10px] font-bold bg-[#4a3728] text-white">FASE 07</button>
-                    <button onclick="renderGrid(6)" id="btn-6" class="phase-btn px-6 py-2 rounded-full text-[10px] font-bold bg-white border border-gray-100">FASE 06</button>
-                    <button onclick="renderGrid(5)" id="btn-5" class="phase-btn px-6 py-2 rounded-full text-[10px] font-bold bg-white border border-gray-100">FASE 05</button>
+            <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+                <h2 class="text-3xl font-black uppercase tracking-tighter">Pilihan Unit</h2>
+                <div class="flex gap-2">
+                    <button onclick="renderUnits(7)" id="p-7" class="px-5 py-2 rounded-full text-[10px] font-bold border phase-btn">FASE 07</button>
+                    <button onclick="renderUnits(6)" id="p-6" class="px-5 py-2 rounded-full text-[10px] font-bold border phase-btn">FASE 06</button>
+                    <button onclick="renderUnits(5)" id="p-5" class="px-5 py-2 rounded-full text-[10px] font-bold border phase-btn">FASE 05</button>
                 </div>
             </div>
-            <div id="unit-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-8"></div>
+            <div id="grid-container" class="grid grid-cols-1 lg:grid-cols-2 gap-8"></div>
         </div>
     </section>
 
-    <section id="kpr" class="py-20 px-6 mb-20">
+    <section id="kpr" class="py-20 px-6">
         <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-[3rem] shadow-sm border border-gray-100">
-            <h3 class="text-2xl font-black text-center mb-10 text-[#4a3728]">Simulasi Cicilan KPR</h3>
-            <div class="grid md:grid-cols-2 gap-10 items-start">
+            <h3 class="text-2xl font-black text-center mb-10">Simulasi Cicilan</h3>
+            <div class="grid md:grid-cols-2 gap-10">
                 <div class="space-y-6">
                     <div>
-                        <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block tracking-widest">Harga Unit (Rp)</label>
-                        <input type="text" id="kpr-disp" value="325.000.000" oninput="formatInput(this)" class="w-full text-2xl font-black outline-none border-b-2 border-gray-100 focus:border-[#a68966] bg-transparent pb-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Harga Properti (Rp)</label>
+                        <input type="text" id="kpr-disp" value="325.000.000" oninput="handleInput(this)" class="w-full text-2xl font-black outline-none border-b-2 border-gray-100 focus:border-[#a68966] bg-transparent pb-2">
                         <input type="hidden" id="kpr-raw" value="325000000">
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block tracking-widest">DP (%)</label>
-                            <select id="dp-percent" onchange="calculateKPR()" class="w-full bg-gray-50 border border-gray-100 px-4 py-3 rounded-2xl text-xs font-bold outline-none cursor-pointer">
-                                <option value="0">0%</option>
-                                <option value="5" selected>5%</option>
-                                <option value="10">10%</option>
-                                <option value="15">15%</option>
-                                <option value="20">20%</option>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block">DP (%)</label>
+                            <select id="dp" onchange="calc()" class="w-full bg-gray-50 p-3 rounded-xl text-xs font-bold outline-none">
+                                <option value="0">0%</option><option value="5" selected>5%</option><option value="10">10%</option>
                             </select>
                         </div>
                         <div>
-                            <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block tracking-widest">Tenor (Tahun)</label>
-                            <select id="tenor" onchange="calculateKPR()" class="w-full bg-gray-50 border border-gray-100 px-4 py-3 rounded-2xl text-xs font-bold outline-none cursor-pointer">
-                                <option value="10">10 Thn</option>
-                                <option value="15">15 Thn</option>
-                                <option value="20" selected>20 Thn</option>
-                                <option value="25">25 Thn</option>
-                                <option value="30">30 Thn</option>
+                            <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Tenor</label>
+                            <select id="tenor" onchange="calc()" class="w-full bg-gray-50 p-3 rounded-xl text-xs font-bold outline-none">
+                                <option value="15">15 Thn</option><option value="20" selected>20 Thn</option><option value="25">25 Thn</option>
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="bg-[#f8f5f0] p-8 rounded-[2.5rem] text-center border border-[#f0ebe3]">
-                    <p class="text-[10px] font-bold text-gray-400 uppercase mb-2 tracking-widest">Cicilan Per Bulan</p>
-                    <h4 id="kpr-res" class="text-2xl font-black text-[#a68966]">Rp 2.050.000</h4>
-                    <p class="text-[8px] text-gray-400 mt-4 leading-relaxed font-medium italic">*Bunga asumsi 5% p.a fixed. Hanya simulasi.</p>
+                <div class="kpr-result-box">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Estimasi Cicilan</p>
+                    <h4 id="res-val" class="kpr-value">Rp 2.050.000</h4>
+                    <p class="text-[9px] text-gray-400 font-medium">*Asumsi bunga 5% p.a fixed</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-10 text-center border-t border-gray-100">
-        <p class="text-[10px] font-bold text-gray-300 uppercase tracking-[0.3em]">Nefsi Asrifah | Park Serpong 2024</p>
-    </footer>
-
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        const unitData = {
-            5: [
-                { name: "Perunggu Livin Tipe B", tag: "305 Jt", val: 305000000, photos: ["5-1.jpg", "5-1a.jpg"] },
-                { name: "Perunggu Livin Tipe BB", tag: "390 Jt", val: 390000000, photos: ["5-2.jpg", "5-2a.jpg"] },
-                { name: "Quartz Livin Tipe Q", tag: "450 Jt", val: 450000000, photos: ["5-3.jpg", "5-3a.jpg"] },
-                { name: "Quartz Livin Tipe QL", tag: "510 Jt", val: 510000000, photos: ["5-4.jpg", "5-4a.jpg"] },
-                { name: "Zircon Livin Tipe Z", tag: "620 Jt", val: 620000000, photos: ["5-5.jpg", "5-5a.jpg"] }
+        const data = {
+            7: [
+                { name: "Perunggu Beverly Tipe A", tag: "325 Jt", val: 325000000, main: "7-1.jpg", sub: ["7-1a.jpg", "7-1b.jpg"] },
+                { name: "Perunggu Beverly Tipe B", tag: "335 Jt", val: 335000000, main: "7-2.jpg", sub: ["7-2a.jpg", "7-2b.jpg"] },
+                { name: "Quartz Beverly Tipe Q", tag: "480 Jt", val: 480000000, main: "7-6.jpg", sub: ["7-6a.jpg", "7-6b.jpg"] }
             ],
             6: [
-                { name: "Perunggu Livin Tipe B", tag: "315 Jt", val: 315000000, photos: ["6-1.jpg", "6-1a.jpg"] },
-                { name: "Perunggu Livin Tipe BB", tag: "405 Jt", val: 405000000, photos: ["6-2.jpg", "6-2a.jpg"] },
-                { name: "Quartz Livin Tipe Q", tag: "465 Jt", val: 465000000, photos: ["6-3.jpg", "6-3a.jpg"] },
-                { name: "Quartz Livin Tipe QL", tag: "525 Jt", val: 525000000, photos: ["6-4.jpg", "6-4a.jpg"] }
+                { name: "Perunggu Livin Tipe B", tag: "315 Jt", val: 315000000, main: "6-1.jpg", sub: ["6-1a.jpg"] }
             ],
-            7: [
-                { name: "Perunggu Beverly Tipe A", tag: "325 Jt", val: 325000000, photos: ["7-1.jpg", "7-1a.jpg"] },
-                { name: "Perunggu Beverly Tipe B", tag: "335 Jt", val: 335000000, photos: ["7-2.jpg", "7-2a.jpg"] },
-                { name: "Perunggu Beverly Tipe C", tag: "345 Jt", val: 345000000, photos: ["7-3.jpg", "7-3a.jpg"] },
-                { name: "Silver Beverly Tipe S", tag: "410 Jt", val: 410000000, photos: ["7-4.jpg", "7-4a.jpg"] },
-                { name: "Silver Beverly Tipe SL", tag: "435 Jt", val: 435000000, photos: ["7-5.jpg", "7-5a.jpg"] },
-                { name: "Quartz Beverly Tipe Q", tag: "480 Jt", val: 480000000, photos: ["7-6.jpg", "7-6a.jpg"] },
-                { name: "Quartz Beverly Tipe QL", tag: "540 Jt", val: 540000000, photos: ["7-7.jpg", "7-7a.jpg"] },
-                { name: "Zircon Beverly Tipe Z", tag: "650 Jt", val: 650000000, photos: ["7-8.jpg", "7-8a.jpg"] }
+            5: [
+                { name: "Perunggu Livin Tipe B", tag: "305 Jt", val: 305000000, main: "5-1.jpg", sub: ["5-1a.jpg"] }
             ]
         };
 
-        let activeSliders = {};
+        function renderUnits(phase) {
+            document.querySelectorAll('.phase-btn').forEach(b => b.className = "px-5 py-2 rounded-full text-[10px] font-bold border phase-btn bg-white");
+            document.getElementById('p-'+phase).className = "px-5 py-2 rounded-full text-[10px] font-bold border phase-btn bg-[#4a3728] text-white";
 
-        function renderGrid(phase) {
-            document.querySelectorAll('.phase-btn').forEach(btn => {
-                btn.classList.remove('bg-[#4a3728]', 'text-white');
-                btn.classList.add('bg-white', 'border', 'border-gray-100');
-            });
-            const activeBtn = document.getElementById(`btn-${phase}`);
-            if(activeBtn) {
-                activeBtn.classList.remove('bg-white', 'border-gray-100');
-                activeBtn.classList.add('bg-[#4a3728]', 'text-white');
-            }
+            const container = document.getElementById('grid-container');
+            container.innerHTML = '';
 
-            const grid = document.getElementById('unit-grid');
-            grid.innerHTML = '';
-            
-            unitData[phase].forEach((u, uIdx) => {
-                const uniqueId = `u-${phase}-${uIdx}`;
-                activeSliders[uniqueId] = 0;
-                const mainPhoto = u.photos[0]; 
-                const subPhotos = u.photos.slice(1); 
+            data[phase].forEach((u, i) => {
+                const id = `slide-${phase}-${i}`;
+                const slides = u.sub.map(img => `<div class="slide"><img src="fase-${phase}/${img}" class="img-fit" onerror="this.src='https://placehold.co/400x600?text=Interior'"></div>`).join('');
                 
-                const sliderItems = subPhotos.length > 0 ? subPhotos.map(img => `
-                    <div class="slider-item">
-                        <img src="fase-${phase}/${img}" class="unit-img" onerror="this.src='https://placehold.co/400x600?text=Interior'">
-                    </div>
-                `).join('') : `<div class="slider-item"><img src="https://placehold.co/400x600?text=Soon" class="unit-img"></div>`;
-                
-                const dots = subPhotos.map((_, i) => `
-                    <div class="dot ${i === 0 ? 'active' : ''}" onclick="moveSlider('${uniqueId}', ${i})"></div>
-                `).join('');
-
-                grid.innerHTML += `
+                container.innerHTML += `
                     <div class="unit-card" data-aos="fade-up">
-                        <div class="visual-layout">
-                            <div class="photo-main-right">
-                                <img src="fase-${phase}/${mainPhoto}" class="unit-img" onerror="this.src='https://placehold.co/400x600?text=Facade'">
-                                <div class="absolute top-3 right-3 bg-black/30 backdrop-blur-sm text-white text-[7px] px-2 py-1 rounded-full uppercase font-bold tracking-widest">Eksterior</div>
+                        <div class="visual-split">
+                            <div class="photo-side">
+                                <div class="slider-wrap" id="${id}">${slides}</div>
                             </div>
-                            <div class="photo-box">
-                                <div class="slider-wrapper" id="wrap-${uniqueId}">${sliderItems}</div>
-                                <div class="dot-nav" id="dots-${uniqueId}">${dots}</div>
+                            <div class="photo-side">
+                                <img src="fase-${phase}/${u.main}" class="img-fit" onerror="this.src='https://placehold.co/400x600?text=Eksterior'">
                             </div>
                         </div>
-                        <div class="px-2">
-                            <h4 class="text-lg font-black text-[#4a3728] uppercase tracking-tighter mb-1">${u.name}</h4>
-                            <div class="flex justify-between items-center mt-4">
+                        <div>
+                            <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">Park Serpong Fase ${phase}</p>
+                            <h4 class="text-xl font-black text-[#4a3728] uppercase mb-4">${u.name}</h4>
+                            <div class="flex justify-between items-end">
                                 <div>
-                                    <p class="text-[8px] font-bold text-gray-300 uppercase">Mulai Dari</p>
-                                    <p class="price-tag text-xl">Rp ${u.tag}</p>
+                                    <span class="text-[8px] font-bold text-gray-300 uppercase">Harga Mulai</span>
+                                    <p class="text-2xl font-extrabold text-[#a68966]">Rp ${u.tag}</p>
                                 </div>
                                 <div class="flex gap-2">
                                     <button onclick="setKPR(${u.val})" class="p-3 bg-gray-50 rounded-xl border border-gray-100"><i class="fa-solid fa-calculator text-[#a68966]"></i></button>
-                                    <button onclick="window.open('https://wa.me/628111982833')" class="px-5 py-3 bg-[#a68966] text-white rounded-xl font-bold text-[9px] uppercase tracking-widest shadow-md">Hubungi</button>
+                                    <button onclick="window.open('https://wa.me/628111982833')" class="px-6 py-3 bg-[#a68966] text-white rounded-xl font-bold text-[10px] uppercase shadow-lg">Detail</button>
                                 </div>
                             </div>
                         </div>
@@ -358,39 +292,36 @@
             AOS.refresh();
         }
 
-        function moveSlider(id, idx) {
-            const wrap = document.getElementById(`wrap-${id}`);
-            const dots = document.getElementById(`dots-${id}`).querySelectorAll('.dot');
-            activeSliders[id] = idx;
-            if (wrap) wrap.style.transform = `translateX(-${idx * 100}%)`;
-            dots.forEach(d => d.classList.remove('active'));
-            if (dots[idx]) dots[idx].classList.add('active');
-        }
-
         function formatIDR(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
-        
-        function formatInput(el) {
+        function handleInput(el) {
             let v = el.value.replace(/\D/g, "");
             document.getElementById('kpr-raw').value = v;
             el.value = formatIDR(v);
-            calculateKPR();
+            calc();
         }
-
-        function calculateKPR() {
+        function calc() {
             const h = parseFloat(document.getElementById('kpr-raw').value) || 0;
-            const t = parseInt(document.getElementById('tenor').value) || 20;
-            const dpPct = parseInt(document.getElementById('dp-percent').value) || 5;
-            const r = 0.05 / 12; 
-            const n = t * 12;
+            const t = parseInt(document.getElementById('tenor').value);
+            const d = parseInt(document.getElementById('dp').value);
+            const r = 0.05 / 12; const n = t * 12;
             if (h > 0) {
-                const p = h * (1 - (dpPct / 100));
+                const p = h * (1 - (d / 100));
                 const res = (p * r) / (1 - Math.pow(1 + r, -n));
-                document.getElementById('kpr-res').innerText = "Rp " + formatIDR(Math.round(res));
-            } else { document.getElementById('kpr-res').innerText = "Rp 0"; }
+                document.getElementById('res-val').innerText = "Rp " + formatIDR(Math.round(res));
+            }
         }
-
         function setKPR(v) {
             document.getElementById('kpr-raw').value = v;
             document.getElementById('kpr-disp').value = formatIDR(v);
-            calculateKPR();
-            document.getElementById('kpr').scrollI
+            calc();
+            document.getElementById('kpr').scrollIntoView({behavior: 'smooth'});
+        }
+
+        window.onload = () => { 
+            AOS.init({ duration: 800, once: true }); 
+            renderUnits(7); 
+            calc();
+        };
+    </script>
+</body>
+    </html>
