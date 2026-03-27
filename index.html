@@ -27,15 +27,13 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- INTERACTIVE ANIMATIONS --- */
         .click-interact {
-            transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s;
+            transition: transform 0.1s ease, background-color 0.2s;
         }
-        .click-interact:active { transform: scale(0.95); }
+        .click-interact:active { transform: scale(0.96); }
 
         .nav-glass { background: rgba(253, 251, 247, 0.96); backdrop-filter: blur(10px); z-index: 1000; }
         
-        /* Hamburger Menu Overlay */
         #menu-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255,255,255,0.98); z-index: 2000; display: none;
@@ -47,25 +45,21 @@
         .menu-link {
             font-size: 1.25rem; font-weight: 800; text-transform: uppercase;
             letter-spacing: 2px; margin: 0.8rem 0; color: var(--dark);
-            transition: all 0.3s; cursor: pointer; padding: 10px 20px;
+            transition: 0.3s; cursor: pointer; padding: 10px 20px;
             border-radius: 1rem; text-align: center;
         }
-        @media (min-width: 640px) { .menu-link { font-size: 1.5rem; } }
-        .menu-link:active { background: #f0ebe3; transform: scale(0.9); }
 
-        /* Profile Animation */
         .profile-wrapper {
             background: white; border-radius: 2rem; overflow: hidden;
             display: flex; flex-direction: column; max-width: 900px; margin: 0 auto;
             box-shadow: 0 20px 40px rgba(0,0,0,0.03);
         }
-        .profile-img-side { overflow: hidden; position: relative; width: 100%; aspect-ratio: 4/3; }
+        .profile-img-side { overflow: hidden; position: relative; width: 100%; aspect-ratio: 4/3; background: #eee; }
         .profile-img-side img { animation: profileFloat 4s ease-in-out infinite; transition: transform 0.5s; object-position: top; }
-        .profile-img-side:hover img { transform: scale(1.05); }
 
         @keyframes profileFloat {
-            0%, 100% { transform: translateY(0) scale(1.02); }
-            50% { transform: translateY(-10px) scale(1); }
+            0%, 100% { transform: translateY(0) scale(1.01); }
+            50% { transform: translateY(-8px) scale(1); }
         }
 
         @media (min-width: 768px) {
@@ -79,33 +73,28 @@
             display: flex; align-items: center; justify-content: center;
             transition: 0.3s; color: var(--dark);
         }
-        @media (min-width: 640px) { .social-link { width: 48px; height: 48px; } }
-        .social-link:hover { background: var(--gold); color: white; transform: translateY(-3px); }
-        .social-link:active { transform: scale(0.8); }
 
-        /* Unit Card */
+        @keyframes cardPop {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .unit-card {
             background: white; border-radius: 2rem; padding: 1.25rem;
             border: 1px solid #f0f0f0; margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
+            animation: cardPop 0.5s ease forwards;
         }
-        @media (min-width: 640px) { .unit-card { border-radius: 2.5rem; padding: 1.5rem; margin-bottom: 2rem; } }
-        .unit-card:hover { border-color: var(--gold); box-shadow: 0 15px 30px rgba(0,0,0,0.04); }
+        @media (min-width: 640px) { .unit-card { border-radius: 2.5rem; padding: 1.5rem; } }
 
-        .main-unit-box { height: 250px; border-radius: 1.5rem; overflow: hidden; background: #000; position: relative; }
+        .main-unit-box { height: 250px; border-radius: 1.5rem; overflow: hidden; background: #f0ebe3; position: relative; }
         @media (min-width: 640px) { .main-unit-box { height: 350px; border-radius: 2rem; } }
-        .main-unit-box img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.5s; }
+        .main-unit-box img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s; }
         
         .thumb-scroller { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding: 5px 2px; }
         .thumb-scroller::-webkit-scrollbar { display: none; }
-        .thumb-item { min-width: 140px; aspect-ratio: 16/9; border-radius: 1rem; object-fit: cover; cursor: pointer; border: 2px solid transparent; transition: 0.4s; }
-        @media (min-width: 640px) { .thumb-item { min-width: 180px; border-radius: 1.2rem; } }
-        .thumb-item.active { border-color: var(--gold); transform: scale(0.95); }
-        .thumb-item:active { transform: scale(0.85); }
+        .thumb-item { min-width: 140px; aspect-ratio: 16/9; border-radius: 1rem; object-fit: cover; cursor: pointer; border: 2px solid transparent; transition: 0.3s; background: #eee; }
+        .thumb-item.active { border-color: var(--gold); }
 
-        /* KPR Styling */
         .kpr-result-card { background: linear-gradient(145deg, #4a3728, #2a1f16); color: white; border-radius: 2rem; padding: 2rem; }
-        @media (min-width: 640px) { .kpr-result-card { border-radius: 2.5rem; padding: 2.5rem; } }
         .kpr-input-group { background: #fdfbf7; padding: 1rem 1.25rem; border-radius: 1.25rem; border: 1px solid #f0ebe3; transition: 0.3s; }
         .kpr-input-group:focus-within { border-color: var(--gold); background: white; }
         .kpr-input-field { background: transparent; width: 100%; font-weight: 700; outline: none; border: none; }
@@ -113,32 +102,23 @@
 </head>
 <body>
 
-    <!-- Header & Hamburger -->
     <nav class="fixed w-full nav-glass px-5 sm:px-6 py-3 sm:py-4 border-b border-gray-50 flex justify-between items-center shadow-sm">
         <div class="font-extrabold text-base sm:text-lg tracking-tighter uppercase">NEFSI ASRIFAH <span class="text-[#a68966]">| ECHI</span></div>
         <button onclick="toggleMenu(true)" class="click-interact text-xl sm:text-2xl p-2 bg-gray-50 rounded-xl"><i class="fa-solid fa-bars-staggered"></i></button>
     </nav>
 
-    <!-- Overlay Menu -->
     <div id="menu-overlay">
-        <button onclick="toggleMenu(false)" class="click-interact absolute top-4 sm:top-6 right-4 sm:right-6 text-2xl sm:text-3xl p-4"><i class="fa-solid fa-xmark"></i></button>
-        
+        <button onclick="toggleMenu(false)" class="click-interact absolute top-4 right-4 text-2xl p-4"><i class="fa-solid fa-xmark"></i></button>
         <div class="flex flex-col items-center w-full px-6">
-            <div class="text-[10px] font-black text-[#a68966] tracking-[0.5em] mb-8 sm:mb-12 uppercase">Navigation</div>
+            <div class="text-[10px] font-black text-[#a68966] tracking-[0.5em] mb-8 uppercase">Navigation</div>
             <div onclick="goToSection('top')" class="menu-link w-full max-w-xs">Beranda</div>
             <div onclick="goToSection('katalog')" class="menu-link w-full max-w-xs">Katalog Unit</div>
             <div class="w-12 h-[1px] bg-gray-100 my-4"></div>
-            <div onclick="renderUnits(7); toggleMenu(false); goToSection('katalog')" class="menu-link w-full max-w-xs text-sm sm:text-base opacity-60">Fase 07</div>
-            <div onclick="renderUnits(6); toggleMenu(false); goToSection('katalog')" class="menu-link w-full max-w-xs text-sm sm:text-base opacity-60">Fase 06</div>
-            <div onclick="renderUnits(5); toggleMenu(false); goToSection('katalog')" class="menu-link w-full max-w-xs text-sm sm:text-base opacity-60">Fase 05</div>
+            <div onclick="renderUnits(7); goToSection('katalog')" class="menu-link w-full max-w-xs text-sm opacity-60">Fase 07</div>
+            <div onclick="renderUnits(6); goToSection('katalog')" class="menu-link w-full max-w-xs text-sm opacity-60">Fase 06</div>
+            <div onclick="renderUnits(5); goToSection('katalog')" class="menu-link w-full max-w-xs text-sm opacity-60">Fase 05</div>
             <div class="w-12 h-[1px] bg-gray-100 my-4"></div>
             <div onclick="goToSection('kpr')" class="menu-link w-full max-w-xs">Kalkulator KPR</div>
-        </div>
-
-        <div class="absolute bottom-10 sm:bottom-16 flex gap-6 sm:gap-8">
-            <a href="https://wa.me/628111982833" target="_blank" class="social-link click-interact"><i class="fa-brands fa-whatsapp text-lg sm:text-xl"></i></a>
-            <a href="https://tiktok.com" target="_blank" class="social-link click-interact"><i class="fa-brands fa-tiktok text-lg sm:text-xl"></i></a>
-            <a href="https://instagram.com" target="_blank" class="social-link click-interact"><i class="fa-brands fa-instagram text-lg sm:text-xl"></i></a>
         </div>
     </div>
 
@@ -146,8 +126,7 @@
         <div class="max-w-6xl mx-auto">
             <div class="profile-wrapper" data-aos="fade-up">
                 <div class="profile-img-side">
-                    <!-- Memastikan gambar tidak terpotong aneh di HP -->
-                    <img src="wajah.jpg" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop'">
+                    <img src="wajah.jpg" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop'">
                 </div>
                 <div class="profile-info-side p-6 sm:p-8">
                     <span class="text-[9px] sm:text-[10px] font-black text-[#a68966] uppercase tracking-[0.4em] mb-3 block">Official Sales Specialist</span>
@@ -165,12 +144,12 @@
 
     <section id="katalog" class="py-8 sm:py-10 px-5 sm:px-6">
         <div class="max-w-7xl mx-auto">
-            <div class="mb-8 sm:mb-10 text-center md:text-left">
+            <div class="mb-8 text-center md:text-left">
                 <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tighter mb-2" data-aos="fade-right">Pilihan Unit</h2>
-                <div class="flex flex-wrap justify-center md:justify-start gap-2 mt-4 sm:mt-6" data-aos="fade-up">
-                    <button onclick="renderUnits(7)" id="p-7" class="click-interact px-6 py-3 sm:px-8 sm:py-4 rounded-full text-[9px] sm:text-[10px] font-black border phase-btn transition-all">FASE 07</button>
-                    <button onclick="renderUnits(6)" id="p-6" class="click-interact px-6 py-3 sm:px-8 sm:py-4 rounded-full text-[9px] sm:text-[10px] font-black border phase-btn transition-all">FASE 06</button>
-                    <button onclick="renderUnits(5)" id="p-5" class="click-interact px-6 py-3 sm:px-8 sm:py-4 rounded-full text-[9px] sm:text-[10px] font-black border phase-btn transition-all">FASE 05</button>
+                <div class="flex flex-wrap justify-center md:justify-start gap-2 mt-4" data-aos="fade-up">
+                    <button onclick="renderUnits(7)" id="p-7" class="click-interact px-6 py-3 rounded-full text-[9px] font-black border phase-btn transition-all">FASE 07</button>
+                    <button onclick="renderUnits(6)" id="p-6" class="click-interact px-6 py-3 rounded-full text-[9px] font-black border phase-btn transition-all">FASE 06</button>
+                    <button onclick="renderUnits(5)" id="p-5" class="click-interact px-6 py-3 rounded-full text-[9px] font-black border phase-btn transition-all">FASE 05</button>
                 </div>
             </div>
             <div id="grid-container" class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10"></div>
@@ -179,36 +158,26 @@
 
     <section id="kpr" class="py-12 sm:py-20 px-5 sm:px-6">
         <div class="max-w-5xl mx-auto">
-            <div class="text-center mb-10 sm:mb-16" data-aos="fade-up">
+            <div class="text-center mb-10" data-aos="fade-up">
                 <h3 class="text-2xl sm:text-3xl font-black uppercase tracking-tighter">Kalkulator KPR</h3>
-                <p class="text-gray-400 text-xs sm:text-sm mt-2">Masukan angka untuk simulasi cicilan</p>
             </div>
-            <div class="grid lg:grid-cols-5 gap-8 sm:gap-10 items-start">
-                <div class="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6" data-aos="fade-right">
+            <div class="grid lg:grid-cols-5 gap-8 items-start">
+                <div class="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-4" data-aos="fade-right">
                     <div class="sm:col-span-2 kpr-input-group">
-                        <label class="text-[9px] font-black text-gray-400 uppercase mb-2 block">Harga Properti (Rp)</label>
+                        <label class="text-[9px] font-black text-gray-400 uppercase mb-1 block">Harga Properti (Rp)</label>
                         <input type="text" id="kpr-disp" value="325.000.000" oninput="handleInput(this)" class="kpr-input-field text-xl sm:text-2xl">
                         <input type="hidden" id="kpr-raw" value="325000000">
                     </div>
-                    <div class="kpr-input-group flex-1">
-                        <label class="text-[9px] font-black text-gray-400 uppercase mb-2 block">DP (%)</label>
-                        <input type="number" id="dp-input" value="5" oninput="calc()" class="kpr-input-field text-lg sm:text-xl">
-                    </div>
-                    <div class="kpr-input-group flex-1">
-                        <label class="text-[9px] font-black text-gray-400 uppercase mb-2 block">Tenor (Tahun)</label>
-                        <input type="number" id="tenor-input" value="20" oninput="calc()" class="kpr-input-field text-lg sm:text-xl">
-                    </div>
-                    <div class="sm:col-span-2 kpr-input-group">
-                        <label class="text-[9px] font-black text-gray-400 uppercase mb-2 block">Suku Bunga (%)</label>
-                        <input type="number" id="interest-input" value="5" step="0.1" oninput="calc()" class="kpr-input-field text-lg sm:text-xl">
-                    </div>
+                    <div class="kpr-input-group"><label class="text-[9px] font-black text-gray-400 uppercase mb-1 block">DP (%)</label><input type="number" id="dp-input" value="5" oninput="calc()" class="kpr-input-field text-lg"></div>
+                    <div class="kpr-input-group"><label class="text-[9px] font-black text-gray-400 uppercase mb-1 block">Tenor (Thn)</label><input type="number" id="tenor-input" value="20" oninput="calc()" class="kpr-input-field text-lg"></div>
+                    <div class="sm:col-span-2 kpr-input-group"><label class="text-[9px] font-black text-gray-400 uppercase mb-1 block">Suku Bunga (%)</label><input type="number" id="interest-input" value="5" step="0.1" oninput="calc()" class="kpr-input-field text-lg"></div>
                 </div>
                 <div class="lg:col-span-2" data-aos="fade-left">
                     <div class="kpr-result-card shadow-2xl">
-                        <p class="text-[9px] sm:text-[10px] font-black text-gray-400 uppercase mb-3 sm:mb-4 tracking-widest">Estimasi Cicilan / Bulan</p>
-                        <h4 id="res-val" class="text-3xl sm:text-4xl md:text-5xl font-black text-[#a68966] mb-8 sm:mb-10 tracking-tighter">Rp 2.050.000</h4>
-                        <a id="wa-consult" href="#" target="_blank" class="click-interact w-full bg-[#a68966] text-white py-4 sm:py-5 rounded-xl sm:rounded-2xl font-black text-[10px] sm:text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 sm:gap-3 shadow-xl">
-                            <i class="fa-brands fa-whatsapp text-base sm:text-lg"></i> Konsultasi via WhatsApp
+                        <p class="text-[9px] font-black text-gray-400 uppercase mb-3 tracking-widest">Estimasi Cicilan / Bulan</p>
+                        <h4 id="res-val" class="text-3xl sm:text-4xl font-black text-[#a68966] mb-8 tracking-tighter">Rp 2.050.000</h4>
+                        <a id="wa-consult" href="#" target="_blank" class="click-interact w-full bg-[#a68966] text-white py-4 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 shadow-xl">
+                            <i class="fa-brands fa-whatsapp text-lg"></i> KONSULTASI SEKARANG
                         </a>
                     </div>
                 </div>
@@ -216,24 +185,35 @@
         </div>
     </section>
 
-    <footer class="py-10 sm:py-16 bg-white border-t border-gray-50 text-center">
-        <p class="text-[9px] sm:text-[10px] font-bold text-gray-300 uppercase tracking-[0.2em] sm:tracking-[0.3em] px-4">© 2024 Nefsi Asrifah | Park Serpong Specialist</p>
+    <footer class="py-10 bg-white border-t border-gray-50 text-center">
+        <p class="text-[9px] font-bold text-gray-300 uppercase tracking-[0.2em]">© 2024 Nefsi Asrifah | Park Serpong Specialist</p>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         const unitData = {
             5: [
-                { id: "5a", name: "Perunggu Livin Tipe B", tag: "305 Jt", val: 305000000, mainPhoto: "unit-1.jpg", supportPhotos: ["unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
-                { id: "5b", name: "Perunggu Livin Tipe BB", tag: "390 Jt", val: 390000000, mainPhoto: "unit-2.jpg", supportPhotos: ["unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] }
+                { name: "Perunggu Livin Tipe B", tag: "305 Jt", val: 305000000, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
+                { name: "Perunggu Livin Tipe BB", tag: "390 Jt", val: 390000000, photos: ["unit-2.jpg", "unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] },
+                { name: "Quartz Livin Tipe Q", tag: "450 Jt", val: 450000000, photos: ["unit-3.jpg", "unit-3.1.jpg", "unit-3.2.jpg", "unit-3.3.jpg"] },
+                { name: "TreeTops Livin Tipe", tag: "520 Jt", val: 520000000, photos: ["unit-4.jpg", "unit-4.1.jpg", "unit-4.2.jpg", "unit-4.3.jpg", "unit-4.4.jpg"] },
+                { name: "Gold Livin Tipe G", tag: "580 Jt", val: 580000000, photos: ["unit-5.jpg", "unit-5.1.jpg", "unit-5.2.jpg", "unit-5.3.jpg"] },
+                { name: "GoldTops Livin Type GT", tag: "650 Jt", val: 650000000, photos: ["unit-6.jpg", "unit-6.1.jpg", "unit-6.2.jpg", "unit-6.3.jpg"] }
             ],
             6: [
-                { id: "6a", name: "Perunggu Livin Tipe B", tag: "315 Jt", val: 315000000, mainPhoto: "unit-1.jpg", supportPhotos: ["unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
-                { id: "6b", name: "Quartz Livin Tipe Q", tag: "460 Jt", val: 460000000, mainPhoto: "unit-2.jpg", supportPhotos: ["unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] }
+                { name: "Perunggu Livin Tipe B", tag: "315 Jt", val: 315000000, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
+                { name: "Quartz Livin Tipe Q", tag: "460 Jt", val: 460000000, photos: ["unit-2.jpg", "unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] },
+                { name: "TreeTops Livin", tag: "530 Jt", val: 530000000, photos: ["unit-3.jpg", "unit-3.1.jpg", "unit-3.2.jpg", "unit-3.3.jpg"] },
+                { name: "Gold Livin Tipe G", tag: "595 Jt", val: 595000000, photos: ["unit-4.jpg", "unit-4.1.jpg", "unit-4.2.jpg", "unit-4.3.jpg"] },
+                { name: "GoldTops Livin Type GT", tag: "670 Jt", val: 670000000, photos: ["unit-5.jpg", "unit-5.1.jpg", "unit-5.2.jpg", "unit-5.3.jpg", "unit-5.4.jpg"] }
             ],
             7: [
-                { id: "7a", name: "Perunggu Beverly Livin", tag: "325 Jt", val: 325000000, mainPhoto: "unit-1.jpg", supportPhotos: ["unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
-                { id: "7b", name: "Silver Beverly Livin", tag: "410 Jt", val: 410000000, mainPhoto: "unit-2.jpg", supportPhotos: ["unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] }
+                { name: "Perunggu Beverly Livin", tag: "325 Jt", val: 325000000, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
+                { name: "Silver Beverly Livin", tag: "410 Jt", val: 410000000, photos: ["unit-2.jpg", "unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] },
+                { name: "Urban Beverly Livin", tag: "500 Jt", val: 500000000, photos: ["unit-3.jpg", "unit-3.1.jpg", "unit-3.2.jpg", "unit-3.3.jpg"] },
+                { name: "TreeTops Beverly Livin", tag: "550 Jt", val: 550000000, photos: ["unit-4.jpg", "unit-4.1.jpg", "unit-4.2.jpg", "unit-4.3.jpg"] },
+                { name: "Gold Beverly Livin", tag: "610 Jt", val: 610000000, photos: ["unit-5.jpg", "unit-5.1.jpg", "unit-5.2.jpg", "unit-5.3.jpg"] },
+                { name: "GoldTops Beverly Livin", tag: "690 Jt", val: 690000000, photos: ["unit-6.jpg", "unit-6.1.jpg", "unit-6.2.jpg", "unit-6.3.jpg"] }
             ]
         };
 
@@ -254,6 +234,7 @@
         function renderUnits(phase) {
             Object.values(autoSlideTimers).forEach(t => clearInterval(t));
             autoSlideTimers = {};
+            
             document.querySelectorAll('.phase-btn').forEach(b => {
                 b.classList.remove('bg-[#4a3728]', 'text-white', 'border-[#4a3728]');
                 b.classList.add('bg-white', 'text-dark', 'border-gray-100');
@@ -263,53 +244,67 @@
             const container = document.getElementById('grid-container');
             container.innerHTML = '';
 
-            unitData[phase].forEach((u) => {
-                const cardId = u.id;
-                let thumbs = u.supportPhotos.map((img, idx) => `
-                    <img src="fase-${phase}/${img}" class="thumb-item click-interact" onclick="changePhoto('${cardId}', 'fase-${phase}/${img}', this, true)">
+            unitData[phase].forEach((u, idx) => {
+                const cardId = `u-${phase}-${idx}`;
+                // Foto pertama di array photos menjadi main photo
+                const mainPhoto = u.photos[0];
+                
+                let thumbs = u.photos.map(img => `
+                    <img src="fase-${phase}/${img}" class="thumb-item click-interact" 
+                         onerror="this.src='https://placehold.co/400x225/f0ebe3/4a3728?text=Unit+Photo'"
+                         onclick="changePhoto('${cardId}', 'fase-${phase}/${img}', this, true)">
                 `).join('');
 
                 container.innerHTML += `
-                    <div class="unit-card click-interact" data-aos="fade-up">
+                    <div class="unit-card click-interact" style="animation-delay: ${idx * 0.1}s">
                         <div class="main-unit-box">
-                            <img id="main-${cardId}" src="fase-${phase}/${u.mainPhoto}">
+                            <img id="main-${cardId}" src="fase-${phase}/${mainPhoto}" 
+                                 onerror="this.src='https://placehold.co/800x600/f0ebe3/4a3728?text=Fase+${phase}+Unit'">
                         </div>
-                        <div class="mt-4"><div class="thumb-scroller">${thumbs}</div></div>
-                        <div class="mt-4 sm:mt-6">
+                        <div class="mt-3"><div class="thumb-scroller">${thumbs}</div></div>
+                        <div class="mt-4">
                             <h4 class="text-xl sm:text-2xl font-black text-[#4a3728] uppercase tracking-tighter">${u.name}</h4>
-                            
-                            <!-- RAPIH DI MOBILE: flex-col ke sm:flex-row agar tombol melebar penuh di HP -->
-                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-[#fdfbf7] p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-gray-50 mt-4 gap-4 sm:gap-0">
-                                <div>
-                                    <span class="text-[8px] sm:text-[9px] font-black text-gray-400 uppercase tracking-widest">Mulai Dari</span>
-                                    <p class="text-xl sm:text-2xl font-black text-[#a68966]">Rp ${u.tag}</p>
-                                </div>
+                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-[#fdfbf7] p-4 rounded-2xl border border-gray-50 mt-3 gap-3">
+                                <div><span class="text-[8px] font-black text-gray-400 uppercase tracking-widest">Mulai Dari</span><p class="text-xl sm:text-2xl font-black text-[#a68966]">Rp ${u.tag}</p></div>
                                 <div class="flex gap-2 w-full sm:w-auto">
-                                    <button onclick="setKPR(${u.val})" class="click-interact w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center bg-white rounded-xl sm:rounded-2xl border border-gray-100 shadow-sm shrink-0"><i class="fa-solid fa-calculator text-[#a68966] text-lg sm:text-xl"></i></button>
-                                    <a href="https://wa.me/628111982833?text=Halo%20Echi,%20tertarik%20unit%20${u.name}" target="_blank" class="click-interact flex-1 h-12 sm:h-14 flex items-center justify-center bg-[#4a3728] text-white rounded-xl sm:rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg">HUBUNGI</a>
+                                    <button onclick="setKPR(${u.val})" class="click-interact w-12 h-12 flex items-center justify-center bg-white rounded-xl border border-gray-100 shadow-sm shrink-0"><i class="fa-solid fa-calculator text-[#a68966] text-lg"></i></button>
+                                    <a href="https://wa.me/628111982833?text=Halo%20Echi,%20tertarik%20unit%20${u.name}" target="_blank" class="click-interact flex-1 h-12 flex items-center justify-center bg-[#4a3728] text-white rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg">HUBUNGI</a>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 `;
-                startAutoSlide(cardId, phase, u.supportPhotos);
+                startAutoSlide(cardId, phase, u.photos);
             });
-            AOS.refresh();
         }
 
         function startAutoSlide(cardId, phase, photos) {
             let idx = -1;
             autoSlideTimers[cardId] = setInterval(() => {
                 idx = (idx + 1) % photos.length;
-                const cardEl = document.getElementById(`main-${cardId}`).closest('.unit-card');
+                const mEl = document.getElementById(`main-${cardId}`);
+                if (!mEl) return;
+                const cardEl = mEl.closest('.unit-card');
                 const thumbs = cardEl.querySelectorAll('.thumb-item');
-                if(thumbs[idx]) {
-                    // isManual = false, agar layar TIDAK terscroll otomatis
-                    changePhoto(cardId, `fase-${phase}/${photos[idx]}`, thumbs[idx], false);
-                }
+                if(thumbs[idx]) changePhoto(cardId, `fase-${phase}/${photos[idx]}`, thumbs[idx], false);
             }, 5000);
         }
 
         function changePhoto(id, src, el, isManual) {
-            con
+            const m = document.getElementById('main-' + id);
+            if(!m) return;
+            m.style.opacity = '0.4';
+            setTimeout(() => {
+                m.src = src; m.style.opacity = '1';
+                if(el && el.parentElement) {
+                    el.parentElement.querySelectorAll('.thumb-item').forEach(i => i.classList.remove('active'));
+                    el.classList.add('active');
+                    if (isManual) el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                }
+            }, 200);
+            if (isManual && autoSlideTimers[id]) clearInterval(autoSlideTimers[id]);
+        }
+
+        function formatIDR(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+        function handleInput(el) {
+            let v = el.value.replace(/\
