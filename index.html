@@ -34,14 +34,13 @@
             border-bottom: 1px solid #f0f0f0;
         }
 
-        /* --- PROFILE DRAG & TRANSFORM --- */
+        /* --- PROFILE SECTION --- */
         #profile-trigger {
             touch-action: pan-y;
             cursor: grab;
             position: relative;
             z-index: 10;
         }
-        #profile-trigger:active { cursor: grabbing; }
 
         .profile-container {
             transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
@@ -68,6 +67,7 @@
             flex-shrink: 0;
         }
 
+        /* Transform state when scrolled or dragged */
         .is-transformed .profile-container {
             flex-direction: row;
             align-items: center;
@@ -84,46 +84,45 @@
             margin-right: 20px;
         }
 
-        /* --- UNIT CARD & ADAPTIVE HERO --- */
+        /* --- UNIT CARD & ADAPTIVE LAYOUT --- */
         .unit-card {
             background: white; border-radius: 2rem; overflow: hidden;
             border: 1px solid #f0ebe3; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
             margin-bottom: 3rem;
+            position: relative;
         }
 
-        /* Rasio Adaptif dengan Transisi */
         .hero-view {
             width: 100%; 
-            aspect-ratio: 1/1; /* Default 1:1 */
-            background: #1a1a1a;
+            aspect-ratio: 1/1; /* Default Kotak */
+            background: #f3f4f6;
             overflow: hidden; 
             position: relative; 
             display: flex;
             align-items: center; 
             justify-content: center;
-            transition: aspect-ratio 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* State saat foto pendukung diklik */
         .hero-view.is-wide {
-            aspect-ratio: 16/9;
+            aspect-ratio: 16/9; /* Menjadi Lebar saat foto pendukung diklik */
         }
 
         .hero-view img { 
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s ease;
         }
 
         .thumb-img-wrapper {
             width: 100%; aspect-ratio: 16/9; overflow: hidden;
             border-radius: 12px; cursor: pointer;
-            transition: transform 0.2s ease;
+            background: #eee;
         }
-        .thumb-img-wrapper:active { transform: scale(0.95); }
         .thumb-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
+        /* UI ELEMENTS */
         .btn-chat-wa {
             background-color: var(--dark) !important;
             color: #ffffff !important;
@@ -140,7 +139,7 @@
         }
         .phase-btn.active { background: var(--dark); color: white !important; }
 
-        .swiper-slide { width: 180px !important; }
+        .swiper-slide { width: 160px !important; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -159,6 +158,7 @@
 </head>
 <body>
 
+    <!-- Navigasi -->
     <nav class="fixed top-0 w-full nav-glass px-6 py-4 flex justify-between items-center">
         <div class="font-extrabold text-sm tracking-tighter uppercase">NEFSI ASRIFAH <span class="text-[#a68966]">| ECHI</span></div>
         <button onclick="toggleMenu(true)" class="p-1"><i class="fa-solid fa-bars text-xl"></i></button>
@@ -171,17 +171,17 @@
         <a href="#kpr" onclick="toggleMenu(false)" class="text-xl font-black mb-6 uppercase">Simulasi KPR</a>
     </div>
 
-    <!-- Section Profil -->
+    <!-- Header Profil -->
     <header id="top">
         <div id="profile-trigger" class="profile-container">
             <div class="profile-image-wrapper">
-                <img src="wajah.jpg" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400?text=Echi'">
+                <img src="wajah.jpg" id="prof-img" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400?text=Echi'">
             </div>
             <div class="profile-text-content">
                 <span class="text-[8px] font-bold text-[#a68966] uppercase tracking-[0.3em] mb-1 block">Property Consultant</span>
                 <h1 class="text-2xl font-black tracking-tighter mb-1 uppercase">Estate by Echi</h1>
-                <p class="text-gray-400 text-[9px] max-w-[250px] leading-tight font-medium">Spesialis Properti Park Serpong.</p>
-                <div class="flex gap-2 mt-4 justify-center is-transformed:justify-start">
+                <p class="text-gray-400 text-[9px] max-w-[250px] leading-tight font-medium">Temukan hunian impian Anda di Park Serpong bersama saya.</p>
+                <div class="flex gap-2 mt-4 justify-center">
                     <a href="#katalog" class="tab-btn"><i class="fa-solid fa-house"></i> UNIT</a>
                     <a href="#kpr" class="tab-btn"><i class="fa-solid fa-calculator"></i> KPR</a>
                 </div>
@@ -189,20 +189,22 @@
         </div>
     </header>
 
-    <!-- Katalog Unit -->
+    <!-- Katalog -->
     <section id="katalog" class="py-10 px-4">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-center font-black uppercase tracking-[0.3em] text-[12px] mb-8">Unit Park Serpong</h2>
+            <h2 class="text-center font-black uppercase tracking-[0.3em] text-[12px] mb-8">Pilihan Unit</h2>
             <div class="flex gap-2 overflow-x-auto no-scrollbar mb-8 pb-2 justify-center">
                 <button onclick="renderUnits(7)" id="btn-7" class="phase-btn active">FASE 07</button>
                 <button onclick="renderUnits(6)" id="btn-6" class="phase-btn">FASE 06</button>
                 <button onclick="renderUnits(5)" id="btn-5" class="phase-btn">FASE 05</button>
             </div>
-            <div id="unit-list"></div>
+            <div id="unit-list" class="space-y-4">
+                <!-- Unit list will be injected here -->
+            </div>
         </div>
     </section>
 
-    <!-- Simulasi KPR -->
+    <!-- KPR Section -->
     <section id="kpr" class="py-16 px-4 bg-white border-t">
         <div class="max-w-md mx-auto">
             <h3 class="text-center font-black uppercase text-[#a68966] mb-10">Simulasi Cicilan</h3>
@@ -228,7 +230,7 @@
                 <div class="mt-8 kpr-result-box">
                     <p class="text-[9px] font-bold text-gray-400 uppercase mb-3">Estimasi Cicilan</p>
                     <span id="hasil-cicilan" class="kpr-result-value">Rp 2.050.000</span>
-                    <a href="https://wa.me/628111982833" target="_blank" class="block w-full py-4 bg-[#a68966] text-white rounded-xl font-bold text-[10px] uppercase">Chat Echi Sekarang</a>
+                    <a href="https://wa.me/628111982833" target="_blank" class="block w-full py-4 bg-[#a68966] text-white rounded-xl font-bold text-[10px] uppercase">Tanya Echi Sekarang</a>
                 </div>
             </div>
         </div>
@@ -240,7 +242,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // --- LOGIKA TARIK PROFIL ---
+        // --- LOGIKA TRANSFORM PROFIL ---
         const trigger = document.getElementById('profile-trigger');
         const header = document.querySelector('header');
         let isDragging = false, startY = 0;
@@ -302,9 +304,12 @@
         function renderUnits(fase) {
             const list = document.getElementById('unit-list');
             list.innerHTML = '';
+            
+            // Clean Swipers
             activeSwipers.forEach(s => s.destroy());
             activeSwipers = [];
 
+            // Phase Buttons
             document.querySelectorAll('.phase-btn').forEach(b => b.classList.toggle('active', b.id === `btn-${fase}`));
 
             unitData[fase].forEach((u, i) => {
@@ -321,7 +326,7 @@
 
                 list.innerHTML += `
                     <div class="unit-card">
-                        <!-- Hero Image Adaptif -->
+                        <!-- Foto Atas Adaptif (1:1 -> 16:9) -->
                         <div class="hero-view" id="hero-container-${uid}" onclick="resetHero('${uid}', '${heroSrc}')">
                             <img id="hero-img-${uid}" src="${heroSrc}" onerror="this.src='https://placehold.co/600x600?text=${u.name}'">
                         </div>
@@ -329,9 +334,9 @@
                         <div class="p-6">
                             <h4 class="font-black text-2xl uppercase tracking-tighter mb-4">${u.name}</h4>
                             
-                            <!-- Thumbnail Slider -->
+                            <!-- Slider Foto Pendukung -->
                             <div class="mb-6">
-                                <p class="text-[7px] font-black text-gray-300 uppercase tracking-widest mb-3">Ketuk Galeri untuk Perbesar</p>
+                                <p class="text-[7px] font-black text-gray-400 uppercase tracking-widest mb-3">Ketuk Foto di Bawah untuk Perbesar</p>
                                 <div class="swiper" id="swiper-${uid}">
                                     <div class="swiper-wrapper">${thumbHtml}</div>
                                 </div>
@@ -340,13 +345,13 @@
                             <div class="flex flex-col gap-3">
                                 <div class="bg-[#fdfbf7] p-5 rounded-2xl border border-gray-100 flex justify-between items-center">
                                     <div>
-                                        <p class="text-[7px] font-bold text-gray-400 uppercase">Harga Mulai</p>
+                                        <p class="text-[7px] font-bold text-gray-400 uppercase">Mulai Dari</p>
                                         <p class="font-black text-xl text-[#a68966]">Rp ${u.tag}</p>
                                     </div>
                                     <button onclick="setKPR(${u.val})" class="bg-white border px-4 py-2 rounded-xl text-[8px] font-black uppercase">Simulasi</button>
                                 </div>
-                                <a href="https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20info%20unit%20${u.name}" target="_blank" class="btn-chat-wa">
-                                    <i class="fa-brands fa-whatsapp"></i><span>Tanya Echi Sekarang</span>
+                                <a href="https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20saya%20tertarik%20unit%20${u.name}" target="_blank" class="btn-chat-wa">
+                                    <i class="fa-brands fa-whatsapp"></i><span>Chat Echi Sekarang</span>
                                 </a>
                             </div>
                         </div>
@@ -354,24 +359,26 @@
                 `;
             });
 
+            // Re-init Swipers
             setTimeout(() => { 
                 unitData[fase].forEach((u, i) => {
                     activeSwipers.push(new Swiper(`#swiper-u-${fase}-${i}`, { 
-                        slidesPerView: "auto", spaceBetween: 12, slidesOffsetBefore: 0, slidesOffsetAfter: 0,
-                        loop: true, autoplay: { delay: 4000, disableOnInteraction: false }
+                        slidesPerView: "auto", 
+                        spaceBetween: 12, 
+                        freeMode: true,
+                        loop: true, 
+                        autoplay: { delay: 4000, disableOnInteraction: false }
                     }));
                 }); 
             }, 100);
         }
 
-        // Fungsi saat galeri diklik
+        // --- ADAPTIVE PHOTO LOGIC ---
         function previewImage(id, src) { 
             const container = document.getElementById(`hero-container-${id}`);
             const img = document.getElementById(`hero-img-${id}`);
             
-            // Ubah Rasio ke 16:9
-            container.classList.add('is-wide');
-            // Ganti Source Foto
+            container.classList.add('is-wide'); // Ubah ke 16:9
             img.style.opacity = '0';
             setTimeout(() => {
                 img.src = src;
@@ -379,14 +386,11 @@
             }, 150);
         }
 
-        // Fungsi saat hero diklik (Reset)
         function resetHero(id, src) { 
             const container = document.getElementById(`hero-container-${id}`);
             const img = document.getElementById(`hero-img-${id}`);
             
-            // Kembalikan Rasio ke 1:1
-            container.classList.remove('is-wide');
-            // Ganti Source ke Foto Utama
+            container.classList.remove('is-wide'); // Balik ke 1:1
             img.style.opacity = '0';
             setTimeout(() => {
                 img.src = src;
@@ -394,8 +398,9 @@
             }, 150);
         }
 
+        // --- KPR & UI LOGIC ---
         function toggleMenu(s) { document.getElementById('mobile-menu').classList.toggle('hidden', !s); document.getElementById('mobile-menu').classList.toggle('flex', s); }
         function formatRibuan(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
-        function formatAndCalc(el) { let v = el.value.replace(/\D/g, ""); document.getElementById('kpr-raw').value = v; el.value = formatRibuan(v); calc(); }
-        function calc() {
+        function formatAndCalc(el) { 
+            let v = el.value.replace(/\D/g, ""); 
         
