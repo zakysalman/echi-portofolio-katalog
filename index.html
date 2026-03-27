@@ -36,47 +36,41 @@
 
         .unit-card {
             background: white;
-            border-radius: 2rem;
+            border-radius: 2.5rem;
             overflow: hidden;
             border: 1px solid #f0ebe3;
             box-shadow: 0 10px 40px rgba(74, 55, 40, 0.03);
-            margin-bottom: 2rem;
+            margin-bottom: 3.5rem;
             display: flex;
             flex-direction: column;
         }
 
-        .main-view {
+        /* Unit Utama (Atas - 4:3) */
+        .hero-view {
             width: 100%;
             aspect-ratio: 4/3;
             background: #f7f3ed;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
-        .main-view img {
+        .hero-view img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: opacity 0.4s ease;
         }
 
-        .swiper-container {
-            padding: 10px 15px 20px 15px;
+        /* Galeri Pendukung (Bawah - 16:9) */
+        .gallery-container {
+            padding: 20px 0;
             background: #fff;
         }
         .swiper-slide {
-            width: 100px;
-            height: 65px;
-            border-radius: 12px;
+            width: 240px; /* Lebih lebar untuk 16:9 */
+            aspect-ratio: 16/9; /* Rasio sesuai permintaan */
+            border-radius: 1rem;
             overflow: hidden;
             cursor: pointer;
-            border: 2px solid transparent;
-            transition: 0.3s;
+            border: 1px solid #eee;
             background: #f0ebe3;
-        }
-        .swiper-slide-thumb-active {
-            border-color: var(--gold);
         }
         .swiper-slide img {
             width: 100%;
@@ -85,9 +79,9 @@
         }
 
         .phase-btn {
-            padding: 10px 18px;
-            border-radius: 10px;
-            font-size: 10px;
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-size: 11px;
             font-weight: 800;
             border: 1px solid #eee;
             background: white;
@@ -98,6 +92,7 @@
             background: var(--dark);
             color: white;
             border-color: var(--dark);
+            box-shadow: 0 4px 15px rgba(74, 55, 40, 0.15);
         }
 
         #mobile-menu {
@@ -110,10 +105,10 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         .btn-action {
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .btn-action:active {
-            transform: scale(0.92);
+            transform: scale(0.95);
         }
     </style>
 </head>
@@ -127,64 +122,67 @@
     <div id="mobile-menu">
         <button onclick="document.getElementById('mobile-menu').style.display='none'" class="absolute top-6 right-6 text-3xl"><i class="fa-solid fa-xmark"></i></button>
         <a href="#top" onclick="document.getElementById('mobile-menu').style.display='none'" class="py-5 text-2xl font-black uppercase">Beranda</a>
-        <a href="#katalog" onclick="document.getElementById('mobile-menu').style.display='none'" class="py-5 text-2xl font-black uppercase">Unit Pilihan</a>
+        <a href="#katalog" onclick="document.getElementById('mobile-menu').style.display='none'" class="py-5 text-2xl font-black uppercase">Unit Park Serpong</a>
         <a href="#kpr" onclick="document.getElementById('mobile-menu').style.display='none'" class="py-5 text-2xl font-black uppercase">Simulasi KPR</a>
     </div>
 
-    <div id="top" class="pt-28 pb-10 px-6">
+    <div id="top" class="pt-32 pb-12 px-6">
         <div class="max-w-4xl mx-auto flex flex-col items-center text-center">
-            <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-lg mb-4">
+            <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl mb-6">
                 <img src="wajah.jpg" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400?text=Echi'">
             </div>
-            <span class="text-[9px] font-extrabold text-[#a68966] uppercase tracking-[0.4em] mb-2">Park Serpong Property Consultant</span>
-            <h1 class="text-3xl font-black tracking-tight mb-2">ECHI ASRIFAH</h1>
-            <p class="text-gray-400 text-[11px] max-w-xs mx-auto leading-relaxed">Wujudkan hunian impian dengan pelayanan transparan dan profesional.</p>
+            <span class="text-[10px] font-extrabold text-[#a68966] uppercase tracking-[0.5em] mb-3">Official Consultant</span>
+            <h1 class="text-4xl font-black tracking-tighter mb-4">ESTATE BY ECHI</h1>
+            <p class="text-gray-400 text-xs max-w-xs mx-auto leading-relaxed font-medium">Temukan hunian masa depan Anda di Park Serpong bersama konsultan terpercaya.</p>
         </div>
     </div>
 
     <section id="katalog" class="py-6 px-6">
         <div class="max-w-6xl mx-auto">
-            <div class="flex gap-2 overflow-x-auto no-scrollbar mb-8 pb-2">
+            <div class="flex gap-3 overflow-x-auto no-scrollbar mb-10 pb-2">
                 <button onclick="renderUnits(7)" id="btn-7" class="phase-btn active">FASE 07</button>
                 <button onclick="renderUnits(6)" id="btn-6" class="phase-btn">FASE 06</button>
                 <button onclick="renderUnits(5)" id="btn-5" class="phase-btn">FASE 05</button>
             </div>
             
-            <div id="unit-display-area" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- Unit didorong oleh JS -->
+            <div id="unit-list" class="space-y-12">
+                <!-- Data Unit masuk melalui JS -->
             </div>
         </div>
     </section>
 
-    <section id="kpr" class="py-20 px-6 bg-white border-t border-gray-100">
+    <section id="kpr" class="py-24 px-6 bg-white border-t border-gray-100">
         <div class="max-w-xl mx-auto">
-            <h3 class="text-center font-black uppercase tracking-widest text-[#a68966] mb-12">Simulasi Angsuran</h3>
-            <div class="space-y-4">
-                <div class="bg-[#fdfbf7] p-5 rounded-2xl border border-gray-200">
-                    <label class="text-[9px] font-black uppercase text-gray-400 block mb-1">Harga Properti (Rp)</label>
-                    <input type="text" id="kpr-disp" value="325.000.000" oninput="formatAndCalc(this)" class="w-full bg-transparent border-none outline-none text-xl font-black">
+            <h3 class="text-center font-black uppercase tracking-widest text-[#a68966] mb-12">Simulasi KPR</h3>
+            <div class="space-y-5">
+                <div class="bg-[#fdfbf7] p-6 rounded-3xl border border-gray-200">
+                    <label class="text-[9px] font-black uppercase text-gray-400 block mb-2">Harga Properti</label>
+                    <div class="flex items-center">
+                        <span class="text-gray-300 font-bold mr-2">Rp</span>
+                        <input type="text" id="kpr-disp" value="325.000.000" oninput="formatAndCalc(this)" class="w-full bg-transparent border-none outline-none text-2xl font-black tracking-tight">
+                    </div>
                     <input type="hidden" id="kpr-raw" value="325000000">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-[#fdfbf7] p-5 rounded-2xl border border-gray-200">
-                        <label class="text-[9px] font-black uppercase text-gray-400 block mb-1">Uang Muka (%)</label>
-                        <input type="number" id="dp-val" value="5" oninput="calc()" class="w-full bg-transparent border-none font-black text-lg outline-none">
+                    <div class="bg-[#fdfbf7] p-6 rounded-3xl border border-gray-200">
+                        <label class="text-[9px] font-black uppercase text-gray-400 block mb-2">Uang Muka (%)</label>
+                        <input type="number" id="dp-val" value="5" oninput="calc()" class="w-full bg-transparent border-none font-black text-xl outline-none">
                     </div>
-                    <div class="bg-[#fdfbf7] p-5 rounded-2xl border border-gray-200">
-                        <label class="text-[9px] font-black uppercase text-gray-400 block mb-1">Tenor (Tahun)</label>
-                        <input type="number" id="tenor-val" value="20" oninput="calc()" class="w-full bg-transparent border-none font-black text-lg outline-none">
+                    <div class="bg-[#fdfbf7] p-6 rounded-3xl border border-gray-200">
+                        <label class="text-[9px] font-black uppercase text-gray-400 block mb-2">Tenor (Tahun)</label>
+                        <input type="number" id="tenor-val" value="20" oninput="calc()" class="w-full bg-transparent border-none font-black text-xl outline-none">
                     </div>
                 </div>
-                <div class="mt-10 bg-dark p-8 rounded-[2rem] text-center shadow-xl">
-                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Estimasi Per Bulan</p>
-                    <h2 id="hasil-cicilan" class="text-3xl font-black text-white mb-8 tracking-tighter">Rp 2.050.000</h2>
-                    <a id="wa-link" href="https://wa.me/628111982833" target="_blank" class="block w-full py-4 bg-[#a68966] text-white rounded-xl font-black text-[10px] uppercase tracking-[0.2em] btn-action">Chat WA Ke Echi</a>
+                <div class="mt-12 bg-dark p-10 rounded-[3rem] text-center shadow-2xl">
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Estimasi Cicilan</p>
+                    <h2 id="hasil-cicilan" class="text-4xl font-black text-white mb-10 tracking-tighter">Rp 2.050.000</h2>
+                    <a id="wa-link" href="https://wa.me/628111982833" target="_blank" class="block w-full py-5 bg-[#a68966] text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] btn-action">Konsultasi Ke Echi</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-12 text-center text-[9px] font-bold text-gray-300 uppercase tracking-[0.4em]">
+    <footer class="py-16 text-center text-[9px] font-bold text-gray-300 uppercase tracking-[0.6em]">
         &copy; 2024 Nefsi Asrifah | Echi Park Serpong
     </footer>
 
@@ -221,8 +219,8 @@
         let activeSwipers = [];
 
         function renderUnits(fase) {
-            const container = document.getElementById('unit-display-area');
-            container.innerHTML = '';
+            const list = document.getElementById('unit-list');
+            list.innerHTML = '';
             activeSwipers.forEach(s => s.destroy());
             activeSwipers = [];
 
@@ -230,48 +228,58 @@
             document.getElementById('btn-'+fase).classList.add('active');
 
             unitData[fase].forEach((u, i) => {
-                const uid = `unit-${fase}-${i}`;
-                const thumbHtml = u.photos.map(p => `
+                const uid = `u-${fase}-${i}`;
+                
+                // Pisahkan Foto Utama (index 0) dengan Pendukung (index 1 dst)
+                const galleryPhotos = u.photos.slice(1);
+                const thumbHtml = galleryPhotos.map(p => `
                     <div class="swiper-slide">
-                        <img src="fase-${fase}/${p}" onerror="this.src='https://placehold.co/200x150/f7f3ed/a68966?text=Image'">
+                        <img src="fase-${fase}/${p}" onerror="this.src='https://placehold.co/640x360/f7f3ed/a68966?text=Gallery'">
                     </div>
                 `).join('');
 
-                container.innerHTML += `
+                list.innerHTML += `
                     <div class="unit-card">
-                        <div class="main-view">
-                            <img id="main-img-${uid}" src="fase-${fase}/${u.photos[0]}" onerror="this.src='https://placehold.co/600x450/f7f3ed/a68966?text=${u.name}'">
+                        <!-- UNIT UTAMA -->
+                        <div class="hero-view">
+                            <img src="fase-${fase}/${u.photos[0]}" onerror="this.src='https://placehold.co/800x600/f7f3ed/a68966?text=${u.name}'">
                         </div>
 
-                        <div class="swiper swiper-container" id="swiper-${uid}">
-                            <div class="swiper-wrapper">${thumbHtml}</div>
-                        </div>
-
-                        <div class="px-8 pb-8 pt-2">
-                            <h4 class="font-black text-xl uppercase tracking-tighter mb-4">${u.name}</h4>
-                            
-                            <div class="grid grid-cols-2 gap-3">
-                                <!-- Pintasan KPR -->
-                                <button onclick="setKPR(${u.val}, '${u.name}')" class="flex items-center justify-center gap-2 bg-[#fdfbf7] border border-gray-100 py-4 rounded-2xl btn-action">
-                                    <i class="fa-solid fa-calculator text-[#a68966]"></i>
-                                    <span class="text-[9px] font-black uppercase tracking-widest text-[#a68966]">Hitung KPR</span>
-                                </button>
-                                
-                                <!-- Pintasan WA Echi -->
-                                <a href="https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20saya%20tertarik%20dengan%20unit%20${u.name}%20di%20Fase%200${fase}.%20Boleh%20tanya%20detailnya?" 
-                                   target="_blank" 
-                                   class="flex items-center justify-center gap-2 bg-dark py-4 rounded-2xl btn-action shadow-lg">
-                                    <i class="fa-brands fa-whatsapp text-white"></i>
-                                    <span class="text-[9px] font-black uppercase tracking-widest text-white">WA Echi</span>
-                                </a>
-                            </div>
-
-                            <div class="mt-6 flex justify-between items-center border-t border-gray-50 pt-6">
-                                <div>
-                                    <p class="text-[7px] font-black text-gray-300 uppercase mb-1">Estimasi Harga Mulai</p>
-                                    <p class="font-black text-lg text-[#a68966]">Rp ${u.tag}</p>
+                        <!-- GALERI PENDUKUNG (16:9) -->
+                        <div class="gallery-container">
+                            <p class="px-8 text-[9px] font-black uppercase text-gray-300 tracking-widest mb-4">Unit Gallery</p>
+                            <div class="swiper swiper-gallery" id="swiper-${uid}">
+                                <div class="swiper-wrapper">
+                                    ${thumbHtml}
                                 </div>
-                                <span class="bg-gray-50 px-3 py-1 rounded-full text-[8px] font-black text-gray-400 uppercase">Fase 0${fase}</span>
+                            </div>
+                        </div>
+
+                        <!-- KONTEN & AKSI -->
+                        <div class="px-8 pb-10">
+                            <h4 class="font-black text-2xl uppercase tracking-tighter mb-6">${u.name}</h4>
+                            
+                            <div class="flex flex-col gap-4">
+                                <div class="flex justify-between items-end bg-[#fdfbf7] p-6 rounded-3xl border border-gray-100">
+                                    <div>
+                                        <p class="text-[8px] font-black text-gray-300 uppercase mb-1">Mulai Dari</p>
+                                        <p class="font-black text-xl text-[#a68966]">Rp ${u.tag}</p>
+                                    </div>
+                                    <span class="text-[8px] font-black text-gray-300 uppercase">Phase 0${fase}</span>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button onclick="setKPR(${u.val}, '${u.name}')" class="flex items-center justify-center gap-2 bg-white border border-gray-200 py-4 rounded-2xl btn-action shadow-sm">
+                                        <i class="fa-solid fa-calculator text-[#a68966]"></i>
+                                        <span class="text-[9px] font-black uppercase tracking-widest">Hitung KPR</span>
+                                    </button>
+                                    <a href="https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20saya%20tertarik%20dengan%20unit%20${u.name}%20di%20Fase%200${fase}.%20Bisa%20info%20detailnya?" 
+                                       target="_blank" 
+                                       class="flex items-center justify-center gap-2 bg-dark py-4 rounded-2xl btn-action shadow-lg">
+                                        <i class="fa-brands fa-whatsapp text-white"></i>
+                                        <span class="text-[9px] font-black uppercase tracking-widest text-white">Hubungi Echi</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -280,23 +288,15 @@
 
             setTimeout(() => {
                 unitData[fase].forEach((u, i) => {
-                    const uid = `unit-${fase}-${i}`;
+                    const uid = `u-${fase}-${i}`;
                     const swiper = new Swiper(`#swiper-${uid}`, {
                         slidesPerView: "auto",
-                        spaceBetween: 8,
+                        spaceBetween: 12,
+                        slidesOffsetBefore: 30,
+                        slidesOffsetAfter: 30,
                         freeMode: true,
                         loop: true,
-                        autoplay: { delay: 3000, disableOnInteraction: true },
-                        on: {
-                            click: function(s) {
-                                if(s.clickedSlide) {
-                                    const src = s.clickedSlide.querySelector('img').src;
-                                    const main = document.getElementById('main-img-'+uid);
-                                    main.style.opacity = '0.5';
-                                    setTimeout(() => { main.src = src; main.style.opacity = '1'; }, 150);
-                                }
-                            }
-                        }
+                        autoplay: { delay: 3500, disableOnInteraction: false }
                     });
                     activeSwipers.push(swiper);
                 });
@@ -322,7 +322,7 @@
             const cicilan = (pinjam * bunga) / (1 - Math.pow(1 + bunga, -bulan));
             
             document.getElementById('hasil-cicilan').innerText = "Rp " + formatRibuan(Math.round(cicilan || 0));
-            document.getElementById('wa-link').href = `https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20saya%20sudah%20hitung%20simulasi%20KPR%20dengan%20harga%20unit%20Rp%20${formatRibuan(h)}.%20Bisa%20bantu%20cek%20promonya?`;
+            document.getElementById('wa-link').href = `https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20saya%20sudah%20simulasi%20KPR%20untuk%20unit%20harga%20Rp%20${formatRibuan(h)}`;
         }
 
         function setKPR(v, name) {
@@ -335,4 +335,4 @@
         window.onload = () => { renderUnits(7); calc(); };
     </script>
 </body>
-</html>
+    </html>
