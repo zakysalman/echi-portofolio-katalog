@@ -45,32 +45,51 @@
             flex-direction: column;
         }
 
-        /* Unit Utama (Atas - 4:3) */
+        /* Unit Utama (Frame Tetap 4:3) */
         .hero-view {
             width: 100%;
             aspect-ratio: 4/3;
-            background: #f7f3ed;
+            background: #1a1a1a; /* Latar gelap untuk area kosong saat no-crop */
             overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
+        /* Logika No-Crop: Gambar utama pakai cover, gambar preview pakai contain */
         .hero-view img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* Default untuk foto utama agar penuh */
+            transition: all 0.4s ease;
+            opacity: 1;
         }
 
-        /* Galeri Pendukung (Bawah - 16:9) */
+        /* Class khusus saat menampilkan foto pendukung (Tanpa Crop) */
+        .hero-view.is-preview img {
+            object-fit: contain; /* Seluruh foto terlihat tanpa terpotong */
+            background: #1a1a1a;
+        }
+
+        /* Galeri Pendukung (16:9) */
         .gallery-container {
             padding: 20px 0;
             background: #fff;
         }
         .swiper-slide {
-            width: 240px; /* Lebih lebar untuk 16:9 */
-            aspect-ratio: 16/9; /* Rasio sesuai permintaan */
+            width: 220px; 
+            aspect-ratio: 16/9; 
             border-radius: 1rem;
             overflow: hidden;
             cursor: pointer;
-            border: 1px solid #eee;
+            border: 2px solid transparent;
             background: #f0ebe3;
+            transition: all 0.2s ease;
+        }
+        .swiper-slide.active-thumb {
+            border-color: var(--gold);
+            transform: scale(0.92);
         }
         .swiper-slide img {
             width: 100%;
@@ -110,6 +129,29 @@
         .btn-action:active {
             transform: scale(0.95);
         }
+
+        .reset-indicator {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(166, 137, 102, 0.9);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .hero-view.is-preview .reset-indicator {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -122,7 +164,7 @@
     <div id="mobile-menu">
         <button onclick="document.getElementById('mobile-menu').style.display='none'" class="absolute top-6 right-6 text-3xl"><i class="fa-solid fa-xmark"></i></button>
         <a href="#top" onclick="document.getElementById('mobile-menu').style.display='none'" class="py-5 text-2xl font-black uppercase">Beranda</a>
-        <a href="#katalog" onclick="document.getElementById('mobile-menu').style.display='none'" class="py-5 text-2xl font-black uppercase">Unit Park Serpong</a>
+        <a href="#katalog" onclick="document.getElementById('mobile-menu').style.display='none'" class="py-5 text-2xl font-black uppercase">Katalog Unit</a>
         <a href="#kpr" onclick="document.getElementById('mobile-menu').style.display='none'" class="py-5 text-2xl font-black uppercase">Simulasi KPR</a>
     </div>
 
@@ -131,9 +173,9 @@
             <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-xl mb-6">
                 <img src="wajah.jpg" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400?text=Echi'">
             </div>
-            <span class="text-[10px] font-extrabold text-[#a68966] uppercase tracking-[0.5em] mb-3">Official Consultant</span>
-            <h1 class="text-4xl font-black tracking-tighter mb-4">ESTATE BY ECHI</h1>
-            <p class="text-gray-400 text-xs max-w-xs mx-auto leading-relaxed font-medium">Temukan hunian masa depan Anda di Park Serpong bersama konsultan terpercaya.</p>
+            <span class="text-[10px] font-extrabold text-[#a68966] uppercase tracking-[0.5em] mb-3">Official Property Consultant</span>
+            <h1 class="text-4xl font-black tracking-tighter mb-4 uppercase">Estate by Echi</h1>
+            <p class="text-gray-400 text-xs max-w-xs mx-auto leading-relaxed font-medium">Lihat detail hunian idaman Anda tanpa terpotong dengan fitur interaktif kami.</p>
         </div>
     </div>
 
@@ -146,7 +188,7 @@
             </div>
             
             <div id="unit-list" class="space-y-12">
-                <!-- Data Unit masuk melalui JS -->
+                <!-- Konten dinamis dari JS -->
             </div>
         </div>
     </section>
@@ -165,18 +207,18 @@
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="bg-[#fdfbf7] p-6 rounded-3xl border border-gray-200">
-                        <label class="text-[9px] font-black uppercase text-gray-400 block mb-2">Uang Muka (%)</label>
+                        <label class="text-[9px] font-black uppercase text-gray-400 block mb-2">DP (%)</label>
                         <input type="number" id="dp-val" value="5" oninput="calc()" class="w-full bg-transparent border-none font-black text-xl outline-none">
                     </div>
                     <div class="bg-[#fdfbf7] p-6 rounded-3xl border border-gray-200">
-                        <label class="text-[9px] font-black uppercase text-gray-400 block mb-2">Tenor (Tahun)</label>
+                        <label class="text-[9px] font-black uppercase text-gray-400 block mb-2">Tenor (Thn)</label>
                         <input type="number" id="tenor-val" value="20" oninput="calc()" class="w-full bg-transparent border-none font-black text-xl outline-none">
                     </div>
                 </div>
                 <div class="mt-12 bg-dark p-10 rounded-[3rem] text-center shadow-2xl">
-                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Estimasi Cicilan</p>
+                    <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Cicilan Per Bulan</p>
                     <h2 id="hasil-cicilan" class="text-4xl font-black text-white mb-10 tracking-tighter">Rp 2.050.000</h2>
-                    <a id="wa-link" href="https://wa.me/628111982833" target="_blank" class="block w-full py-5 bg-[#a68966] text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] btn-action">Konsultasi Ke Echi</a>
+                    <a id="wa-link" href="https://wa.me/628111982833" target="_blank" class="block w-full py-5 bg-[#a68966] text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] btn-action">Tanya Echi Sekarang</a>
                 </div>
             </div>
         </div>
@@ -194,25 +236,17 @@
             5: [
                 { name: "Perunggu Livin Tipe B", tag: "305 Jt", val: 305000000, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
                 { name: "Perunggu Livin Tipe BB", tag: "390 Jt", val: 390000000, photos: ["unit-2.jpg", "unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] },
-                { name: "Quartz Livin Tipe Q", tag: "450 Jt", val: 450000000, photos: ["unit-3.jpg", "unit-3.1.jpg", "unit-3.2.jpg", "unit-3.3.jpg"] },
-                { name: "TreeTops Livin Tipe", tag: "520 Jt", val: 520000000, photos: ["unit-4.jpg", "unit-4.1.jpg", "unit-4.2.jpg", "unit-4.3.jpg", "unit-4.4.jpg"] },
-                { name: "Gold Livin Tipe G", tag: "580 Jt", val: 580000000, photos: ["unit-5.jpg", "unit-5.1.jpg", "unit-5.2.jpg", "unit-5.3.jpg"] },
-                { name: "GoldTops Livin Type GT", tag: "650 Jt", val: 650000000, photos: ["unit-6.jpg", "unit-6.1.jpg", "unit-6.2.jpg", "unit-6.3.jpg"] }
+                { name: "Quartz Livin Tipe Q", tag: "450 Jt", val: 450000000, photos: ["unit-3.jpg", "unit-3.1.jpg", "unit-3.2.jpg", "unit-3.3.jpg"] }
             ],
             6: [
                 { name: "Perunggu Livin Tipe B", tag: "315 Jt", val: 315000000, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
-                { name: "Quartz Livin Tipe Q", tag: "460 Jt", val: 460000000, photos: ["unit-2.jpg", "unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] },
-                { name: "TreeTops Livin", tag: "530 Jt", val: 530000000, photos: ["unit-3.jpg", "unit-3.1.jpg", "unit-3.2.jpg", "unit-3.3.jpg"] },
-                { name: "Gold Livin Tipe G", tag: "595 Jt", val: 595000000, photos: ["unit-4.jpg", "unit-4.1.jpg", "unit-4.2.jpg", "unit-4.3.jpg"] },
-                { name: "GoldTops Livin Type GT", tag: "670 Jt", val: 670000000, photos: ["unit-5.jpg", "unit-5.1.jpg", "unit-5.2.jpg", "unit-5.3.jpg", "unit-5.4.jpg"] }
+                { name: "Quartz Livin Tipe Q", tag: "460 Jt", val: 460000000, photos: ["unit-2.jpg", "unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] }
             ],
             7: [
                 { name: "Perunggu Beverly Livin", tag: "325 Jt", val: 325000000, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
                 { name: "Silver Beverly Livin", tag: "410 Jt", val: 410000000, photos: ["unit-2.jpg", "unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] },
                 { name: "Urban Beverly Livin", tag: "500 Jt", val: 500000000, photos: ["unit-3.jpg", "unit-3.1.jpg", "unit-3.2.jpg", "unit-3.3.jpg"] },
-                { name: "TreeTops Beverly Livin", tag: "550 Jt", val: 550000000, photos: ["unit-4.jpg", "unit-4.1.jpg", "unit-4.2.jpg", "unit-4.3.jpg"] },
-                { name: "Gold Beverly Livin", tag: "610 Jt", val: 610000000, photos: ["unit-5.jpg", "unit-5.1.jpg", "unit-5.2.jpg", "unit-5.3.jpg"] },
-                { name: "GoldTops Beverly Livin", tag: "690 Jt", val: 690000000, photos: ["unit-6.jpg", "unit-6.1.jpg", "unit-6.2.jpg", "unit-6.3.jpg"] }
+                { name: "TreeTops Beverly Livin", tag: "550 Jt", val: 550000000, photos: ["unit-4.jpg", "unit-4.1.jpg", "unit-4.2.jpg", "unit-4.3.jpg"] }
             ]
         };
 
@@ -229,25 +263,26 @@
 
             unitData[fase].forEach((u, i) => {
                 const uid = `u-${fase}-${i}`;
-                
-                // Pisahkan Foto Utama (index 0) dengan Pendukung (index 1 dst)
+                const heroSrc = `fase-${fase}/${u.photos[0]}`;
                 const galleryPhotos = u.photos.slice(1);
-                const thumbHtml = galleryPhotos.map(p => `
-                    <div class="swiper-slide">
-                        <img src="fase-${fase}/${p}" onerror="this.src='https://placehold.co/640x360/f7f3ed/a68966?text=Gallery'">
+                
+                const thumbHtml = galleryPhotos.map((p, idx) => `
+                    <div class="swiper-slide" onclick="previewImage('${uid}', 'fase-${fase}/${p}', this)">
+                        <img src="fase-${fase}/${p}" onerror="this.src='https://placehold.co/640x360/f7f3ed/a68966?text=Unit Detail'">
                     </div>
                 `).join('');
 
                 list.innerHTML += `
                     <div class="unit-card">
-                        <!-- UNIT UTAMA -->
-                        <div class="hero-view">
-                            <img src="fase-${fase}/${u.photos[0]}" onerror="this.src='https://placehold.co/800x600/f7f3ed/a68966?text=${u.name}'">
+                        <!-- FRAME UTAMA -->
+                        <div class="hero-view" id="hero-container-${uid}" onclick="resetHero('${uid}', '${heroSrc}')">
+                            <div class="reset-indicator"><i class="fa-solid fa-rotate-left mr-1"></i> Kembali ke Utama</div>
+                            <img id="hero-img-${uid}" src="${heroSrc}" onerror="this.src='https://placehold.co/800x600/f7f3ed/a68966?text=${u.name}'">
                         </div>
 
                         <!-- GALERI PENDUKUNG (16:9) -->
                         <div class="gallery-container">
-                            <p class="px-8 text-[9px] font-black uppercase text-gray-300 tracking-widest mb-4">Unit Gallery</p>
+                            <p class="px-8 text-[9px] font-black uppercase text-gray-300 tracking-widest mb-4">Pilih Detail (Klik untuk perbesar)</p>
                             <div class="swiper swiper-gallery" id="swiper-${uid}">
                                 <div class="swiper-wrapper">
                                     ${thumbHtml}
@@ -255,7 +290,7 @@
                             </div>
                         </div>
 
-                        <!-- KONTEN & AKSI -->
+                        <!-- KONTEN -->
                         <div class="px-8 pb-10">
                             <h4 class="font-black text-2xl uppercase tracking-tighter mb-6">${u.name}</h4>
                             
@@ -269,15 +304,15 @@
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-3">
-                                    <button onclick="setKPR(${u.val}, '${u.name}')" class="flex items-center justify-center gap-2 bg-white border border-gray-200 py-4 rounded-2xl btn-action shadow-sm">
+                                    <button onclick="setKPR(${u.val}, '${u.name}')" class="flex items-center justify-center gap-2 bg-white border border-gray-200 py-4 rounded-2xl btn-action">
                                         <i class="fa-solid fa-calculator text-[#a68966]"></i>
                                         <span class="text-[9px] font-black uppercase tracking-widest">Hitung KPR</span>
                                     </button>
-                                    <a href="https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20saya%20tertarik%20dengan%20unit%20${u.name}%20di%20Fase%200${fase}.%20Bisa%20info%20detailnya?" 
+                                    <a href="https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20info%20detail%20unit%20${u.name}%20dong." 
                                        target="_blank" 
                                        class="flex items-center justify-center gap-2 bg-dark py-4 rounded-2xl btn-action shadow-lg">
                                         <i class="fa-brands fa-whatsapp text-white"></i>
-                                        <span class="text-[9px] font-black uppercase tracking-widest text-white">Hubungi Echi</span>
+                                        <span class="text-[9px] font-black uppercase tracking-widest text-white">Chat Echi</span>
                                     </a>
                                 </div>
                             </div>
@@ -295,12 +330,48 @@
                         slidesOffsetBefore: 30,
                         slidesOffsetAfter: 30,
                         freeMode: true,
-                        loop: true,
-                        autoplay: { delay: 3500, disableOnInteraction: false }
                     });
                     activeSwipers.push(swiper);
                 });
             }, 100);
+        }
+
+        // Fungsi Preview - Tanpa Crop
+        function previewImage(uid, newSrc, el) {
+            const hero = document.getElementById(`hero-img-${uid}`);
+            const container = document.getElementById(`hero-container-${uid}`);
+            
+            // Highlight thumbnail
+            const slides = el.parentElement.querySelectorAll('.swiper-slide');
+            slides.forEach(s => s.classList.remove('active-thumb'));
+            el.classList.add('active-thumb');
+
+            // Change hero dengan mode contain (Full View)
+            hero.style.opacity = '0';
+            setTimeout(() => {
+                container.classList.add('is-preview');
+                hero.src = newSrc;
+                hero.style.opacity = '1';
+            }, 200);
+        }
+
+        // Reset ke Mode Utama (Crop/Cover)
+        function resetHero(uid, originSrc) {
+            const hero = document.getElementById(`hero-img-${uid}`);
+            const container = document.getElementById(`hero-container-${uid}`);
+            const swiperContainer = document.getElementById(`swiper-${uid}`);
+            
+            if(!container.classList.contains('is-preview')) return;
+
+            hero.style.opacity = '0';
+            setTimeout(() => {
+                container.classList.remove('is-preview');
+                hero.src = originSrc;
+                hero.style.opacity = '1';
+                
+                // Hapus highlight thumbnail
+                swiperContainer.querySelectorAll('.swiper-slide').forEach(s => s.classList.remove('active-thumb'));
+            }, 200);
         }
 
         function formatRibuan(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
@@ -322,7 +393,7 @@
             const cicilan = (pinjam * bunga) / (1 - Math.pow(1 + bunga, -bulan));
             
             document.getElementById('hasil-cicilan').innerText = "Rp " + formatRibuan(Math.round(cicilan || 0));
-            document.getElementById('wa-link').href = `https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20saya%20sudah%20simulasi%20KPR%20untuk%20unit%20harga%20Rp%20${formatRibuan(h)}`;
+            document.getElementById('wa-link').href = `https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20ingin%20konsultasi%20unit%20harga%20Rp%20${formatRibuan(h)}`;
         }
 
         function setKPR(v, name) {
@@ -335,4 +406,4 @@
         window.onload = () => { renderUnits(7); calc(); };
     </script>
 </body>
-    </html>
+</html>
