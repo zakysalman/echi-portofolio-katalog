@@ -16,8 +16,8 @@
             --gold: #a68966;
             --dark: #2d241d;
             --cream: #fdfbf7;
-            /* Warna Coklat Kayu Polos */
-            --wood-solid: #8b5a2b; 
+            /* Warna Coklat Kayu Solid (Elegant Wood) */
+            --wood-base: #8b5a2b; 
         }
 
         body { 
@@ -79,20 +79,22 @@
             margin-right: 20px;
         }
 
-        /* --- UNIT CARD DESIGN: SOLID WOOD --- */
+        /* --- UNIT CARD DESIGN: BLENDED WOOD --- */
         .unit-card {
-            background: var(--wood-solid); /* Coklat Kayu Polos */
+            background: var(--wood-base); 
             border-radius: 2.5rem; 
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
             margin-bottom: 3rem;
             color: white; 
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
         .hero-view {
             width: 100%; 
             aspect-ratio: 1/1; 
-            background: white; /* Latar belakang gambar putih bersih */
+            /* Warna latar belakang hero harus sama dengan warna kartu agar blend sempurna */
+            background: var(--wood-base); 
             overflow: hidden; 
             position: relative; 
             display: flex;
@@ -108,13 +110,16 @@
         .hero-view img { 
             width: 100%; 
             height: 100%; 
-            object-fit: cover;
-            mix-blend-mode: normal; /* Normal: Tidak tumpang tindih */
+            object-fit: contain; /* Contain agar rumah tidak terpotong */
+            /* Multiply membuat background putih gambar hilang, rumah tetap solid */
+            mix-blend-mode: multiply; 
             transition: opacity 0.3s ease;
+            filter: brightness(1.05) contrast(1.05); /* Sedikit boost agar rumah lebih menonjol */
         }
 
         .card-content {
             padding: 1.5rem;
+            background: rgba(0,0,0,0.05); /* Sedikit gelap untuk membedakan area konten */
         }
 
         .unit-title {
@@ -122,40 +127,42 @@
             font-size: 1.4rem;
             text-transform: uppercase;
             letter-spacing: -0.01em;
-            margin-bottom: 1rem;
-            line-height: 1.2;
+            margin-bottom: 1.25rem;
+            color: #ffffff;
         }
 
         .thumb-img-wrapper {
             width: 100%; aspect-ratio: 16/9; overflow: hidden;
             border-radius: 12px; cursor: pointer;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.2);
         }
         .thumb-img-wrapper img { 
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
+            mix-blend-mode: normal; /* Thumbnail tetap normal agar akurat */
         }
 
         .btn-chat-wa {
-            background-color: white !important;
-            color: var(--wood-solid) !important;
+            background-color: #ffffff !important;
+            color: var(--wood-base) !important;
             display: flex; align-items: center; justify-content: center;
             gap: 8px; padding: 1rem; border-radius: 1.2rem;
             text-align: center; font-weight: 800; font-size: 11px;
             text-transform: uppercase;
-            margin-top: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .price-box {
-            background: rgba(0, 0, 0, 0.15); 
+            background: rgba(255, 255, 255, 0.1); 
             padding: 1.25rem; 
             border-radius: 1.5rem; 
             display: flex; 
             justify-content: space-between; 
             align-items: center;
-            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .phase-btn {
@@ -175,6 +182,7 @@
             display: flex; align-items: center; gap: 5px; color: var(--dark) !important;
         }
 
+        /* --- KPR SECTION --- */
         .kpr-result-box {
             background-color: var(--dark) !important;
             padding: 2.5rem; border-radius: 2rem; text-align: center;
@@ -321,25 +329,25 @@
                         
                         <div class="card-content">
                             <h4 class="unit-title">${u.name}</h4>
-                            <div class="mb-4">
-                                <p class="text-[7px] font-black text-white/50 uppercase tracking-widest mb-3">Galeri Foto</p>
+                            
+                            <div class="mb-5">
+                                <p class="text-[7px] font-black text-white/40 uppercase tracking-widest mb-3">Galeri Foto</p>
                                 <div class="swiper" id="swiper-${uid}">
                                     <div class="swiper-wrapper">${thumbHtml}</div>
                                 </div>
                             </div>
 
-                            <div class="flex flex-col gap-2">
-                                <div class="price-box">
-                                    <div>
-                                        <p class="text-[7px] font-bold text-white/50 uppercase">Harga Unit</p>
-                                        <p class="font-black text-xl text-[#ffcc80]">Rp ${u.tag}</p>
-                                    </div>
-                                    <button onclick="setKPR(${u.val})" class="bg-white/10 border border-white/20 text-white px-3 py-1.5 rounded-xl text-[8px] font-black uppercase">Simulasi</button>
+                            <div class="price-box">
+                                <div>
+                                    <p class="text-[7px] font-bold text-white/40 uppercase">Harga Perkiraan</p>
+                                    <p class="font-black text-xl text-[#ffcc80]">Rp ${u.tag}</p>
                                 </div>
-                                <a href="https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20info%20unit%20${u.name}" target="_blank" class="btn-chat-wa">
-                                    <i class="fa-brands fa-whatsapp"></i><span>Chat Echi</span>
-                                </a>
+                                <button onclick="setKPR(${u.val})" class="bg-white/10 border border-white/20 text-white px-3 py-2 rounded-xl text-[8px] font-black uppercase">Simulasi</button>
                             </div>
+
+                            <a href="https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20info%20unit%20${u.name}" target="_blank" class="btn-chat-wa">
+                                <i class="fa-brands fa-whatsapp"></i><span>Chat Echi Sekarang</span>
+                            </a>
                         </div>
                     </div>
                 `;
@@ -354,6 +362,7 @@
             }, 100);
         }
 
+        // Script transform profil & menu
         const trigger = document.getElementById('profile-trigger');
         const header = document.querySelector('header');
         let isDragging = false, startY = 0;
@@ -385,7 +394,7 @@
         }
         function resetHero(id, src) { 
             const container = document.getElementById(`hero-container-${id}`);
-            const img = document.getElementById(`hero-img-${id}`);
+            const img = document.getElementById|(`hero-img-${id}`);
             container.classList.remove('is-wide');
             img.style.opacity = '0';
             setTimeout(() => { img.src = src; img.style.opacity = '1'; }, 150);
@@ -394,7 +403,7 @@
         function formatRibuan(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
         function formatAndCalc(el) { let v = el.value.replace(/\D/g, ""); document.getElementById('kpr-raw').value = v; el.value = formatRibuan(v); calc(); }
         function calc() {
-            const h = parseFloat(document.getElementById('kpr-raw').value) || 0, dp = parseFloat(document.getElementById('dp-val').value) || 0, t = parseFloat(document.getElementById('tenor-val').value) || 1;
+            const h = parseFloat(document.getElementById('kpr-raw').value) || 0, dp = parseFloat(document.getElementById('dp-val').value) || 0, t = parseFloat(document.getElementById|('tenor-val').value) || 1;
             const p = h - (h * dp / 100), b = 0.05 / 12, m = t * 12;
             const c = (p * b) / (1 - Math.pow(1 + b, -m));
             document.getElementById('hasil-cicilan').innerText = "Rp " + formatRibuan(Math.round(c || 0));
