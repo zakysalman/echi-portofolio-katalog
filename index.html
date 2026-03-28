@@ -15,7 +15,7 @@
         :root {
             --gold: #a68966;
             --page-bg: #fdfbf7;
-            --card-cream: #f9f9f2; /* Cream Keputihan */
+            --card-cream: #f9f9f2; 
             --dark: #2d241d;
         }
 
@@ -50,10 +50,8 @@
         }
 
         .profile-image-wrapper {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            overflow: hidden;
+            width: 110px; height: 110px;
+            border-radius: 50%; overflow: hidden;
             border: 4px solid white;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
@@ -61,22 +59,13 @@
             background: #fff;
         }
 
-        /* State saat scroll / ditarik */
         .is-transformed .profile-container {
-            flex-direction: row;
-            align-items: center;
-            text-align: left;
-            padding-top: 85px;
-            padding-left: 20px;
-            padding-right: 20px;
+            flex-direction: row; align-items: center; text-align: left;
+            padding-top: 85px; padding-left: 20px; padding-right: 20px;
         }
 
         .is-transformed .profile-image-wrapper {
-            width: 80px;
-            height: 80px;
-            border-radius: 15px;
-            margin-bottom: 0;
-            margin-right: 15px;
+            width: 80px; height: 80px; border-radius: 15px; margin-bottom: 0; margin-right: 15px;
         }
 
         .is-transformed .profile-text h1 { font-size: 1.25rem; }
@@ -93,73 +82,30 @@
         }
 
         .hero-view {
-            width: 100%; 
-            aspect-ratio: 1/1; 
-            background: #000; /* Hitam agar mode screen bekerja */
-            overflow: hidden; 
-            position: relative; 
-            display: flex;
-            align-items: center; 
-            justify-content: center;
+            width: 100%; aspect-ratio: 1/1; 
+            background: #000; 
+            overflow: hidden; position: relative; display: flex;
+            align-items: center; justify-content: center;
             transition: all 0.5s ease;
         }
 
-        .hero-view.is-wide {
-            aspect-ratio: 16/9;
-            background: #fff;
-        }
+        .hero-view.is-wide { aspect-ratio: 16/9; background: #fff; }
 
         .hero-view img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: contain;
-            mix-blend-mode: screen; /* Menghilangkan latar hitam pada foto utama */
+            width: 100%; height: 100%; object-fit: contain;
+            mix-blend-mode: screen; 
             transition: opacity 0.3s ease;
         }
 
-        .hero-view.no-blend img {
-            mix-blend-mode: normal !important;
-            object-fit: cover;
-        }
+        .hero-view.no-blend img { mix-blend-mode: normal !important; object-fit: cover; }
 
         .card-content { padding: 1.5rem; }
-
-        .unit-title {
-            font-weight: 800;
-            font-size: 1.4rem;
-            text-transform: uppercase;
-            letter-spacing: -0.01em;
-            margin-bottom: 1rem;
-        }
-
-        .thumb-img-wrapper {
-            width: 100%; aspect-ratio: 16/9; overflow: hidden;
-            border-radius: 15px; cursor: pointer;
-            background: #eee;
-        }
-
-        .btn-chat-wa {
-            background-color: var(--dark) !important;
-            color: #fff !important;
-            display: flex; align-items: center; justify-content: center;
-            gap: 8px; padding: 1.1rem; border-radius: 1.25rem;
-            text-align: center; font-weight: 800; font-size: 11px;
-            text-transform: uppercase;
-        }
-
-        .price-box {
-            background: white; padding: 1.25rem; border-radius: 1.5rem; 
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 1.5rem; border: 1px solid rgba(0,0,0,0.03);
-        }
-
-        .phase-btn {
-            padding: 10px 20px; border-radius: 12px; font-size: 10px;
-            font-weight: 800; border: 1px solid #eee; background: white;
-            white-space: nowrap; transition: 0.3s;
-        }
+        .unit-title { font-weight: 800; font-size: 1.4rem; text-transform: uppercase; margin-bottom: 1rem; }
+        .thumb-img-wrapper { width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 15px; cursor: pointer; background: #eee; }
+        .btn-chat-wa { background-color: var(--dark) !important; color: #fff !important; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 1.1rem; border-radius: 1.25rem; text-align: center; font-weight: 800; font-size: 11px; text-transform: uppercase; }
+        .price-box { background: white; padding: 1.25rem; border-radius: 1.5rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border: 1px solid rgba(0,0,0,0.03); }
+        .phase-btn { padding: 10px 20px; border-radius: 12px; font-size: 10px; font-weight: 800; border: 1px solid #eee; background: white; white-space: nowrap; transition: 0.3s; }
         .phase-btn.active { background: var(--dark); color: white !important; }
-
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
@@ -177,7 +123,6 @@
         <a href="#kpr" onclick="toggleMenu(false)" class="text-xl font-black mb-6 uppercase">Simulasi KPR</a>
     </div>
 
-    <!-- HEADER DENGAN ANIMASI -->
     <header id="top">
         <div id="profile-trigger" class="profile-container">
             <div class="profile-image-wrapper">
@@ -202,7 +147,6 @@
         </div>
     </section>
 
-    <!-- KPR -->
     <section id="kpr" class="py-16 px-6 bg-white border-t">
         <div class="max-w-md mx-auto">
             <h3 class="text-center font-black uppercase text-[#a68966] mb-8 text-xs tracking-widest">Mortgage Calculator</h3>
@@ -242,15 +186,28 @@
     <script>
         const WA_NUMBER = "628111982833";
         const unitData = {
-            7: [
-                { name: "Perunggu Beverly", tag: "325 Jt", val: 325000000, photos: ["fase-7/unit-1.jpg", "fase-7/unit-1.1.jpg", "fase-7/unit-1.2.jpg"] },
-                { name: "Silver Beverly", tag: "410 Jt", val: 410000000, photos: ["fase-7/unit-2.jpg", "fase-7/unit-2.1.jpg", "fase-7/unit-2.2.jpg"] }
+            5: [
+                { name: "Perunggu Livin Tipe B", tag: "305 Jt", val: 305000000, photos: ["fase-5/unit-1.jpg", "fase-5/unit-1.1.jpg", "fase-5/unit-1.2.jpg", "fase-5/unit-1.3.jpg"] },
+                { name: "Perunggu BB", tag: "390 Jt", val: 390000000, photos: ["fase-5/unit-2.jpg", "fase-5/unit-2.1.jpg", "fase-5/unit-2.2.jpg", "fase-5/unit-2.3.jpg"] },
+                { name: "Quartz Livin Q", tag: "450 Jt", val: 450000000, photos: ["fase-5/unit-3.jpg", "fase-5/unit-3.1.jpg", "fase-5/unit-3.2.jpg", "fase-5/unit-3.3.jpg"] },
+                { name: "TreeTops Livin", tag: "520 Jt", val: 520000000, photos: ["fase-5/unit-4.jpg", "fase-5/unit-4.1.jpg", "fase-5/unit-4.2.jpg", "fase-5/unit-4.3.jpg", "fase-5/unit-4.4.jpg"] },
+                { name: "Gold Livin G", tag: "580 Jt", val: 580000000, photos: ["fase-5/unit-5.jpg", "fase-5/unit-5.1.jpg", "fase-5/unit-5.2.jpg", "fase-5/unit-5.3.jpg"] },
+                { name: "GoldTops GT", tag: "650 Jt", val: 650000000, photos: ["fase-5/unit-6.jpg", "fase-5/unit-6.1.jpg", "fase-5/unit-6.2.jpg", "fase-5/unit-6.3.jpg"] }
             ],
             6: [
-                { name: "Quartz Tipe Q", tag: "460 Jt", val: 460000000, photos: ["fase-6/unit-1.jpg", "fase-6/unit-1.1.jpg"] }
+                { name: "Perunggu Tipe B", tag: "315 Jt", val: 315000000, photos: ["fase-6/unit-1.jpg", "fase-6/unit-1.1.jpg", "fase-6/unit-1.2.jpg", "fase-6/unit-1.3.jpg"] },
+                { name: "Quartz Tipe Q", tag: "460 Jt", val: 460000000, photos: ["fase-6/unit-2.jpg", "fase-6/unit-2.1.jpg", "fase-6/unit-2.2.jpg", "fase-6/unit-2.3.jpg"] },
+                { name: "TreeTops Livin", tag: "530 Jt", val: 530000000, photos: ["fase-6/unit-3.jpg", "fase-6/unit-3.1.jpg", "fase-6/unit-3.2.jpg", "fase-6/unit-3.3.jpg"] },
+                { name: "Gold Tipe G", tag: "595 Jt", val: 595000000, photos: ["fase-6/unit-4.jpg", "fase-6/unit-4.1.jpg", "fase-6/unit-4.2.jpg", "fase-6/unit-4.3.jpg"] },
+                { name: "GoldTops Type GT", tag: "670 Jt", val: 670000000, photos: ["fase-6/unit-5.jpg", "fase-6/unit-5.1.jpg", "fase-6/unit-5.2.jpg", "fase-6/unit-5.3.jpg", "fase-6/unit-5.4.jpg"] }
             ],
-            5: [
-                { name: "Perunggu Livin B", tag: "305 Jt", val: 305000000, photos: ["fase-5/unit-1.jpg", "fase-5/unit-1.1.jpg"] }
+            7: [
+                { name: "Perunggu Beverly", tag: "325 Jt", val: 325000000, photos: ["fase-7/unit-1.jpg", "fase-7/unit-1.1.jpg", "fase-7/unit-1.2.jpg", "fase-7/unit-1.3.jpg"] },
+                { name: "Silver Beverly", tag: "410 Jt", val: 410000000, photos: ["fase-7/unit-2.jpg", "fase-7/unit-2.1.jpg", "fase-7/unit-2.2.jpg", "fase-7/unit-2.3.jpg"] },
+                { name: "Urban Beverly", tag: "500 Jt", val: 500000000, photos: ["fase-7/unit-3.jpg", "fase-7/unit-3.1.jpg", "fase-7/unit-3.2.jpg", "fase-7/unit-3.3.jpg"] },
+                { name: "TreeTops Beverly", tag: "550 Jt", val: 550000000, photos: ["fase-7/unit-4.jpg", "fase-7/unit-4.1.jpg", "fase-7/unit-4.2.jpg", "fase-7/unit-4.3.jpg"] },
+                { name: "Gold Beverly", tag: "610 Jt", val: 610000000, photos: ["fase-7/unit-5.jpg", "fase-7/unit-5.1.jpg", "fase-7/unit-5.2.jpg", "fase-7/unit-5.3.jpg"] },
+                { name: "GoldTops Beverly", tag: "690 Jt", val: 690000000, photos: ["fase-7/unit-6.jpg", "fase-7/unit-6.1.jpg", "fase-7/unit-6.2.jpg", "fase-7/unit-6.3.jpg"] }
             ]
         };
 
@@ -261,7 +218,6 @@
             list.innerHTML = '';
             activeSwipers.forEach(s => s.destroy());
             activeSwipers = [];
-
             document.querySelectorAll('.phase-btn').forEach(b => b.classList.toggle('active', b.id === `btn-${fase}`));
 
             unitData[fase].forEach((u, i) => {
@@ -282,11 +238,7 @@
                         </div>
                         <div class="card-content">
                             <h4 class="unit-title">${u.name}</h4>
-                            <div class="mb-6">
-                                <div class="swiper" id="swiper-${uid}">
-                                    <div class="swiper-wrapper">${thumbHtml}</div>
-                                </div>
-                            </div>
+                            <div class="mb-6"><div class="swiper" id="swiper-${uid}"><div class="swiper-wrapper">${thumbHtml}</div></div></div>
                             <div class="price-box">
                                 <div><p class="text-[8px] font-bold text-gray-400 uppercase">Harga Unit</p><p class="font-black text-xl">Rp ${u.tag}</p></div>
                                 <button onclick="setKPR(${u.val})" class="bg-gray-100 px-4 py-2 rounded-xl text-[9px] font-black uppercase">Simulasi</button>
@@ -298,35 +250,26 @@
                     </div>
                 `;
             });
-
-            setTimeout(() => { 
-                unitData[fase].forEach((u, i) => {
-                    activeSwipers.push(new Swiper(`#swiper-u-${fase}-${i}`, { slidesPerView: "auto", spaceBetween: 15 }));
-                }); 
-            }, 100);
+            setTimeout(() => { unitData[fase].forEach((u, i) => { activeSwipers.push(new Swiper(`#swiper-u-${fase}-${i}`, { slidesPerView: "auto", spaceBetween: 15 })); }); }, 100);
         }
 
-        // SCROLL ANIMATION FOR PROFILE
-        const header = document.querySelector('header');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) header.classList.add('is-transformed');
-            else header.classList.remove('is-transformed');
+            if (window.scrollY > 50) document.querySelector('header').classList.add('is-transformed');
+            else document.querySelector('header').classList.remove('is-transformed');
         });
 
         function previewImage(id, src) { 
             const container = document.getElementById(`hero-container-${id}`);
             const img = document.getElementById(`hero-img-${id}`);
             container.classList.add('is-wide', 'no-blend'); 
-            img.style.opacity = '0';
-            setTimeout(() => { img.src = src; img.style.opacity = '1'; }, 150);
+            img.style.opacity = '0'; setTimeout(() => { img.src = src; img.style.opacity = '1'; }, 150);
         }
 
         function resetHero(id, src) { 
             const container = document.getElementById(`hero-container-${id}`);
-            const img = document.getElementById!(`hero-img-${id}`);
+            const img = document.getElementById(`hero-img-${id}`);
             container.classList.remove('is-wide', 'no-blend'); 
-            img.style.opacity = '0';
-            setTimeout(() => { img.src = src; img.style.opacity = '1'; }, 150);
+            img.style.opacity = '0'; setTimeout(() => { img.src = src; img.style.opacity = '1'; }, 150);
         }
 
         function toggleMenu(s) { document.getElementById('mobile-menu').classList.toggle('hidden', !s); document.getElementById('mobile-menu').classList.toggle('flex', s); }
