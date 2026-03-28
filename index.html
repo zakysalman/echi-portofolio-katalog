@@ -84,17 +84,33 @@
             margin-right: 20px;
         }
 
-        /* --- UNIT CARD & ADAPTIVE HERO --- */
+        /* --- UNIT CARD DESIGN UPDATED --- */
         .unit-card {
-            background: white; border-radius: 2rem; overflow: hidden;
-            border: 1px solid #f0ebe3; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            background: white; 
+            border-radius: 2.5rem; 
+            overflow: hidden;
+            border: 1px solid #f0ebe3; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.04);
             margin-bottom: 3rem;
+        }
+
+        /* Atas Putih Polos */
+        .card-top {
+            background: #ffffff;
+            padding: 0;
+        }
+
+        /* Bawah Coklat Cream */
+        .card-bottom {
+            background: var(--cream);
+            padding: 1.5rem;
+            border-top: 1px solid #f0ebe3;
         }
 
         .hero-view {
             width: 100%; 
             aspect-ratio: 1/1; 
-            background: #f0f0f0;
+            background: #ffffff; /* Putih Polos */
             overflow: hidden; 
             position: relative; 
             display: flex;
@@ -117,7 +133,8 @@
         .thumb-img-wrapper {
             width: 100%; aspect-ratio: 16/9; overflow: hidden;
             border-radius: 12px; cursor: pointer;
-            background: #e5e7eb;
+            background: #ffffff;
+            border: 1px solid #eee;
         }
         .thumb-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -125,9 +142,10 @@
             background-color: var(--dark) !important;
             color: #ffffff !important;
             display: flex; align-items: center; justify-content: center;
-            gap: 8px; padding: 0.8rem; border-radius: 1rem;
-            text-align: center; font-weight: 800; font-size: 10px;
+            gap: 8px; padding: 1rem; border-radius: 1.2rem;
+            text-align: center; font-weight: 800; font-size: 11px;
             text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(45, 36, 29, 0.2);
         }
 
         .phase-btn {
@@ -172,8 +190,7 @@
     <header id="top">
         <div id="profile-trigger" class="profile-container">
             <div class="profile-image-wrapper">
-                <!-- Pemanggilan file wajah 133129.jpg -->
-                <img src="133129.jpg" class="w-full h-full object-cover" id="img-wajah" onerror="this.src='https://placehold.co/400x400?text=Echi'">
+                <img src="wajah.jpg" class="w-full h-full object-cover" id="img-wajah" onerror="this.src='https://placehold.co/400x400?text=Echi'">
             </div>
             <div class="profile-text-content">
                 <span class="text-[8px] font-bold text-[#a68966] uppercase tracking-[0.3em] mb-1 block">Property Consultant</span>
@@ -238,7 +255,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // --- LOGIKA TRANSFORM PROFIL ---
         const trigger = document.getElementById('profile-trigger');
         const header = document.querySelector('header');
         let isDragging = false, startY = 0;
@@ -267,7 +283,6 @@
             else if (!isDragging) header.classList.remove('is-transformed');
         });
 
-        // --- DATA UNIT (MENGGUNAKAN NAMA FILE ASLI SESUAI PERMINTAAN) ---
         const WA_NUMBER = "628111982833";
         const unitData = {
             5: [
@@ -311,33 +326,37 @@
                 const thumbHtml = u.photos.slice(1).map(p => `
                     <div class="swiper-slide" onclick="previewImage('${uid}', '${p}')">
                         <div class="thumb-img-wrapper">
-                            <img src="${p}" onerror="this.src='https://placehold.co/600x337?text=Detail+Unit'">
+                            <img src="${p}" onerror="this.src='https://placehold.co/600x337?text=Detail'">
                         </div>
                     </div>
                 `).join('');
 
                 list.innerHTML += `
                     <div class="unit-card">
-                        <div class="hero-view" id="hero-container-${uid}" onclick="resetHero('${uid}', '${heroSrc}')">
-                            <img id="hero-img-${uid}" src="${heroSrc}" onerror="this.src='https://placehold.co/600x600?text=${u.name}'">
+                        <!-- BAGIAN ATAS: PUTIH POLOS -->
+                        <div class="card-top">
+                            <div class="hero-view" id="hero-container-${uid}" onclick="resetHero('${uid}', '${heroSrc}')">
+                                <img id="hero-img-${uid}" src="${heroSrc}" onerror="this.src='https://placehold.co/600x600?text=${u.name}'">
+                            </div>
                         </div>
                         
-                        <div class="p-6">
+                        <!-- BAGIAN BAWAH: COKLAT CREAM -->
+                        <div class="card-bottom">
                             <h4 class="font-black text-2xl uppercase tracking-tighter mb-4">${u.name}</h4>
                             <div class="mb-6">
-                                <p class="text-[7px] font-black text-gray-300 uppercase tracking-widest mb-3">Galeri Unit (Klik untuk Lihat)</p>
+                                <p class="text-[7px] font-black text-gray-400 uppercase tracking-widest mb-3">Galeri Detail</p>
                                 <div class="swiper" id="swiper-${uid}">
                                     <div class="swiper-wrapper">${thumbHtml}</div>
                                 </div>
                             </div>
 
                             <div class="flex flex-col gap-3">
-                                <div class="bg-[#fdfbf7] p-5 rounded-2xl border border-gray-100 flex justify-between items-center">
+                                <div class="bg-white p-5 rounded-2xl border border-[#f0ebe3] flex justify-between items-center shadow-sm">
                                     <div>
-                                        <p class="text-[7px] font-bold text-gray-400 uppercase">Harga Unit</p>
+                                        <p class="text-[7px] font-bold text-gray-400 uppercase">Harga Mulai</p>
                                         <p class="font-black text-xl text-[#a68966]">Rp ${u.tag}</p>
                                     </div>
-                                    <button onclick="setKPR(${u.val})" class="bg-white border px-4 py-2 rounded-xl text-[8px] font-black uppercase">Simulasi</button>
+                                    <button onclick="setKPR(${u.val})" class="bg-transparent border border-[#a68966] text-[#a68966] px-4 py-2 rounded-xl text-[8px] font-black uppercase">Simulasi</button>
                                 </div>
                                 <a href="https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20info%20unit%20${u.name}" target="_blank" class="btn-chat-wa">
                                     <i class="fa-brands fa-whatsapp"></i><span>Chat Echi Sekarang</span>
@@ -357,7 +376,6 @@
             }, 100);
         }
 
-        // --- ADAPTIVE PHOTO LOGIC ---
         function previewImage(id, src) { 
             const container = document.getElementById(`hero-container-${id}`);
             const img = document.getElementById(`hero-img-${id}`);
