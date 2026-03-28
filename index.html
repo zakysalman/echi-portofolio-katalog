@@ -47,156 +47,59 @@
         }
 
         .profile-socials {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 12px;
-            margin-bottom: 12px;
-            transition: all 0.4s ease;
+            display: flex; gap: 12px; justify-content: center; margin-top: 12px; margin-bottom: 12px; transition: all 0.4s ease;
         }
-        .is-transformed .profile-socials {
-            justify-content: flex-start;
-            margin-top: 8px;
-            margin-bottom: 0px;
-        }
+        .is-transformed .profile-socials { justify-content: flex-start; margin-top: 8px; margin-bottom: 0px; }
 
-        /* --- PROFILE DRAG & TRANSFORM LOGIC --- */
-        #profile-trigger {
-            touch-action: pan-y;
-            cursor: grab;
-            position: relative;
-            z-index: 10;
-        }
-        #profile-trigger:active { cursor: grabbing; }
-
+        /* --- PROFILE DRAG & TRANSFORM --- */
+        #profile-trigger { touch-action: pan-y; cursor: grab; position: relative; z-index: 10; }
         .profile-container {
-            /* Menggunakan cubic-bezier agar animasi lebih responsif */
             transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding-top: 100px;
-            padding-bottom: 30px;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            padding-top: 100px; padding-bottom: 30px; width: 100%; max-width: 800px; margin: 0 auto;
         }
-
         .profile-image-wrapper {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 4px solid white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            margin-bottom: 20px;
-            flex-shrink: 0;
+            width: 110px; height: 110px; border-radius: 50%; overflow: hidden; border: 4px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); margin-bottom: 20px;
         }
+        .is-transformed .profile-container { flex-direction: row; text-align: left; padding: 90px 20px 20px; }
+        .is-transformed .profile-image-wrapper { width: 120px; height: 120px; border-radius: 24px; margin-bottom: 0; margin-right: 20px; }
 
-        .profile-text-content {
-            transition: all 0.4s ease;
+        /* --- DYNAMIC RATIO & BLEND MODE --- */
+        .hero-view {
+            width: 100%; aspect-ratio: 1/1; /* Default 1:1 */
+            background: #f5f5f5; overflow: hidden; position: relative;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
+        .hero-view.is-preview { aspect-ratio: 16/9; background: #1a1a1a; }
+        .hero-view img { width: 100%; height: 100%; object-fit: cover; transition: all 0.3s ease; }
+        .blend-multiply { mix-blend-mode: multiply; }
 
-        /* State Transformasi (Ditarik atau Scrolled) */
-        .is-transformed .profile-container {
-            flex-direction: row;
-            align-items: center;
-            text-align: left;
-            padding-left: 20px;
-            padding-right: 20px;
-            padding-top: 90px;
-            padding-bottom: 20px;
+        .btn-back-main {
+            position: absolute; bottom: 15px; background: rgba(255,255,255,0.9);
+            padding: 8px 15px; border-radius: 50px; font-size: 9px; font-weight: 900;
+            color: var(--dark); text-transform: uppercase; display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 10;
         }
-
-        .is-transformed .profile-image-wrapper {
-            width: 120px;
-            height: 120px;
-            border-radius: 24px;
-            margin-bottom: 0;
-            margin-right: 20px;
-        }
-
-        /* --- BLEND MODE --- */
-        .blend-multiply {
-            mix-blend-mode: multiply;
-        }
+        .is-preview .btn-back-main { display: block; }
 
         /* --- UI ELEMENTS --- */
-        .section-header-text {
-            font-size: 14px; font-weight: 900; text-transform: uppercase;
-            letter-spacing: 0.3em; color: var(--dark); margin-bottom: 15px; text-align: center;
-        }
-
-        .unit-card {
-            background: white; border-radius: 2rem; overflow: hidden;
-            border: 1px solid #f0ebe3; box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            margin-bottom: 2.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-view {
-            width: 100%; aspect-ratio: 16/10; background: #f5f5f5; /* Diubah sedikit agar multiply lebih rapi */
-            overflow: hidden; position: relative; display: flex;
-            align-items: center; justify-content: center;
-            cursor: pointer;
-        }
-
-        .hero-view img { width: 100%; height: 100%; object-fit: cover; transition: mix-blend-mode 0.3s ease; }
-        .hero-view.is-preview { background: #1a1a1a; }
-        .hero-view.is-preview img { object-fit: contain; }
-
-        .btn-chat-wa {
-            background-color: var(--dark) !important;
-            color: #ffffff !important;
-            display: flex; align-items: center; justify-content: center;
-            gap: 8px; padding: 0.8rem; border-radius: 0.8rem;
-            text-align: center; font-weight: 800; font-size: 10px;
-            text-transform: uppercase;
-        }
-
-        .kpr-result-box {
-            background-color: var(--dark) !important;
-            padding: 2.5rem; border-radius: 2rem; text-align: center;
-        }
-
-        .kpr-result-value {
-            color: #ffffff !important;
-            font-size: 1.8rem; font-weight: 900; margin-bottom: 2rem; display: block;
-        }
-
-        .phase-btn {
-            padding: 10px 20px; border-radius: 12px; font-size: 11px;
-            font-weight: 800; border: 1px solid #eee; background: white;
-            white-space: nowrap; transition: 0.3s; color: var(--dark);
-        }
+        .unit-card { background: white; border-radius: 2rem; overflow: hidden; border: 1px solid #f0ebe3; margin-bottom: 2.5rem; }
+        .phase-btn { padding: 10px 20px; border-radius: 12px; font-size: 11px; font-weight: 800; border: 1px solid #eee; transition: 0.3s; }
         .phase-btn.active { background: var(--dark); color: white !important; }
-
-        .swiper-slide { width: 180px !important; cursor: pointer; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        .quick-tabs { display: flex; gap: 8px; justify-content: center; margin-top: 20px; }
-        .is-transformed .quick-tabs { justify-content: flex-start; margin-top: 10px; }
-
-        .tab-btn {
-            padding: 8px 15px; background: white; border-radius: 50px; font-size: 9px;
-            font-weight: 800; text-transform: uppercase; border: 1px solid #eee;
-            display: flex; align-items: center; gap: 5px; color: var(--dark) !important;
-        }
+        .swiper-slide { width: 160px !important; }
+        .tab-btn { padding: 8px 15px; background: white; border-radius: 50px; font-size: 9px; font-weight: 800; border: 1px solid #eee; display: flex; align-items: center; gap: 5px; }
     </style>
 </head>
 <body>
 
     <nav class="fixed top-0 w-full nav-glass px-6 py-4 flex justify-between items-center">
         <div class="font-extrabold text-sm tracking-tighter uppercase">NEFSI ASRIFAH <span class="text-[#a68966]">| ECHI</span></div>
-        <div class="flex items-center gap-5">
-            <div class="hidden sm:flex gap-3 text-lg">
+        <div class="flex items-center gap-4">
+            <div class="hidden sm:flex gap-3">
                 <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
                 <a href="#" class="social-link"><i class="fa-brands fa-tiktok"></i></a>
-                <a href="https://wa.me/628111982833" class="social-link"><i class="fa-brands fa-whatsapp"></i></a>
             </div>
             <button onclick="toggleMenu(true)" class="p-1"><i class="fa-solid fa-bars text-xl"></i></button>
         </div>
@@ -206,8 +109,6 @@
         <button onclick="toggleMenu(false)" class="absolute top-8 right-8 text-2xl"><i class="fa-solid fa-xmark"></i></button>
         <a href="#top" onclick="toggleMenu(false)" class="text-xl font-black mb-6">BERANDA</a>
         <a href="#katalog" onclick="toggleMenu(false)" class="text-xl font-black mb-6">KATALOG</a>
-        <a href="#kpr" onclick="toggleMenu(false)" class="text-xl font-black mb-6">HITUNG KPR</a>
-        
         <div class="flex gap-6 mt-10 text-3xl">
             <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
             <a href="#" class="social-link"><i class="fa-brands fa-tiktok"></i></a>
@@ -224,13 +125,11 @@
                 <span class="text-[8px] font-bold text-[#a68966] uppercase tracking-[0.3em] mb-1 block">Property Consultant</span>
                 <h1 class="text-2xl font-black tracking-tighter mb-1 uppercase">Estate by Echi</h1>
                 <p class="text-gray-400 text-[9px] max-w-[250px] leading-tight font-medium">Konsultan properti pilihan untuk Park Serpong.</p>
-                
                 <div class="profile-socials text-lg">
                     <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
                     <a href="#" class="social-link"><i class="fa-brands fa-tiktok"></i></a>
                     <a href="#" class="social-link"><i class="fa-brands fa-linkedin"></i></a>
                 </div>
-
                 <div class="quick-tabs">
                     <a href="#katalog" class="tab-btn"><i class="fa-solid fa-house"></i> UNIT</a>
                     <a href="#kpr" class="tab-btn"><i class="fa-solid fa-calculator"></i> KPR</a>
@@ -241,14 +140,12 @@
 
     <section id="katalog" class="py-10 px-4">
         <div class="max-w-4xl mx-auto">
-            <h2 class="section-header-text">Unit Park Serpong</h2>
             <div class="flex gap-2 overflow-x-auto no-scrollbar mb-6 pb-2 justify-center">
                 <button onclick="renderUnits(7)" id="btn-7" class="phase-btn active">FASE 07</button>
                 <button onclick="renderUnits(6)" id="btn-6" class="phase-btn">FASE 06</button>
                 <button onclick="renderUnits(5)" id="btn-5" class="phase-btn">FASE 05</button>
             </div>
-            <div id="unit-list" class="block w-full">
-                </div>
+            <div id="unit-list"></div>
         </div>
     </section>
 
@@ -270,14 +167,14 @@
                         <input type="number" id="dp-val" value="5" oninput="calc()" class="w-full bg-transparent border-none font-bold text-lg outline-none">
                     </div>
                     <div class="bg-[#fdfbf7] p-4 rounded-2xl border">
-                        <label class="text-[8px] font-bold text-gray-400 uppercase block mb-1">Tenor (Tahun)</label>
+                        <label class="text-[8px] font-bold text-gray-400 uppercase block mb-1">Tenor (Thn)</label>
                         <input type="number" id="tenor-val" value="20" oninput="calc()" class="w-full bg-transparent border-none font-bold text-lg outline-none">
                     </div>
                 </div>
-                <div class="mt-8 kpr-result-box">
+                <div class="mt-8 bg-[#2d241d] p-10 rounded-3xl text-center">
                     <p class="text-[9px] font-bold text-gray-400 uppercase mb-3">Estimasi Cicilan</p>
-                    <span id="hasil-cicilan" class="kpr-result-value">Rp 2.050.000</span>
-                    <a href="https://wa.me/628111982833" target="_blank" class="block w-full py-4 bg-[#a68966] text-white rounded-xl font-bold text-[10px] uppercase hover:opacity-90 transition">Konsultasi WA</a>
+                    <span id="hasil-cicilan" class="text-white text-3xl font-black block mb-6">Rp 2.050.000</span>
+                    <a href="https://wa.me/628111982833" target="_blank" class="block py-4 bg-[#a68966] text-white rounded-xl font-bold text-[10px] uppercase">Konsultasi WA</a>
                 </div>
             </div>
         </div>
@@ -289,51 +186,31 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // Logika Tarik Profil yang Diperbaiki (Lebih sensitif)
+        // Logika Geser Profil
         const trigger = document.getElementById('profile-trigger');
         const header = document.querySelector('header');
         let isDragging = false, startY = 0;
 
-        const handleStart = (e) => {
-            isDragging = true;
-            startY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
-        };
-
-        const handleMove = (e) => {
+        trigger.addEventListener('touchstart', (e) => { isDragging = true; startY = e.touches[0].clientY; });
+        window.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
-            const currentY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
-            
-            // Sensitivitas diperkecil jadi 30 agar lebih responsif merespon sentuhan
+            const currentY = e.touches[0].clientY;
             if (currentY - startY > 30) header.classList.add('is-transformed');
             else if (currentY - startY < -20) header.classList.remove('is-transformed');
-        };
-
-        const handleEnd = () => { isDragging = false; };
-
-        trigger.addEventListener('mousedown', handleStart);
-        window.addEventListener('mousemove', handleMove);
-        window.addEventListener('mouseup', handleEnd);
-        trigger.addEventListener('touchstart', handleStart, { passive: true });
-        window.addEventListener('touchmove', handleMove, { passive: true });
-        window.addEventListener('touchend', handleEnd);
-
+        });
         window.addEventListener('scroll', () => {
-            // Sensitivitas scroll disesuaikan jadi 30
-            if (window.scrollY > 30) header.classList.add('is-transformed');
-            else if (!isDragging) header.classList.remove('is-transformed');
+            if (window.scrollY > 40) header.classList.add('is-transformed');
+            else header.classList.remove('is-transformed');
         });
 
-        const WA_NUMBER = "628111982833";
-        
-        // Data Unit Dikembalikan Secara Penuh
         const unitData = {
-            5: [
-                { name: "Perunggu Livin Tipe B", tag: "305 Jt", val: 305000000, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
-                { name: "Perunggu Livin Tipe BB", tag: "390 Jt", val: 390000000, photos: ["unit-2.jpg", "unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] },
-                { name: "Quartz Livin Tipe Q", tag: "450 Jt", val: 450000000, photos: ["unit-3.jpg", "unit-3.1.jpg", "unit-3.2.jpg", "unit-3.3.jpg"] },
-                { name: "TreeTops Livin Tipe", tag: "520 Jt", val: 520000000, photos: ["unit-4.jpg", "unit-4.1.jpg", "unit-4.2.jpg", "unit-4.3.jpg", "unit-4.4.jpg"] },
-                { name: "Gold Livin Tipe G", tag: "580 Jt", val: 580000000, photos: ["unit-5.jpg", "unit-5.1.jpg", "unit-5.2.jpg", "unit-5.3.jpg"] },
-                { name: "GoldTops Livin Type GT", tag: "650 Jt", val: 650000000, photos: ["unit-6.jpg", "unit-6.1.jpg", "unit-6.2.jpg", "unit-6.3.jpg"] }
+            7: [
+                { name: "Perunggu Beverly Livin", tag: "325 Jt", val: 325000000, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
+                { name: "Silver Beverly Livin", tag: "410 Jt", val: 410000000, photos: ["unit-2.jpg", "unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] },
+                { name: "Urban Beverly Livin", tag: "500 Jt", val: 500000000, photos: ["unit-3.jpg", "unit-3.1.jpg", "unit-3.2.jpg", "unit-3.3.jpg"] },
+                { name: "TreeTops Beverly Livin", tag: "550 Jt", val: 550000000, photos: ["unit-4.jpg", "unit-4.1.jpg", "unit-4.2.jpg", "unit-4.3.jpg"] },
+                { name: "Gold Beverly Livin", tag: "610 Jt", val: 610000000, photos: ["unit-5.jpg", "unit-5.1.jpg", "unit-5.2.jpg", "unit-5.3.jpg"] },
+                { name: "GoldTops Beverly Livin", tag: "690 Jt", val: 690000000, photos: ["unit-6.jpg", "unit-6.1.jpg", "unit-6.2.jpg", "unit-6.3.jpg"] }
             ],
             6: [
                 { name: "Perunggu Livin Tipe B", tag: "315 Jt", val: 315000000, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
@@ -342,13 +219,13 @@
                 { name: "Gold Livin Tipe G", tag: "595 Jt", val: 595000000, photos: ["unit-4.jpg", "unit-4.1.jpg", "unit-4.2.jpg", "unit-4.3.jpg"] },
                 { name: "GoldTops Livin Type GT", tag: "670 Jt", val: 670000000, photos: ["unit-5.jpg", "unit-5.1.jpg", "unit-5.2.jpg", "unit-5.3.jpg", "unit-5.4.jpg"] }
             ],
-            7: [
-                { name: "Perunggu Beverly Livin", tag: "325 Jt", val: 325000000, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
-                { name: "Silver Beverly Livin", tag: "410 Jt", val: 410000000, photos: ["unit-2.jpg", "unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] },
-                { name: "Urban Beverly Livin", tag: "500 Jt", val: 500000000, photos: ["unit-3.jpg", "unit-3.1.jpg", "unit-3.2.jpg", "unit-3.3.jpg"] },
-                { name: "TreeTops Beverly Livin", tag: "550 Jt", val: 550000000, photos: ["unit-4.jpg", "unit-4.1.jpg", "unit-4.2.jpg", "unit-4.3.jpg"] },
-                { name: "Gold Beverly Livin", tag: "610 Jt", val: 610000000, photos: ["unit-5.jpg", "unit-5.1.jpg", "unit-5.2.jpg", "unit-5.3.jpg"] },
-                { name: "GoldTops Beverly Livin", tag: "690 Jt", val: 690000000, photos: ["unit-6.jpg", "unit-6.1.jpg", "unit-6.2.jpg", "unit-6.3.jpg"] }
+            5: [
+                { name: "Perunggu Livin Tipe B", tag: "305 Jt", val: 305000000, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
+                { name: "Perunggu Livin Tipe BB", tag: "390 Jt", val: 390000000, photos: ["unit-2.jpg", "unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] },
+                { name: "Quartz Livin Tipe Q", tag: "450 Jt", val: 450000000, photos: ["unit-3.jpg", "unit-3.1.jpg", "unit-3.2.jpg", "unit-3.3.jpg"] },
+                { name: "TreeTops Livin Tipe", tag: "520 Jt", val: 520000000, photos: ["unit-4.jpg", "unit-4.1.jpg", "unit-4.2.jpg", "unit-4.3.jpg", "unit-4.4.jpg"] },
+                { name: "Gold Livin Tipe G", tag: "580 Jt", val: 580000000, photos: ["unit-5.jpg", "unit-5.1.jpg", "unit-5.2.jpg", "unit-5.3.jpg"] },
+                { name: "GoldTops Livin Type GT", tag: "650 Jt", val: 650000000, photos: ["unit-6.jpg", "unit-6.1.jpg", "unit-6.2.jpg", "unit-6.3.jpg"] }
             ]
         };
 
@@ -365,72 +242,64 @@
             unitData[fase].forEach((u, i) => {
                 const uid = `u-${fase}-${i}`;
                 const folder = `fase-${fase}/`;
-                const heroSrc = folder + u.photos[0];
+                const mainImg = folder + u.photos[0];
                 const thumbHtml = u.photos.slice(1).map(p => `
                     <div class="swiper-slide" onclick="previewImage('${uid}', '${folder}${p}')">
-                        <img src="${folder}${p}" class="w-full h-full object-cover rounded-lg" onerror="this.src='https://placehold.co/400x300?text=Detail'">
+                        <img src="${folder}${p}" class="w-full h-full object-cover rounded-2xl" onerror="this.src='https://placehold.co/400x300?text=Detail'">
                     </div>
                 `).join('');
 
                 list.innerHTML += `
                     <div class="unit-card">
-                        <div class="hero-view" id="hero-container-${uid}" onclick="resetHero('${uid}', '${heroSrc}')">
-                            <img id="hero-img-${uid}" class="blend-multiply" src="${heroSrc}" onerror="this.src='https://placehold.co/800x600?text=${u.name}'">
+                        <div class="hero-view" id="cont-${uid}">
+                            <img id="img-${uid}" class="blend-multiply" src="${mainImg}" onerror="this.src='https://placehold.co/800x800?text=${u.name}'">
+                            <button onclick="resetHero('${uid}', '${mainImg}')" class="btn-back-main">KEMBALI KE FOTO UTAMA</button>
                         </div>
                         <div class="py-4">
-                            <p class="px-6 text-[7px] font-black text-gray-300 uppercase tracking-widest mb-2">Slide Otomatis</p>
-                            <div class="swiper" id="swiper-${uid}"><div class="swiper-wrapper">${thumbHtml}</div></div>
+                            <div class="swiper px-6" id="sw-${uid}"><div class="swiper-wrapper">${thumbHtml}</div></div>
                         </div>
                         <div class="px-6 pb-8">
                             <h4 class="font-black text-xl uppercase tracking-tighter mb-4">${u.name}</h4>
                             <div class="flex flex-col gap-3">
-                                <div class="bg-[#fdfbf7] p-4 rounded-2xl border border-gray-100">
-                                    <p class="text-[7px] font-bold text-gray-400 uppercase">Mulai Dari</p>
-                                    <p class="font-black text-lg text-[#a68966]">Rp ${u.tag}</p>
+                                <div class="bg-[#fdfbf7] p-4 rounded-2xl border border-gray-100 flex justify-between items-center">
+                                    <div><p class="text-[7px] font-bold text-gray-400 uppercase">Harga Mulai</p><p class="font-black text-lg text-[#a68966]">Rp ${u.tag}</p></div>
+                                    <button onclick="setKPR(${u.val})" class="bg-white border px-4 py-2 rounded-xl text-[8px] font-black uppercase">Simulasi</button>
                                 </div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <button onclick="setKPR(${u.val})" class="bg-white border py-3 rounded-xl text-[8px] font-black uppercase">Simulasi KPR</button>
-                                    <a href="https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20info%20unit%20${u.name}" target="_blank" class="btn-chat-wa">
-                                        <i class="fa-brands fa-whatsapp"></i><span>Tanya Echi</span>
-                                    </a>
-                                </div>
+                                <a href="https://wa.me/628111982833?text=Halo%20Echi,%20info%20${u.name}" target="_blank" class="bg-[#2d241d] text-white flex items-center justify-center gap-2 p-4 rounded-2xl font-black text-[10px] uppercase">
+                                    <i class="fa-brands fa-whatsapp text-lg"></i> Tanya Echi
+                                </a>
                             </div>
                         </div>
                     </div>
                 `;
             });
 
-            // Animasi Swiper dikembalikan seperti aslinya
-            setTimeout(() => { 
+            setTimeout(() => {
                 unitData[fase].forEach((u, i) => {
-                    activeSwipers.push(new Swiper(`#swiper-u-${fase}-${i}`, { 
-                        slidesPerView: "auto", spaceBetween: 10, slidesOffsetBefore: 24, slidesOffsetAfter: 24,
-                        loop: true, autoplay: { delay: 3000 }
+                    activeSwipers.push(new Swiper(`#sw-u-${fase}-${i}`, { 
+                        slidesPerView: "auto", spaceBetween: 10, loop: true, autoplay: { delay: 3000 } 
                     }));
-                }); 
+                });
             }, 100);
         }
 
-        function toggleMenu(s) { document.getElementById('mobile-menu').classList.toggle('hidden', !s); document.getElementById('mobile-menu').classList.toggle('flex', s); }
-        
-        // Logika Blend Mode (Cabut saat thumbnail diklik)
-        function previewImage(id, src) { 
-            const img = document.getElementById(`hero-img-${id}`);
-            const container = document.getElementById(`hero-container-${id}`);
-            img.src = src; 
+        function previewImage(id, src) {
+            const cont = document.getElementById(`cont-${id}`);
+            const img = document.getElementById(`img-${id}`);
+            cont.classList.add('is-preview');
+            img.src = src;
             img.classList.remove('blend-multiply');
-            container.classList.add('is-preview'); 
-        }
-        
-        // Logika Blend Mode (Kembalikan saat unit utama diklik)
-        function resetHero(id, src) { 
-            const img = document.getElementById(`hero-img-${id}`);
-            const container = document.getElementById(`hero-container-${id}`);
-            img.src = src; 
-            img.classList.add('blend-multiply');
-            container.classList.remove('is-preview'); 
         }
 
+        function resetHero(id, src) {
+            const cont = document.getElementById(`cont-${id}`);
+            const img = document.getElementById(`img-${id}`);
+            cont.classList.remove('is-preview');
+            img.src = src;
+            img.classList.add('blend-multiply');
+        }
+
+        function toggleMenu(s) { document.getElementById('mobile-menu').classList.toggle('hidden', !s); document.getElementById('mobile-menu').classList.toggle('flex', s); }
         function formatRibuan(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
         function formatAndCalc(el) { let v = el.value.replace(/\D/g, ""); document.getElementById('kpr-raw').value = v; el.value = formatRibuan(v); calc(); }
         function calc() {
