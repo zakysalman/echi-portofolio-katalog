@@ -28,14 +28,25 @@
             scroll-behavior: smooth;
         }
 
+        /* --- NAVIGATION & MENU --- */
         .nav-glass { 
             background: rgba(255, 255, 255, 0.98); 
             backdrop-filter: blur(10px); 
             z-index: 1000; 
             border-bottom: 1px solid #f0f0f0;
         }
+        #mobile-menu {
+            position: fixed; top: 0; right: -100%; width: 80%; height: 100%;
+            background: white; z-index: 2000; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            padding: 40px; box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+        }
+        #mobile-menu.active { right: 0; }
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3); z-index: 1500; display: none;
+        }
 
-        /* --- PROFILE ANIMATION --- */
+        /* --- PROFILE --- */
         .profile-container {
             transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
             display: flex; flex-direction: column; align-items: center; text-align: center;
@@ -46,48 +57,43 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.1); transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
             margin-bottom: 20px; flex-shrink: 0;
         }
-        
-        .is-transformed .profile-container { flex-direction: row; text-align: left; padding: 110px 25px 30px; }
-        .is-transformed .profile-image-wrapper { width: 90px; height: 90px; border-radius: 20px; margin-bottom: 0; margin-right: 20px; }
+        .sosmed-profile { display: flex; gap: 15px; margin-top: 15px; justify-content: center; }
+        .sosmed-profile a { font-size: 20px; color: var(--dark); transition: 0.3s; }
+        .profile-desc { font-size: 11px; color: #888; max-width: 300px; margin: 12px auto; line-height: 1.6; font-weight: 500; }
 
-        /* --- PERBAIKAN AREA MERAH (UNIT UTAMA) --- */
+        .is-transformed .profile-container { flex-direction: row; text-align: left; padding: 110px 25px 30px; }
+        .is-transformed .profile-image-wrapper { width: 80px; height: 80px; border-radius: 20px; margin-bottom: 0; margin-right: 20px; }
+        .is-transformed .sosmed-profile { justify-content: flex-start; }
+        .is-transformed .profile-desc { margin-left: 0; text-align: left; }
+
+        /* --- UNIT DISPLAY --- */
         .hero-view { 
-            width: 100%; 
-            aspect-ratio: 1/1; 
-            background: transparent; /* Menghilangkan rongga/background sisa */
-            overflow: hidden; 
-            position: relative; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
+            width: 100%; aspect-ratio: 1/1; 
+            background: transparent; overflow: hidden; position: relative; 
+            display: flex; align-items: center; justify-content: center; 
             transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
             border-radius: 2rem 2rem 0 0;
         }
-
         .hero-view.is-detail { aspect-ratio: 16/9; }
+        .hero-view img { width: 100%; height: 100%; object-fit: cover; transition: all 0.5s ease-in-out; }
+        .hero-view.changing img { opacity: 0; transform: scale(1.05); }
+        .hero-view.is-detail img { object-fit: contain; background: #fdfcf9; }
 
-        .hero-view img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; /* Default penuh tanpa rongga */
-            transition: opacity 0.3s ease;
-        }
-
-        .hero-view.is-detail img { 
-            object-fit: contain; /* Saat 16:9 gambar terlihat utuh */
-            background: #000; /* Opsional: background hitam tipis jika foto terlalu portrait */
-        }
-
-        /* --- PERBAIKAN AREA KUNING (UNIT PENDUKUNG 16:9) --- */
-        .static-photo-wrapper, .swiper-container-custom { 
-            width: 100%; 
-            aspect-ratio: 16/9; /* Sesuai permintaan garis kuning */
-            border-radius: 1rem; 
+        /* --- PERBAIKAN POIN 5 (FOTO BAWAH) --- */
+        .static-photo-wrapper { 
+            width: 100%; aspect-ratio: 1/1; /* Rasio 1:1 */
             overflow: hidden; 
+            background: transparent; /* Menyatu dengan latar tanpa kolom */
         }
-        .static-photo-wrapper img, .swiper-slide img { 
-            width: 100%; height: 100%; object-fit: cover; cursor: pointer;
+        .static-photo-wrapper img { 
+            width: 100%; height: 100%; object-fit: contain; cursor: pointer; 
         }
+
+        .swiper-container-custom { 
+            width: 100%; aspect-ratio: 16/9; /* Tetap 16:9 */
+            border-radius: 1.2rem; overflow: hidden; 
+        }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
 
         .unit-card { background: var(--cream-light); border-radius: 2rem; overflow: hidden; border: 1px solid var(--champagne); display: flex; flex-direction: column; }
         .click-label { font-size: 8px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; display: block; text-align: right; opacity: 0.8; }
@@ -103,13 +109,26 @@
         .phase-btn { padding: 10px 24px; border-radius: 12px; font-size: 11px; font-weight: 800; border: 1px solid #eee; background: white; transition: 0.3s; }
         .phase-btn.active { background: var(--dark); color: white !important; }
 
-        .sosmed-profile { display: flex; gap: 15px; margin-top: 15px; }
-        .sosmed-profile a { font-size: 18px; color: var(--dark); }
         .tab-btn { padding: 10px 20px; background: white; border-radius: 50px; font-size: 10px; font-weight: 800; border: 1px solid #eee; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
-        .quick-tabs { display: flex; gap: 8px; margin-top: 20px; }
+        .quick-tabs { display: flex; gap: 8px; margin-top: 15px; justify-content: center; }
+        .is-transformed .quick-tabs { justify-content: flex-start; }
     </style>
 </head>
 <body>
+
+    <div class="menu-overlay" id="overlay" onclick="toggleMenu(false)"></div>
+    <div id="mobile-menu">
+        <div class="flex justify-between items-center mb-10">
+            <span class="font-black text-xs uppercase tracking-widest">Menu</span>
+            <button onclick="toggleMenu(false)"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div class="flex flex-col gap-6 font-bold text-lg uppercase tracking-tighter">
+            <a href="#top" onclick="toggleMenu(false)">Home</a>
+            <a href="#katalog" onclick="toggleMenu(false)">Katalog Unit</a>
+            <a href="#kpr" onclick="toggleMenu(false)">Simulasi KPR</a>
+            <a href="https://wa.me/628119001899" onclick="toggleMenu(false)">Hubungi Echi</a>
+        </div>
+    </div>
 
     <nav class="fixed top-0 w-full nav-glass px-6 py-5 flex justify-between items-center">
         <div class="font-extrabold text-sm tracking-tighter uppercase">NEFSI ASRIFAH <span class="text-[#a68966]">| ECHI</span></div>
@@ -123,7 +142,8 @@
             </div>
             <div class="profile-text-content">
                 <span class="text-[9px] font-bold text-[#a68966] uppercase tracking-[0.3em] mb-1 block">Property Consultant</span>
-                <h1 class="text-3xl font-black tracking-tighter mb-2 uppercase">Estate by Echi</h1>
+                <h1 class="text-3xl font-black tracking-tighter mb-1 uppercase">Estate by Echi</h1>
+                <p class="profile-desc">Membantu Anda menemukan hunian impian dengan pilihan unit terbaik di Park Serpong.</p>
                 <div class="sosmed-profile">
                     <a href="https://www.instagram.com/lippokarawaci.id?igsh=MXcwcTduOWV5ZXhqdA==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
                     <a href="https://www.tiktok.com/@parkserponghomes?_r=1&_t=ZS-94uDfA8olij" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
@@ -172,10 +192,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-[#2d241d] p-12 rounded-[2.5rem] text-center text-white shadow-2xl shadow-stone-200">
+                <div class="bg-[#2d241d] p-12 rounded-[2.5rem] text-center text-white shadow-2xl">
                     <p class="text-[9px] font-bold text-gray-400 uppercase mb-3">Estimasi Cicilan</p>
                     <span id="hasil-cicilan" class="text-4xl md:text-5xl font-black block mb-8">Rp 2.050.000</span>
-                    <button onclick="sendToWA()" class="w-full py-5 bg-[#a68966] text-white rounded-2xl font-bold text-[11px] uppercase tracking-widest hover:brightness-110 transition shadow-lg">Konsultasi ke Echi</button>
+                    <button onclick="sendToWA()" class="w-full py-5 bg-[#a68966] text-white rounded-2xl font-bold text-[11px] uppercase tracking-widest hover:brightness-110 shadow-lg transition">Konsultasi ke Echi</button>
                 </div>
             </div>
         </div>
@@ -238,6 +258,13 @@
             }, 300);
         }
 
+        function toggleMenu(show) {
+            const menu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('overlay');
+            if(show) { menu.classList.add('active'); overlay.style.display = 'block'; }
+            else { menu.classList.remove('active'); overlay.style.display = 'none'; }
+        }
+
         function renderUnits(fase) {
             const list = document.getElementById('unit-list');
             list.innerHTML = '';
@@ -261,7 +288,7 @@
                         </div>
                         <div class="py-6 px-6 border-b border-gray-50">
                             <span class="click-label">click to detail</span>
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-2 gap-4 items-center">
                                 <div class="static-photo-wrapper" onclick="resetToMain('${uid}', '${mainImg}')">
                                     <img src="${mainImg}">
                                 </div>
@@ -270,21 +297,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="px-8 py-8 flex-grow flex flex-col">
-                            <h4 class="font-black text-xl md:text-2xl uppercase tracking-tighter mb-4 leading-tight">${u.name}</h4>
-                            <div class="mb-4">
-                                <p class="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Mulai Dari</p>
-                                <p class="font-bold text-lg text-[#a68966]">Rp ${u.tag}</p>
-                            </div>
-                            <p class="text-[10px] text-gray-500 font-medium mb-6 leading-relaxed flex-grow">${u.desc}</p>
+                        <div class="px-8 py-8">
+                            <h4 class="font-black text-xl uppercase mb-4">${u.name}</h4>
+                            <p class="text-[9px] font-bold text-gray-400 uppercase mb-0.5">Mulai Dari</p>
+                            <p class="font-bold text-lg text-[#a68966] mb-6">Rp ${u.tag}</p>
                             <div class="flex gap-4 mb-8 pb-6 border-b border-gray-100">
                                 <div class="text-[9px] font-bold text-gray-400 flex items-center gap-1.5"><i class="fa-solid fa-bed text-[10px]"></i> ${u.bed} BR</div>
                                 <div class="text-[9px] font-bold text-gray-400 flex items-center gap-1.5"><i class="fa-solid fa-bath text-[10px]"></i> ${u.bath} BA</div>
                                 <div class="text-[9px] font-bold text-gray-400 flex items-center gap-1.5"><i class="fa-solid fa-stairs text-[10px]"></i> ${u.floor} LT</div>
                             </div>
                             <div class="grid grid-cols-2 gap-3">
-                                <button onclick="setKPR('${u.name}', ${u.val})" class="bg-white border py-4 rounded-2xl text-[9px] font-black uppercase hover:bg-gray-50 transition">Simulasi</button>
-                                <a href="https://wa.me/${WA_NUMBER}?text=Halo Echi, saya tertarik unit ${u.name}" target="_blank" class="bg-[#2d241d] text-white flex items-center justify-center rounded-2xl text-[9px] font-black uppercase hover:opacity-90 transition">Chat Echi</a>
+                                <button onclick="setKPR('${u.name}', ${u.val})" class="bg-white border py-4 rounded-2xl text-[9px] font-black uppercase transition">Simulasi</button>
+                                <a href="https://wa.me/${WA_NUMBER}?text=Halo Echi, saya tertarik unit ${u.name}" target="_blank" class="bg-[#2d241d] text-white flex items-center justify-center rounded-2xl text-[9px] font-black uppercase transition">Chat Echi</a>
                             </div>
                         </div>
                     </div>
@@ -293,7 +317,7 @@
 
             setTimeout(() => { 
                 unitData[fase].forEach((u, i) => { 
-                    new Swiper(`#sw-u-${fase}-${i}`, { loop: true, autoplay: { delay: 2500 } }); 
+                    new Swiper(`#sw-u-${fase}-${i}`, { loop: true, autoplay: { delay: 3000 } }); 
                 }); 
             }, 100);
         }
