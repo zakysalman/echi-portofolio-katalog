@@ -67,20 +67,29 @@
             text-transform: uppercase; letter-spacing: 0.1em;
         }
 
-        /* Transform State */
+        /* Transform State (Refined) */
         .is-transformed .profile-container { flex-direction: row; text-align: left; padding: 90px 20px 20px; }
-        .is-transformed .profile-image-wrapper { width: 90px; height: 90px; border-radius: 18px; margin-bottom: 0; margin-right: 20px; }
+        .is-transformed .profile-image-wrapper { width: 100px; height: 100px; border-radius: 20px; margin-bottom: 0; margin-right: 20px; }
         .is-transformed .scroll-indicator { display: none; }
         .is-transformed .quick-tabs { justify-content: flex-start; }
 
-        /* --- UNIT CARD LOGIC --- */
+        /* --- UNIT CARD LOGIC (Zoom Updates) --- */
         .hero-view {
             width: 100%; aspect-ratio: 1/1; background: #f9f7f4; overflow: hidden; position: relative;
             display: flex; align-items: center; justify-content: center; transition: all 0.4s ease;
             pointer-events: none;
         }
         .hero-view.is-preview { aspect-ratio: 16/9; background: #1a1a1a; pointer-events: auto; }
-        .hero-view img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* Zoom foto utama agar tidak ada rongga */
+        .hero-view img { 
+            width: 100%; height: 100%; 
+            object-fit: cover; 
+            transform: scale(1.1); /* Zoom 10% agar memenuhi bingkai */
+            transition: transform 0.4s ease;
+        }
+        .hero-view.is-preview img { transform: scale(1); } /* Normal kembali saat mode slide */
+
         .blend-multiply { mix-blend-mode: multiply; }
 
         .btn-back-main {
@@ -90,11 +99,24 @@
         }
         .is-preview .btn-back-main { display: block; }
 
+        /* --- FOTO MERAH (Sesuai Request: Zoom & Tanpa Rongga) --- */
         .static-photo-wrapper {
-            width: 110px; aspect-ratio: 1/1; border-radius: 1.5rem; overflow: hidden; flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            width: 110px; aspect-ratio: 1/1; 
+            overflow: hidden; pointer-events: none; flex-shrink: 0;
+            background: transparent;
         }
-        .swiper-container-custom { width: 100%; aspect-ratio: 16/9; border-radius: 1.5rem; overflow: hidden; }
+        .static-photo-wrapper img { 
+            width: 100%; height: 100%; 
+            object-fit: cover; 
+            transform: scale(1.15); /* Zoom lebih besar agar foto unit menyentuh batas kolom */
+        }
+
+        /* --- FOTO KUNING (16:9 Swiper) --- */
+        .swiper-container-custom {
+            width: 100%; aspect-ratio: 16/9; border-radius: 1.5rem; overflow: hidden;
+        }
+        .swiper-slide-custom { width: 100% !important; height: 100%; }
+        .swiper-slide-custom img { width: 100%; height: 100%; object-fit: cover; }
 
         .unit-card { background: var(--cream-light); border-radius: 2.5rem; overflow: hidden; border: 1px solid var(--champagne); margin-bottom: 3rem; }
         .phase-btn { padding: 10px 20px; border-radius: 12px; font-size: 11px; font-weight: 800; border: 1px solid #eee; background: white; }
@@ -159,20 +181,10 @@
                     </div>
                     <input type="hidden" id="kpr-raw" value="325000000">
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-[#fdfcf9] p-4 rounded-2xl border border-[#f0ebe3]">
-                        <label class="text-[8px] font-bold text-gray-400 uppercase block mb-1">DP (%)</label>
-                        <input type="number" id="dp-val" value="5" oninput="calc()" class="w-full bg-transparent border-none font-bold text-lg outline-none">
-                    </div>
-                    <div class="bg-[#fdfcf9] p-4 rounded-2xl border border-[#f0ebe3]">
-                        <label class="text-[8px] font-bold text-gray-400 uppercase block mb-1">Tenor (Thn)</label>
-                        <input type="number" id="tenor-val" value="20" oninput="calc()" class="w-full bg-transparent border-none font-bold text-lg outline-none">
-                    </div>
-                </div>
                 <div class="mt-8 bg-[#2d241d] p-10 rounded-3xl text-center text-white">
                     <p class="text-[8px] font-bold text-gray-400 uppercase mb-2">Estimasi Cicilan</p>
                     <span id="hasil-cicilan" class="text-3xl font-black block mb-6">Rp 2.050.000</span>
-                    <a href="https://wa.me/628111982833" class="block py-4 bg-[#a68966] rounded-xl font-bold text-[10px] uppercase tracking-widest">Tanya Detail Unit</a>
+                    <a href="https://wa.me/628111982833" target="_blank" class="block py-4 bg-[#a68966] text-white rounded-xl font-bold text-[10px] uppercase tracking-widest hover:opacity-90 transition">Tanya Detail Unit</a>
                 </div>
             </div>
         </div>
@@ -186,10 +198,32 @@
     <script>
         const WA_NUMBER = "628111982833";
 
+        // Logic Profile Transform
+        let isDragging = false;
+        let startY = 0;
+
+        window.addEventListener('touchstart', (e) => {
+            if (window.scrollY < 10) { 
+                isDragging = true;
+                startY = e.touches[0].clientY;
+            }
+        }, { passive: true });
+
+        window.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const currentY = e.touches[0].clientY;
+            if (currentY - startY > 30) {
+                document.body.classList.add('is-transformed');
+                isDragging = false; 
+            }
+        }, { passive: true });
+
+        window.addEventListener('touchend', () => isDragging = false);
+
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 40) document.body.classList.add('is-transformed');
-            else document.body.classList.remove('is-transformed');
-        });
+            if (window.scrollY > 30) document.body.classList.add('is-transformed');
+            else if (window.scrollY <= 10 && !isDragging) document.body.classList.remove('is-transformed');
+        }, { passive: true });
 
         const unitData = {
             7: [
@@ -239,22 +273,28 @@
                             <button onclick="resetHero('${uid}', '${mainImg}')" class="btn-back-main">Reset</button>
                         </div>
                         <div class="py-6 flex items-center gap-4 px-6">
-                            <div class="static-photo-wrapper"><img src="${mainImg}" class="w-full h-full object-cover"></div>
+                            <div class="static-photo-wrapper">
+                                <img src="${mainImg}" class="blend-multiply">
+                            </div>
                             <div class="swiper swiper-container-custom" id="sw-${uid}">
                                 <div class="swiper-wrapper">${slides}</div>
                             </div>
                         </div>
                         <div class="px-8 pb-10">
-                            <h4 class="font-black text-2xl uppercase tracking-tighter mb-1">${u.name}</h4>
-                            <p class="font-bold text-lg text-[#a68966] mb-4">Rp ${u.tag}</p>
-                            <div class="flex gap-4 mb-6 border-b border-gray-100 pb-4">
-                                <div class="text-[10px] font-bold text-gray-400"><i class="fa-solid fa-bed"></i> ${u.bed} BR</div>
-                                <div class="text-[10px] font-bold text-gray-400"><i class="fa-solid fa-bath"></i> ${u.bath} BA</div>
-                                <div class="text-[10px] font-bold text-gray-400"><i class="fa-solid fa-stairs"></i> ${u.floor} LT</div>
+                            <h4 class="font-black text-2xl uppercase tracking-tighter mb-4 leading-tight">${u.name}</h4>
+                            <div class="mb-4">
+                                <p class="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Mulai Dari</p>
+                                <p class="font-bold text-lg text-[#a68966] leading-none">Rp ${u.tag}</p>
+                            </div>
+                            <p class="text-[10px] text-gray-500 font-medium mb-6 leading-relaxed">${u.desc}</p>
+                            <div class="flex gap-4 mb-8 pb-6 border-b border-gray-100">
+                                <div class="spec-icon"><i class="fa-solid fa-bed text-gray-300"></i> ${u.bed} BR</div>
+                                <div class="spec-icon"><i class="fa-solid fa-bath text-gray-300"></i> ${u.bath} BA</div>
+                                <div class="spec-icon"><i class="fa-solid fa-stairs text-gray-300"></i> ${u.floor} LT</div>
                             </div>
                             <div class="grid grid-cols-2 gap-3">
-                                <button onclick="setKPR(${u.val})" class="bg-white border py-4 rounded-2xl text-[9px] font-black uppercase tracking-widest">Simulasi</button>
-                                <a href="https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20saya%20tertarik%20unit%20${u.name}" target="_blank" class="bg-[#2d241d] text-white flex items-center justify-center gap-2 rounded-2xl text-[9px] font-black uppercase tracking-widest">
+                                <button onclick="setKPR(${u.val})" class="bg-white border py-4 rounded-2xl text-[9px] font-black uppercase transition hover:bg-[#f9f7f4]">Simulasi</button>
+                                <a href="https://wa.me/${WA_NUMBER}?text=Halo%20Echi,%20saya%20tertarik%20unit%20${u.name}" target="_blank" class="bg-[#2d241d] text-white flex items-center justify-center gap-2 rounded-2xl text-[9px] font-black uppercase hover:opacity-90 transition">
                                     <i class="fa-brands fa-whatsapp text-sm"></i> Chat Echi
                                 </a>
                             </div>
@@ -288,12 +328,10 @@
         
         function calc() {
             const h = parseFloat(document.getElementById('kpr-raw').value) || 0;
-            const dp = parseFloat(document.getElementById('dp-val').value) || 5;
-            const t = parseFloat(document.getElementById('tenor-val').value) || 20;
-            const p = h - (h * dp / 100);
+            const pinjaman = h * 0.95;
             const r = 0.05 / 12;
-            const n = t * 12;
-            const c = (p * r) / (1 - Math.pow(1 + r, -n));
+            const n = 240;
+            const c = (pinjaman * r) / (1 - Math.pow(1 + r, -n));
             document.getElementById('hasil-cicilan').innerText = "Rp " + formatRibuan(Math.round(c || 0));
         }
 
