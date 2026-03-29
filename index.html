@@ -36,114 +36,92 @@
         }
 
         /* --- SOSMED STYLE --- */
-        .sosmed-nav { display: flex; gap: 12px; align-items: center; margin-right: 15px; }
-        .sosmed-nav a { color: var(--dark); font-size: 14px; transition: 0.3s; }
-        .sosmed-profile { display: flex; gap: 15px; margin-top: 15px; }
+        .sosmed-profile { display: flex; gap: 15px; margin-top: 20px; justify-content: center; width: 100%; }
         .sosmed-profile a { 
-            width: 32px; height: 32px; border-radius: 50%; background: white; 
+            width: 38px; height: 38px; border-radius: 50%; background: white; 
             display: flex; align-items: center; justify-content: center;
-            font-size: 14px; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 16px; border: 1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             color: var(--dark); transition: 0.3s;
         }
 
-        /* --- PROFILE ANIMATION --- */
+        .sosmed-menu-footer { display: flex; gap: 20px; margin-top: auto; padding-bottom: 40px; justify-content: center; width: 100%; }
+        .sosmed-menu-footer a { font-size: 24px; color: var(--dark); }
+
+        /* --- PROFILE ANIMATION (SMOOTH SLIDE) --- */
         .profile-container {
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
             display: flex; flex-direction: column; align-items: center; text-align: center;
-            padding-top: 100px; padding-bottom: 30px; width: 100%; max-width: 1000px; margin: 0 auto;
+            padding: 120px 20px 40px; width: 100%; max-width: 1000px; margin: 0 auto;
         }
         .profile-image-wrapper {
-            width: 120px; height: 120px; border-radius: 50%; overflow: hidden; border: 4px solid white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: all 0.5s ease; margin-bottom: 15px;
-            position: relative;
+            width: 130px; height: 130px; border-radius: 50%; overflow: hidden; border: 4px solid white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            margin-bottom: 20px; flex-shrink: 0;
         }
         
+        .profile-text-content { transition: all 0.7s ease; }
+
         .scroll-indicator { font-size: 12px; color: var(--gold); margin-bottom: 15px; animation: bounce 2s infinite; }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(5px);} 60% {transform: translateY(3px);} }
 
-        .quick-tabs { display: flex; gap: 8px; justify-content: center; margin-top: 15px; }
-        .tab-btn { 
-            padding: 8px 18px; background: white; border-radius: 50px; font-size: 9px; 
-            font-weight: 800; border: 1px solid #eee; display: flex; align-items: center; gap: 6px;
-            text-transform: uppercase; letter-spacing: 0.1em;
-        }
+        /* State Scroll Active */
+        .is-transformed .profile-container { flex-direction: row; text-align: left; padding: 110px 25px 30px; }
+        .is-transformed .profile-image-wrapper { width: 90px; height: 90px; border-radius: 20px; margin-bottom: 0; margin-right: 20px; }
+        .is-transformed .scroll-indicator { opacity: 0; visibility: hidden; height: 0; margin: 0; }
+        .is-transformed .sosmed-profile { justify-content: flex-start; margin-top: 12px; }
+        .is-transformed .quick-tabs { justify-content: flex-start; }
 
-        .is-transformed .profile-container { flex-direction: row; text-align: left; padding: 110px 40px 30px; }
-        .is-transformed .profile-image-wrapper { width: 110px; height: 110px; border-radius: 25px; margin-bottom: 0; margin-right: 25px; }
-        .is-transformed .scroll-indicator { display: none; }
-        .is-transformed .quick-tabs, .is-transformed .sosmed-profile { justify-content: flex-start; }
-
-        /* --- ZOOM & DESKTOP GRID LOGIC --- */
-        #unit-list {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
+        /* --- DESKTOP GRID --- */
+        #unit-list { display: grid; grid-template-columns: 1fr; gap: 20px; }
         @media (min-width: 768px) {
-            #unit-list {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 30px;
-            }
-            .profile-container { padding-top: 140px; }
-            .is-transformed .profile-container { padding: 120px 60px 40px; }
+            #unit-list { grid-template-columns: repeat(2, 1fr); gap: 30px; }
         }
 
-        .hero-view { width: 100%; aspect-ratio: 1/1; background: #f9f7f4; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; transition: all 0.4s ease; }
-        .hero-view.is-preview { aspect-ratio: 16/9; background: #1a1a1a; pointer-events: auto; }
-        .hero-view img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); transition: transform 0.4s ease; }
-        .hero-view.is-preview img { transform: scale(1); }
-        
+        .hero-view { width: 100%; aspect-ratio: 1/1; background: #f9f7f4; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; }
+        .hero-view img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); }
         .static-photo-wrapper { width: 100px; aspect-ratio: 1/1; overflow: hidden; flex-shrink: 0; }
         .static-photo-wrapper img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.15); }
         .blend-multiply { mix-blend-mode: multiply; }
 
-        .btn-back-main {
-            position: absolute; bottom: 15px; background: rgba(255,255,255,0.95);
-            padding: 10px 20px; border-radius: 50px; font-size: 8px; font-weight: 900;
-            display: none; z-index: 20; border: 1px solid var(--gold);
-        }
-        .is-preview .btn-back-main { display: block; }
-
         .unit-card { background: var(--cream-light); border-radius: 2rem; overflow: hidden; border: 1px solid var(--champagne); display: flex; flex-direction: column; }
-        .swiper-container-custom { width: 100%; aspect-ratio: 16/9; border-radius: 1.2rem; overflow: hidden; }
-        .phase-btn { padding: 10px 20px; border-radius: 12px; font-size: 11px; font-weight: 800; border: 1px solid #eee; background: white; transition: 0.3s; }
+        .phase-btn { padding: 10px 24px; border-radius: 12px; font-size: 11px; font-weight: 800; border: 1px solid #eee; background: white; transition: 0.3s; }
         .phase-btn.active { background: var(--dark); color: white !important; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        .quick-tabs { display: flex; gap: 8px; justify-content: center; margin-top: 20px; }
+        .tab-btn { padding: 10px 20px; background: white; border-radius: 50px; font-size: 10px; font-weight: 800; border: 1px solid #eee; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 w-full nav-glass px-6 py-4 flex justify-between items-center">
+    <nav class="fixed top-0 w-full nav-glass px-6 py-5 flex justify-between items-center">
         <div class="font-extrabold text-sm tracking-tighter uppercase">NEFSI ASRIFAH <span class="text-[#a68966]">| ECHI</span></div>
-        <div class="flex items-center">
-            <div class="sosmed-nav">
-                <a href="https://www.instagram.com/lippokarawaci.id?igsh=MXcwcTduOWV5ZXhqdA==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://www.tiktok.com/@parkserponghomes?_r=1&_t=ZS-94uDfA8olij" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
-                <a href="https://wa.me/6281119001899" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
-            </div>
-            <button onclick="toggleMenu(true)" class="p-1"><i class="fa-solid fa-bars text-xl"></i></button>
-        </div>
+        <button onclick="toggleMenu(true)" class="p-1"><i class="fa-solid fa-bars-staggered text-xl"></i></button>
     </nav>
 
-    <div id="mobile-menu" class="hidden fixed inset-0 bg-white z-[2000] flex-col items-center justify-center text-center">
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-white z-[2000] flex flex-col items-center justify-between py-12 text-center">
         <button onclick="toggleMenu(false)" class="absolute top-8 right-8 text-2xl"><i class="fa-solid fa-xmark"></i></button>
-        <a href="#top" onclick="toggleMenu(false)" class="text-xl font-black mb-6 uppercase">Beranda</a>
-        <a href="#katalog" onclick="toggleMenu(false)" class="text-xl font-black mb-6 uppercase">Katalog Unit</a>
-        <a href="#kpr" onclick="toggleMenu(false)" class="text-xl font-black mb-6 uppercase">Simulasi KPR</a>
+        <div class="flex flex-col gap-8 mt-20">
+            <a href="#top" onclick="toggleMenu(false)" class="text-2xl font-black uppercase tracking-tighter">Beranda</a>
+            <a href="#katalog" onclick="toggleMenu(false)" class="text-2xl font-black uppercase tracking-tighter">Katalog Unit</a>
+            <a href="#kpr" onclick="toggleMenu(false)" class="text-2xl font-black uppercase tracking-tighter">Simulasi KPR</a>
+        </div>
+        <div class="sosmed-menu-footer">
+            <a href="https://www.instagram.com/lippokarawaci.id?igsh=MXcwcTduOWV5ZXhqdA==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@parkserponghomes?_r=1&_t=ZS-94uDfA8olij" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://wa.me/6281119001899" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
     </div>
 
-    <header id="top" class="w-full">
+    <header id="top">
         <div class="profile-container">
             <div class="profile-image-wrapper">
                 <img src="wajah.jpg" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400?text=Echi'">
             </div>
-            <div class="scroll-indicator"><i class="fa-solid fa-chevron-down"></i></div>
-
             <div class="profile-text-content">
-                <span class="text-[8px] font-bold text-[#a68966] uppercase tracking-[0.3em] mb-1 block">Property Consultant</span>
-                <h1 class="text-3xl md:text-4xl font-black tracking-tighter mb-1 uppercase">Estate by Echi</h1>
-                <p class="text-gray-400 text-[10px] md:text-xs max-w-[300px] leading-tight font-medium">Membantu Anda menemukan hunian impian di Park Serpong.</p>
+                <div class="scroll-indicator"><i class="fa-solid fa-chevron-down"></i></div>
+                <span class="text-[9px] font-bold text-[#a68966] uppercase tracking-[0.3em] mb-1 block">Property Consultant</span>
+                <h1 class="text-3xl md:text-4xl font-black tracking-tighter mb-2 uppercase">Estate by Echi</h1>
+                <p class="text-gray-400 text-[10px] md:text-xs max-w-[280px] leading-tight font-medium">Membantu Anda menemukan hunian impian di Park Serpong.</p>
                 
                 <div class="sosmed-profile">
                     <a href="https://www.instagram.com/lippokarawaci.id?igsh=MXcwcTduOWV5ZXhqdA==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
@@ -161,8 +139,8 @@
 
     <section id="katalog" class="py-10 px-6">
         <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-[12px] font-bold text-gray-400 uppercase tracking-[0.3em] mb-4">Unit Park Serpong</h2>
-            <div class="flex gap-2 overflow-x-auto no-scrollbar mb-12 pb-2 justify-center">
+            <h2 class="text-[12px] font-bold text-gray-400 uppercase tracking-[0.3em] mb-6">Unit Park Serpong</h2>
+            <div class="flex gap-2 overflow-x-auto no-scrollbar mb-10 pb-2 justify-center">
                 <button onclick="renderUnits(7)" id="btn-7" class="phase-btn active">FASE 07</button>
                 <button onclick="renderUnits(6)" id="btn-6" class="phase-btn">FASE 06</button>
                 <button onclick="renderUnits(5)" id="btn-5" class="phase-btn">FASE 05</button>
@@ -176,44 +154,45 @@
             <h3 class="text-center font-black uppercase text-[#a68966] mb-12 tracking-widest text-xs">Simulasi KPR</h3>
             <div class="grid md:grid-cols-2 gap-8 items-center">
                 <div class="space-y-4">
-                    <div class="bg-[#fdfcf9] p-6 rounded-2xl border border-[#f0ebe3]">
-                        <label class="text-[8px] font-bold text-gray-400 uppercase block mb-2">Harga Unit</label>
+                    <div class="bg-[#fdfcf9] p-7 rounded-3xl border border-[#f0ebe3]">
+                        <label class="text-[9px] font-bold text-gray-400 uppercase block mb-2">Harga Unit</label>
                         <div class="flex items-center">
-                            <span class="text-gray-400 font-bold mr-2">Rp</span>
+                            <span class="text-gray-400 font-bold mr-2 text-xl">Rp</span>
                             <input type="text" id="kpr-disp" value="325.000.000" oninput="formatAndCalc(this)" class="w-full bg-transparent border-none outline-none text-2xl font-black tracking-tighter">
                         </div>
                         <input type="hidden" id="kpr-raw" value="325000000">
                     </div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-[#fdfcf9] p-4 rounded-2xl border border-[#f0ebe3]">
-                            <label class="text-[8px] font-bold text-gray-400 uppercase block mb-1">DP (%)</label>
-                            <input type="number" id="dp-val" value="5" oninput="calc()" class="w-full bg-transparent border-none font-bold text-lg outline-none">
+                        <div class="bg-[#fdfcf9] p-5 rounded-2xl border border-[#f0ebe3]">
+                            <label class="text-[9px] font-bold text-gray-400 uppercase block mb-1">DP (%)</label>
+                            <input type="number" id="dp-val" value="5" oninput="calc()" class="w-full bg-transparent border-none font-bold text-xl outline-none">
                         </div>
-                        <div class="bg-[#fdfcf9] p-4 rounded-2xl border border-[#f0ebe3]">
-                            <label class="text-[8px] font-bold text-gray-400 uppercase block mb-1">Tenor (Tahun)</label>
-                            <input type="number" id="tenor-val" value="20" oninput="calc()" class="w-full bg-transparent border-none font-bold text-lg outline-none">
+                        <div class="bg-[#fdfcf9] p-5 rounded-2xl border border-[#f0ebe3]">
+                            <label class="text-[9px] font-bold text-gray-400 uppercase block mb-1">Tenor (Thn)</label>
+                            <input type="number" id="tenor-val" value="20" oninput="calc()" class="w-full bg-transparent border-none font-bold text-xl outline-none">
                         </div>
                     </div>
                 </div>
-                <div class="bg-[#2d241d] p-10 rounded-3xl text-center text-white">
-                    <p class="text-[8px] font-bold text-gray-400 uppercase mb-2">Estimasi Cicilan</p>
-                    <span id="hasil-cicilan" class="text-4xl font-black block mb-6">Rp 2.050.000</span>
-                    <a href="https://wa.me/6281119001899" target="_blank" class="block py-4 bg-[#a68966] text-white rounded-xl font-bold text-[10px] uppercase tracking-widest hover:brightness-110 transition">Tanya Detail Unit</a>
+                <div class="bg-[#2d241d] p-12 rounded-[2.5rem] text-center text-white shadow-2xl shadow-stone-200">
+                    <p class="text-[9px] font-bold text-gray-400 uppercase mb-3">Estimasi Cicilan</p>
+                    <span id="hasil-cicilan" class="text-4xl md:text-5xl font-black block mb-8">Rp 2.050.000</span>
+                    <button onclick="sendToWA()" class="w-full py-5 bg-[#a68966] text-white rounded-2xl font-bold text-[11px] uppercase tracking-widest hover:brightness-110 transition shadow-lg">Konsultasi ke Echi</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-16 text-center text-[8px] font-bold text-gray-300 uppercase tracking-[0.4em]">
+    <footer class="py-16 text-center text-[9px] font-bold text-gray-300 uppercase tracking-[0.5em]">
         &copy; 2024 NEFSI ASRIFAH | ECHI PROPERTY
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         const WA_NUMBER = "6281119001899";
+        let selectedUnitName = "General Park Serpong";
 
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 30) document.body.classList.add('is-transformed');
+            if (window.scrollY > 40) document.body.classList.add('is-transformed');
             else document.body.classList.remove('is-transformed');
         });
 
@@ -250,10 +229,10 @@
             unitData[fase].forEach((u, i) => {
                 const uid = `u-${fase}-${i}`;
                 const mainImg = `fase-${fase}/` + u.photos[0];
-                const slides = u.photos.slice(1).map(p => `<div class="swiper-slide" onclick="previewImage('${uid}', 'fase-${fase}/${p}')"><img src="fase-${fase}/${p}" class="w-full h-full object-cover"></div>`).join('');
+                const slides = u.photos.slice(1).map(p => `<div class="swiper-slide"><img src="fase-${fase}/${p}" class="w-full h-full object-cover"></div>`).join('');
                 list.innerHTML += `
                     <div class="unit-card">
-                        <div class="hero-view" id="cont-${uid}"><img id="img-${uid}" src="${mainImg}" class="blend-multiply"><button onclick="resetHero('${uid}', '${mainImg}')" class="btn-back-main">Reset</button></div>
+                        <div class="hero-view"><img src="${mainImg}" class="blend-multiply"></div>
                         <div class="py-6 flex items-center gap-4 px-6 border-b border-gray-50">
                             <div class="static-photo-wrapper"><img src="${mainImg}" class="blend-multiply"></div>
                             <div class="swiper swiper-container-custom" id="sw-${uid}"><div class="swiper-wrapper">${slides}</div></div>
@@ -271,19 +250,17 @@
                                 <div class="text-[9px] font-bold text-gray-400 flex items-center gap-1.5"><i class="fa-solid fa-stairs text-[10px]"></i> ${u.floor} LT</div>
                             </div>
                             <div class="grid grid-cols-2 gap-3">
-                                <button onclick="setKPR(${u.val})" class="bg-white border py-4 rounded-2xl text-[9px] font-black uppercase hover:bg-gray-50 transition">Simulasi</button>
+                                <button onclick="setKPR('${u.name}', ${u.val})" class="bg-white border py-4 rounded-2xl text-[9px] font-black uppercase hover:bg-gray-50 transition">Simulasi</button>
                                 <a href="https://wa.me/${WA_NUMBER}?text=Halo Echi, saya tertarik unit ${u.name}" target="_blank" class="bg-[#2d241d] text-white flex items-center justify-center rounded-2xl text-[9px] font-black uppercase hover:opacity-90 transition">Chat Echi</a>
                             </div>
                         </div>
                     </div>
                 `;
             });
-            setTimeout(() => { unitData[fase].forEach((u, i) => { new Swiper(`#sw-u-${fase}-${i}`, { loop: true, autoplay: { delay: 3000, disableOnInteraction: false } }); }); }, 100);
+            setTimeout(() => { unitData[fase].forEach((u, i) => { new Swiper(`#sw-u-${fase}-${i}`, { loop: true, autoplay: { delay: 3000 } }); }); }, 100);
         }
 
-        function previewImage(id, src) { const cont = document.getElementById(`cont-${id}`); const img = document.getElementById(`img-${id}`); cont.classList.add('is-preview'); img.src = src; img.classList.remove('blend-multiply'); }
-        function resetHero(id, src) { const cont = document.getElementById(`cont-${id}`); const img = document.getElementById(`img-${id}`); cont.classList.remove('is-preview'); img.src = src; img.classList.add('blend-multiply'); }
-        function toggleMenu(s) { document.getElementById('mobile-menu').classList.toggle('hidden', !s); document.getElementById('mobile-menu').classList.toggle('flex', s); }
+        function toggleMenu(s) { document.getElementById('mobile-menu').classList.toggle('hidden', !s); }
         function formatRibuan(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
         function formatAndCalc(el) { let v = el.value.replace(/\D/g, ""); document.getElementById('kpr-raw').value = v; el.value = formatRibuan(v); calc(); }
         function calc() {
@@ -296,7 +273,24 @@
             const c = (p * r) / (1 - Math.pow(1 + r, -n));
             document.getElementById('hasil-cicilan').innerText = "Rp " + formatRibuan(Math.round(c || 0));
         }
-        function setKPR(v) { document.getElementById('kpr-raw').value = v; document.getElementById('kpr-disp').value = formatRibuan(v); calc(); document.getElementById('kpr').scrollIntoView({ behavior: 'smooth' }); }
+
+        function setKPR(name, v) { 
+            selectedUnitName = name;
+            document.getElementById('kpr-raw').value = v; 
+            document.getElementById('kpr-disp').value = formatRibuan(v); 
+            calc(); 
+            document.getElementById('kpr').scrollIntoView({ behavior: 'smooth' }); 
+        }
+
+        function sendToWA() {
+            const harga = document.getElementById('kpr-disp').value;
+            const dp = document.getElementById('dp-val').value;
+            const tenor = document.getElementById('tenor-val').value;
+            const cicilan = document.getElementById('hasil-cicilan').innerText;
+            const text = `Halo Echi, saya ingin konsultasi mengenai unit: %0A%0A*Unit:* ${selectedUnitName}%0A*Harga:* Rp ${harga}%0A*DP:* ${dp}%%0A*Tenor:* ${tenor} Tahun%0A*Estimasi Cicilan:* ${cicilan}%0A%0AHubungi saya segera ya, terima kasih!`;
+            window.open(`https://wa.me/${WA_NUMBER}?text=${text}`, '_blank');
+        }
+
         window.onload = () => { renderUnits(7); calc(); };
     </script>
 </body>
