@@ -59,7 +59,6 @@
             margin-bottom: 20px; flex-shrink: 0;
         }
         
-        /* State Scroll Active */
         .is-transformed .profile-container { flex-direction: row; text-align: left; padding: 110px 25px 30px; }
         .is-transformed .profile-image-wrapper { width: 90px; height: 90px; border-radius: 20px; margin-bottom: 0; margin-right: 20px; }
         .is-transformed .scroll-indicator { opacity: 0; visibility: hidden; height: 0; margin: 0; }
@@ -68,9 +67,7 @@
 
         /* --- UNIT CARD & HERO --- */
         #unit-list { display: grid; grid-template-columns: 1fr; gap: 20px; }
-        @media (min-width: 768px) {
-            #unit-list { grid-template-columns: repeat(2, 1fr); gap: 30px; }
-        }
+        @media (min-width: 768px) { #unit-list { grid-template-columns: repeat(2, 1fr); gap: 30px; } }
 
         .hero-view { 
             width: 100%; aspect-ratio: 16/9; background: #ece8e1; 
@@ -78,27 +75,25 @@
             align-items: center; justify-content: center; 
         }
 
-        /* Foto Utama: contain agar tidak terpotong */
         .hero-view img { 
             width: 100%; height: 100%; object-fit: contain; 
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
-        .hero-view.changing img {
-            opacity: 0;
-            transform: scale(0.98);
-        }
+        .hero-view.changing img { opacity: 0; transform: scale(0.98); }
 
-        .static-photo-wrapper { width: 90px; aspect-ratio: 1/1; overflow: hidden; flex-shrink: 0; cursor: pointer; }
+        /* --- SUPPORTING UNIT (16:9) --- */
+        .static-photo-wrapper { width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 1rem; cursor: pointer; }
         .static-photo-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .blend-multiply { mix-blend-mode: multiply; }
+        
+        .swiper-container-custom { width: 100%; aspect-ratio: 16/9; border-radius: 1rem; overflow: hidden; }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
 
         .unit-card { background: var(--cream-light); border-radius: 2rem; overflow: hidden; border: 1px solid var(--champagne); display: flex; flex-direction: column; }
         
-        /* Label click to detail */
-        .click-label { font-size: 8px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 8px; display: block; text-align: center; width: 100%; opacity: 0.8; }
+        /* Label click to detail di Kanan */
+        .click-label { font-size: 8px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; display: block; text-align: right; width: 100%; opacity: 0.8; }
 
-        /* Buttons & Tabs */
         .phase-btn { padding: 10px 24px; border-radius: 12px; font-size: 11px; font-weight: 800; border: 1px solid #eee; background: white; transition: 0.3s; }
         .phase-btn.active { background: var(--dark); color: white !important; }
         .tab-btn { padding: 10px 20px; background: white; border-radius: 50px; font-size: 10px; font-weight: 800; border: 1px solid #eee; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
@@ -113,7 +108,6 @@
         }
         .hero-view.is-custom .btn-back-photo { opacity: 1; }
         
-        .swiper-slide { cursor: pointer; }
         .scroll-indicator { font-size: 12px; color: var(--gold); margin-bottom: 15px; animation: bounce 2s infinite; }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(5px);} 60% {transform: translateY(3px);} }
     </style>
@@ -148,14 +142,11 @@
                 <div class="scroll-indicator"><i class="fa-solid fa-chevron-down"></i></div>
                 <span class="text-[9px] font-bold text-[#a68966] uppercase tracking-[0.3em] mb-1 block">Property Consultant</span>
                 <h1 class="text-3xl md:text-4xl font-black tracking-tighter mb-2 uppercase">Estate by Echi</h1>
-                <p class="text-gray-400 text-[10px] md:text-xs max-w-[280px] leading-tight font-medium">Membantu Anda menemukan hunian impian di Park Serpong.</p>
-                
                 <div class="sosmed-profile">
                     <a href="https://www.instagram.com/lippokarawaci.id?igsh=MXcwcTduOWV5ZXhqdA==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
                     <a href="https://www.tiktok.com/@parkserponghomes?_r=1&_t=ZS-94uDfA8olij" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
                     <a href="https://wa.me/628119001899" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
                 </div>
-
                 <div class="quick-tabs">
                     <a href="#katalog" class="tab-btn"><i class="fa-solid fa-house"></i> Unit</a>
                     <a href="#kpr" class="tab-btn"><i class="fa-solid fa-calculator"></i> KPR</a>
@@ -166,7 +157,6 @@
 
     <section id="katalog" class="py-10 px-6">
         <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-[12px] font-bold text-gray-400 uppercase tracking-[0.3em] mb-6">Unit Park Serpong</h2>
             <div class="flex gap-2 overflow-x-auto no-scrollbar mb-10 pb-2 justify-center">
                 <button onclick="renderUnits(7)" id="btn-7" class="phase-btn active">FASE 07</button>
                 <button onclick="renderUnits(6)" id="btn-6" class="phase-btn">FASE 06</button>
@@ -253,22 +243,14 @@
             const hero = document.querySelector(`#hero-${uid}`);
             const img = hero.querySelector('img');
             hero.classList.add('changing');
-            setTimeout(() => {
-                img.src = src;
-                hero.classList.remove('changing');
-                hero.classList.add('is-custom');
-            }, 300);
+            setTimeout(() => { img.src = src; hero.classList.remove('changing'); hero.classList.add('is-custom'); }, 300);
         }
 
         function resetHero(uid, originalSrc) {
             const hero = document.querySelector(`#hero-${uid}`);
             const img = hero.querySelector('img');
             hero.classList.add('changing');
-            setTimeout(() => {
-                img.src = originalSrc;
-                hero.classList.remove('changing');
-                hero.classList.remove('is-custom');
-            }, 300);
+            setTimeout(() => { img.src = originalSrc; hero.classList.remove('changing'); hero.classList.remove('is-custom'); }, 300);
         }
 
         function renderUnits(fase) {
@@ -281,7 +263,7 @@
                 const mainImg = `fase-${fase}/` + u.photos[0];
                 const slides = u.photos.slice(1).map(p => {
                     const fullSrc = `fase-${fase}/${p}`;
-                    return `<div class="swiper-slide" onclick="changeHero('${uid}', '${fullSrc}')"><img src="${fullSrc}" class="w-full h-full object-cover"></div>`;
+                    return `<div class="swiper-slide" onclick="changeHero('${uid}', '${fullSrc}')"><img src="${fullSrc}"></div>`;
                 }).join('');
                 
                 list.innerHTML += `
@@ -291,12 +273,12 @@
                             <img src="${mainImg}">
                         </div>
                         <div class="py-6 px-6 border-b border-gray-50">
-                            <span class="click-label">"click to detail"</span>
-                            <div class="flex items-center gap-4">
-                                <div class="static-photo-wrapper rounded-2xl overflow-hidden" onclick="resetHero('${uid}', '${mainImg}')">
+                            <span class="click-label">click to detail</span>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="static-photo-wrapper" onclick="resetHero('${uid}', '${mainImg}')">
                                     <img src="${mainImg}" class="blend-multiply">
                                 </div>
-                                <div class="swiper swiper-container-custom rounded-2xl overflow-hidden" id="sw-${uid}">
+                                <div class="swiper swiper-container-custom" id="sw-${uid}">
                                     <div class="swiper-wrapper">${slides}</div>
                                 </div>
                             </div>
@@ -322,16 +304,7 @@
                 `;
             });
 
-            setTimeout(() => { 
-                unitData[fase].forEach((u, i) => { 
-                    new Swiper(`#sw-u-${fase}-${i}`, { 
-                        loop: true, 
-                        autoplay: { delay: 2500, disableOnInteraction: false },
-                        slidesPerView: 1.2, // Sedikit memperlihatkan slide berikutnya
-                        spaceBetween: 10
-                    }); 
-                }); 
-            }, 100);
+            setTimeout(() => { unitData[fase].forEach((u, i) => { new Swiper(`#sw-u-${fase}-${i}`, { loop: true, autoplay: { delay: 2500, disableOnInteraction: false }, slidesPerView: 1, spaceBetween: 0 }); }); }, 100);
         }
 
         function toggleMenu(s) { document.getElementById('mobile-menu').classList.toggle('hidden', !s); }
@@ -348,14 +321,7 @@
             document.getElementById('hasil-cicilan').innerText = "Rp " + formatRibuan(Math.round(c || 0));
         }
 
-        function setKPR(name, v) { 
-            selectedUnitName = name;
-            document.getElementById('kpr-raw').value = v; 
-            document.getElementById('kpr-disp').value = formatRibuan(v); 
-            calc(); 
-            document.getElementById('kpr').scrollIntoView({ behavior: 'smooth' }); 
-        }
-
+        function setKPR(name, v) { selectedUnitName = name; document.getElementById('kpr-raw').value = v; document.getElementById('kpr-disp').value = formatRibuan(v); calc(); document.getElementById('kpr').scrollIntoView({ behavior: 'smooth' }); }
         function sendToWA() {
             const harga = document.getElementById('kpr-disp').value;
             const dp = document.getElementById('dp-val').value;
