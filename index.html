@@ -77,9 +77,9 @@
             #unit-list { grid-template-columns: repeat(2, 1fr); gap: 30px; }
         }
 
-        .hero-view { width: 100%; aspect-ratio: 1/1; background: #f9f7f4; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; }
-        .hero-view img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); }
-        .static-photo-wrapper { width: 100px; aspect-ratio: 1/1; overflow: hidden; flex-shrink: 0; }
+        .hero-view { width: 100%; aspect-ratio: 16/9; background: #f9f7f4; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; transition: all 0.4s ease; }
+        .hero-view img { width: 100%; height: 100%; object-fit: cover; }
+        .static-photo-wrapper { width: 100px; aspect-ratio: 1/1; overflow: hidden; flex-shrink: 0; cursor: pointer; }
         .static-photo-wrapper img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.15); }
         .blend-multiply { mix-blend-mode: multiply; }
 
@@ -89,6 +89,12 @@
         
         .quick-tabs { display: flex; gap: 8px; justify-content: center; margin-top: 20px; }
         .tab-btn { padding: 10px 20px; background: white; border-radius: 50px; font-size: 10px; font-weight: 800; border: 1px solid #eee; display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
+
+        /* Tombol Back Foto Utama */
+        .btn-back-photo { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.8); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--dark); opacity: 0; transition: 0.3s; z-index: 10; }
+        .hero-view.is-custom .btn-back-photo { opacity: 1; }
+        
+        .swiper-slide { cursor: pointer; }
     </style>
 </head>
 <body>
@@ -222,6 +228,18 @@
             ]
         };
 
+        function changeHero(uid, src) {
+            const hero = document.querySelector(`#hero-${uid}`);
+            hero.querySelector('img').src = src;
+            hero.classList.add('is-custom');
+        }
+
+        function resetHero(uid, originalSrc) {
+            const hero = document.querySelector(`#hero-${uid}`);
+            hero.querySelector('img').src = originalSrc;
+            hero.classList.remove('is-custom');
+        }
+
         function renderUnits(fase) {
             const list = document.getElementById('unit-list');
             list.innerHTML = '';
@@ -229,13 +247,24 @@
             unitData[fase].forEach((u, i) => {
                 const uid = `u-${fase}-${i}`;
                 const mainImg = `fase-${fase}/` + u.photos[0];
-                const slides = u.photos.slice(1).map(p => `<div class="swiper-slide"><img src="fase-${fase}/${p}" class="w-full h-full object-cover"></div>`).join('');
+                const slides = u.photos.slice(1).map(p => {
+                    const fullSrc = `fase-${fase}/${p}`;
+                    return `<div class="swiper-slide" onclick="changeHero('${uid}', '${fullSrc}')"><img src="${fullSrc}" class="w-full h-full object-cover"></div>`;
+                }).join('');
+                
                 list.innerHTML += `
                     <div class="unit-card">
-                        <div class="hero-view rounded-t-[2rem] overflow-hidden"><img src="${mainImg}" class="blend-multiply"></div>
+                        <div class="hero-view rounded-t-[2rem] overflow-hidden" id="hero-${uid}">
+                            <button class="btn-back-photo" onclick="resetHero('${uid}', '${mainImg}')"><i class="fa-solid fa-camera-rotate"></i></button>
+                            <img src="${mainImg}" class="blend-multiply">
+                        </div>
                         <div class="py-6 flex items-center gap-4 px-6 border-b border-gray-50">
-                            <div class="static-photo-wrapper rounded-2xl overflow-hidden"><img src="${mainImg}" class="blend-multiply"></div>
-                            <div class="swiper swiper-container-custom rounded-2xl overflow-hidden" id="sw-${uid}"><div class="swiper-wrapper">${slides}</div></div>
+                            <div class="static-photo-wrapper rounded-2xl overflow-hidden" onclick="resetHero('${uid}', '${mainImg}')">
+                                <img src="${mainImg}" class="blend-multiply">
+                            </div>
+                            <div class="swiper swiper-container-custom rounded-2xl overflow-hidden" id="sw-${uid}">
+                                <div class="swiper-wrapper">${slides}</div>
+                            </div>
                         </div>
                         <div class="px-8 py-8 flex-grow flex flex-col">
                             <h4 class="font-black text-xl md:text-2xl uppercase tracking-tighter mb-4 leading-tight">${u.name}</h4>
@@ -257,7 +286,16 @@
                     </div>
                 `;
             });
-            setTimeout(() => { unitData[fase].forEach((u, i) => { new Swiper(`#sw-u-${fase}-${i}`, { loop: true, autoplay: { delay: 3000 } }); }); }, 100);
+            setTimeout(() => { 
+                unitData[fase].forEach((u, i) => { 
+                    new Swiper(`#sw-u-${fase}-${i}`, { 
+                        loop: true, 
+                        autoplay: { delay: 2500, disableOnInteraction: false }, // Durasi 2.5 detik
+                        slidesPerView: 1,
+                        spaceBetween: 10
+                    }); 
+                }); 
+            }, 100);
         }
 
         function toggleMenu(s) { document.getElementById('mobile-menu').classList.toggle('hidden', !s); }
