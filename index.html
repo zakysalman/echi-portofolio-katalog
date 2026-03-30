@@ -19,7 +19,6 @@
             --champagne: #f0ebe3;
         }
 
-        /* Poin 5: Animasi scroll elegan */
         html { scroll-behavior: smooth; }
 
         body { 
@@ -30,11 +29,9 @@
             overflow-x: hidden;
         }
 
-        /* Tambahan CSS untuk poin 1 & 5 */
         .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* Icon back bulat di kiri bawah foto */
         .btn-reset-profile {
             position: absolute; bottom: -5px; left: -10px; width: 35px; height: 35px;
             background: var(--dark); border-radius: 50%; display: none; align-items: center; justify-content: center;
@@ -61,32 +58,53 @@
             background: rgba(0,0,0,0.4); z-index: 1500; display: none;
         }
 
-        /* --- DRAGGABLE PROFILE --- */
-        #profile-section {
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-            touch-action: none;
-            cursor: grab;
+        /* --- ABOUT ME SLIDE-IN PANEL --- */
+        #about-me-panel {
+            position: fixed; top: 0; right: -100%; width: 100%; height: 100%;
+            background: #1a1613; z-index: 3000; color: #fdfcf9;
+            transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            overflow-y: auto; padding-bottom: 50px;
         }
-        #profile-section.grabbing { cursor: grabbing; }
+        #about-me-panel.active { right: 0; }
+        .btn-close-about {
+            position: sticky; top: 25px; left: 25px; width: 45px; height: 45px;
+            background: rgba(255,255,255,0.05); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold); z-index: 10; border: 1px solid rgba(166, 137, 102, 0.3);
+            margin-bottom: -20px;
+        }
+        .about-header { display: flex; gap: 20px; align-items: center; padding: 100px 25px 30px; }
+        .about-pfp {
+            width: 100px; height: 100px; border-radius: 20px; border: 3px solid var(--gold);
+            overflow: hidden; flex-shrink: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .about-medsos-icons { display: flex; gap: 18px; margin-top: 15px; }
+        .about-medsos-icons a { color: var(--gold); font-size: 20px; }
+        .about-desc-section { padding: 40px 25px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 10px; }
+        .about-desc-section p { font-size: 13px; line-height: 1.8; color: #bbb; }
+        .achievement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 0 25px; }
+        .polaroid-card {
+            background: #fdfcf9; padding: 10px 10px 25px 10px; border-radius: 2px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4); transform: rotate(-3deg); transition: 0.3s;
+        }
+        .polaroid-card:nth-child(even) { transform: rotate(3deg); }
+        .polaroid-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+        .polaroid-label { color: #2d241d; font-size: 9px; font-weight: 800; text-align: center; margin-top: 12px; text-transform: uppercase; }
 
+        /* --- DRAGGABLE PROFILE --- */
+        #profile-section { width: 100%; max-width: 1000px; margin: 0 auto; position: relative; touch-action: none; cursor: grab; }
+        #profile-section.grabbing { cursor: grabbing; }
         .profile-container {
             transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
             display: flex; flex-direction: column; align-items: center; text-align: center;
-            padding: 120px 20px 50px; width: 100%;
-            background: var(--cream-light);
+            padding: 120px 20px 50px; width: 100%; background: var(--cream-light);
             border-bottom: 1px solid var(--champagne);
         }
-
         .profile-image-wrapper {
             width: 135px; height: 135px; border-radius: 50%; overflow: hidden; border: 4px solid white;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1); transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
             margin-bottom: 20px; flex-shrink: 0; position: relative;
         }
-
-        /* Panah Bawah Animasi di luar (di bawah foto) */
         .drag-arrow-outer {
             position: absolute; bottom: 0px; left: 50%; transform: translateX(-50%);
             color: var(--gold); font-size: 18px; animation: bounce 2s infinite; z-index: 5;
@@ -96,13 +114,11 @@
             40% { transform: translateX(-50%) translateY(6px); }
             60% { transform: translateX(-50%) translateY(3px); }
         }
-
         .sosmed-list { display: flex; gap: 15px; margin-top: 20px; justify-content: center; }
         .sosmed-list a { font-size: 22px; color: var(--dark); transition: 0.3s; opacity: 0.8; }
         .sosmed-list a:hover { color: var(--gold); opacity: 1; }
         .profile-desc { font-size: 11px; color: #888; max-width: 320px; margin: 12px auto; line-height: 1.6; font-weight: 500; }
 
-        /* Transform State (Setelah Drag) */
         .is-transformed .profile-container { flex-direction: row; text-align: left; padding: 115px 25px 30px; }
         .is-transformed .profile-image-wrapper { width: 80px; height: 80px; border-radius: 18px; margin-bottom: 0; margin-right: 20px; }
         .is-transformed .drag-arrow-outer { display: none; }
@@ -119,11 +135,9 @@
         }
         .hero-view.is-detail { aspect-ratio: 16/9; background: #fff; }
         .hero-view img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        
         .static-photo-wrapper { width: 100%; aspect-ratio: 1/1; border-radius: 1rem; overflow: hidden; }
         .static-photo-wrapper img { width: 100%; height: 100%; object-fit: cover; }
         .swiper-container-custom { width: 100%; aspect-ratio: 16/9; border-radius: 1rem; overflow: hidden; }
-
         .btn-back-photo { 
             position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.9); 
             width: 35px; height: 35px; border-radius: 50%; display: flex; 
@@ -131,13 +145,10 @@
             opacity: 0; transition: 0.3s; z-index: 10; 
         }
         .hero-view.is-detail .btn-back-photo { opacity: 1; }
-
         .phase-btn { padding: 12px 28px; border-radius: 14px; font-size: 11px; font-weight: 800; border: 1px solid #eee; background: white; transition: 0.3s; }
         .phase-btn.active { background: var(--dark); color: white !important; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-
         .tab-btn { padding: 12px 22px; background: white; border-radius: 50px; font-size: 10px; font-weight: 800; border: 1px solid #eee; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
         .quick-tabs { display: flex; gap: 8px; margin-top: 15px; justify-content: center; }
-        
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
@@ -151,6 +162,7 @@
             <button onclick="toggleMenu(false)" class="w-10 h-10 flex items-center justify-end"><i class="fa-solid fa-xmark text-2xl"></i></button>
         </div>
         <div class="flex flex-col gap-8 font-black text-2xl uppercase tracking-tighter flex-grow">
+            <a href="javascript:void(0)" onclick="toggleAbout(true); toggleMenu(false);" class="text-[#a68966]">About Me</a>
             <a href="#top" onclick="toggleMenu(false)">Home</a>
             <a href="#katalog" onclick="toggleMenu(false)">Unit Catalog</a>
             <a href="#kpr" onclick="toggleMenu(false)">KPR Simulation</a>
@@ -165,6 +177,43 @@
         </div>
     </div>
 
+    <div id="about-me-panel">
+        <div class="btn-close-about" onclick="toggleAbout(false)">
+            <i class="fa-solid fa-arrow-left"></i>
+        </div>
+        <div class="about-header">
+            <div class="about-pfp">
+                <img src="wajah.jpg" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400?text=Echi'">
+            </div>
+            <div>
+                <h2 class="text-2xl font-black uppercase tracking-tighter leading-none mb-1">Nefsi Asrifah</h2>
+                <p class="text-[10px] font-bold text-[#a68966] uppercase tracking-[0.2em]">Property Consultant</p>
+                <div class="about-medsos-icons">
+                    <a href="https://www.instagram.com/lippokarawaci.id"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@parkserponghomes"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://wa.me/628119001899"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="about-desc-section">
+            <h3 class="text-white font-black uppercase text-[10px] tracking-[0.3em] mb-4">Profil Profesional</h3>
+            <p>Sebagai konsultan properti berdedikasi, misi saya adalah memberikan solusi hunian cerdas dan transparan di kawasan Park Serpong. Saya siap mendampingi setiap langkah Anda menemukan aset masa depan yang paling bernilai.</p>
+        </div>
+        <div class="px-6 mb-6">
+            <h3 class="text-[#a68966] font-black uppercase text-[10px] tracking-[0.3em]">Achievements</h3>
+        </div>
+        <div class="achievement-grid">
+            <div class="polaroid-card">
+                <img src="award1.jpg" onerror="this.src='https://placehold.co/400x400?text=Award+1'">
+                <div class="polaroid-label">Top Agent 2024</div>
+            </div>
+            <div class="polaroid-card">
+                <img src="award2.jpg" onerror="this.src='https://placehold.co/400x400?text=Award+2'">
+                <div class="polaroid-label">Certified Consultant</div>
+            </div>
+        </div>
+    </div>
+
     <nav class="fixed top-0 w-full nav-glass px-6 py-5 flex justify-between items-center">
         <div class="font-extrabold text-sm tracking-tighter uppercase">NEFSI ASRIFAH <span class="text-[#a68966]">| ECHI</span></div>
         <button onclick="toggleMenu(true)" class="p-1"><i class="fa-solid fa-bars-staggered text-2xl"></i></button>
@@ -175,14 +224,11 @@
             <div class="profile-container">
                 <div class="relative">
                     <div class="btn-reset-profile" onclick="resetProfile()"><i class="fa-solid fa-rotate-left"></i></div>
-                    
                     <div class="profile-image-wrapper">
                         <img src="wajah.jpg" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400?text=Echi'">
                     </div>
-                    
                     <i class="fa-solid fa-chevron-down drag-arrow-outer"></i>
                 </div>
-
                 <div class="profile-text-content">
                     <span class="text-[9px] font-bold text-[#a68966] uppercase tracking-[0.3em] mb-1 block">Property Consultant</span>
                     <h1 class="text-3xl font-black tracking-tighter mb-1 uppercase">Estate by Echi</h1>
@@ -268,8 +314,10 @@
             ],
             6: [
                 { name: "Perunggu Livin Tipe B", tag: "315 Jt", val: 315000000, desc: "Hunian compact yang fungsional untuk gaya hidup praktis.", bed: 2, bath: 1, floor: 1, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
-                { name: "Quartz Livin Tipe Q", tag: "460 Jt", val: 460000000, desc: "Elegan dan minimalis, pilihan tepat untuk investasi masa depan.", bed: 2, bath: 2, floor: 2, photos: ["unit-2.jpg", "unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] },
-                { name: "TreeTops Livin", tag: "530 Jt", val: 530000000, desc: "Menghadirkan harmoni antara bangunan modern dengan alam.", bed: 3, bath: 2, floor: 2, photos: ["unit-3.jpg", "unit-3.1.jpg", "unit-3.2.jpg", "unit-3.3.jpg"] }
+                { name: "Silver Livin Tipe S", tag: "495 Jt", val: 495000000, desc: "Keseimbangan sempurna antara gaya dan kenyamanan keluarga.", bed: 3, bath: 2, floor: 2, photos: ["unit-2.jpg", "unit-2.1.jpg", "unit-2.2.jpg", "unit-2.3.jpg"] },
+                { name: "Quartz Livin Tipe Q", tag: "460 Jt", val: 460000000, desc: "Elegan dan minimalis, pilihan tepat untuk investasi masa depan.", bed: 2, bath: 2, floor: 2, photos: ["unit-3.jpg", "unit-3.1.jpg", "unit-3.2.jpg", "unit-3.3.jpg"] },
+                { name: "Gold Livin Tipe G", tag: "590 Jt", val: 590000000, desc: "Kemewahan luas dengan desain fasad yang modern dan gagah.", bed: 3, bath: 3, floor: 2, photos: ["unit-4.jpg", "unit-4.1.jpg", "unit-4.2.jpg", "unit-4.3.jpg"] },
+                { name: "GoldTops Livin Type GT", tag: "660 Jt", val: 660000000, desc: "Varian tertinggi untuk kenyamanan maksimal di lokasi strategis.", bed: 4, bath: 3, floor: 2, photos: ["unit-6.jpg", "unit-6.1.jpg", "unit-6.2.jpg", "unit-6.3.jpg"] }
             ],
             5: [
                 { name: "Perunggu Livin Tipe B", tag: "305 Jt", val: 305000000, desc: "Kualitas premium dengan harga yang sangat terjangkau.", bed: 2, bath: 1, floor: 1, photos: ["unit-1.jpg", "unit-1.1.jpg", "unit-1.2.jpg", "unit-1.3.jpg"] },
@@ -280,7 +328,6 @@
             ]
         };
 
-        // --- DRAG TO TRANSFORM LOGIC ---
         const profileSect = document.getElementById('profile-section');
         const container = document.querySelector('.profile-container');
         let startY = 0, distY = 0, isDragging = false;
@@ -305,22 +352,17 @@
             if(!isDragging) return;
             isDragging = false;
             profileSect.classList.remove('grabbing');
-            if(distY > 70) {
-                document.body.classList.add('is-transformed');
-            }
+            if(distY > 70) { document.body.classList.add('is-transformed'); }
             container.style.transform = '';
             distY = 0;
         });
 
-        // Function reset profile
         function resetProfile() { document.body.classList.remove('is-transformed'); }
 
-        // --- UNIT LOGIC ---
         function renderUnits(fase) {
             const list = document.getElementById('unit-list');
             list.innerHTML = '';
             document.querySelectorAll('.phase-btn').forEach(b => b.classList.toggle('active', b.id === `btn-${fase}`));
-            
             unitData[fase].forEach((u, i) => {
                 const uid = `u-${fase}-${i}`;
                 const mainImg = `fase-${fase}/` + u.photos[0];
@@ -328,7 +370,6 @@
                     <div class="swiper-slide" onclick="showDetailPhoto('${uid}', 'fase-${fase}/${p}')">
                         <img src="fase-${fase}/${p}" onerror="this.src='https://placehold.co/400x400?text=Room'">
                     </div>`).join('');
-                
                 list.innerHTML += `
                     <div class="unit-card reveal active">
                         <div class="hero-view" id="hero-${uid}">
@@ -363,7 +404,6 @@
             setTimeout(() => { unitData[fase].forEach((u, i) => { new Swiper(`#sw-u-${fase}-${i}`, { loop: true, autoplay: { delay: 4000 } }); }); }, 150);
         }
 
-        // --- KPR & UTILS ---
         function formatRibuan(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
         function formatAndCalc(el) { let v = el.value.replace(/\D/g, ""); document.getElementById('kpr-raw').value = v; el.value = formatRibuan(v); calc(); }
         function calc() {
@@ -377,7 +417,6 @@
             document.getElementById('hasil-cicilan').innerText = "Rp " + formatRibuan(Math.round(c || 0));
         }
 
-        // Scroll reveal logic
         window.addEventListener('scroll', () => {
             document.querySelectorAll('.reveal').forEach(el => {
                 if(el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add('active');
@@ -416,6 +455,12 @@
             const cicilan = document.getElementById('hasil-cicilan').innerText;
             const text = `Halo Echi, saya tertarik unit *${selectedUnitName}* dengan harga Rp ${harga}. Estimasi cicilan saya ${cicilan}. Mohon info selanjutnya.`;
             window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function toggleAbout(show) {
+            const panel = document.getElementById('about-me-panel');
+            if(show) { panel.classList.add('active'); document.body.style.overflow = 'hidden'; }
+            else { panel.classList.remove('active'); document.body.style.overflow = ''; }
         }
 
         window.onload = () => { renderUnits(7); calc(); };
